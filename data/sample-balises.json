@@ -1,0 +1,10 @@
+[
+  { "id": "83", "name": "Saint-Hilaire (Col de la Buffe)", "lat": 45.3061, "lon": 5.8869, "altitude": 1130, "dept": "38", "windAvg": 12, "windMax": 23, "windDir": 315, "temp": 14.2, "humidity": 58, "updated": "2026-06-05T13:55:00Z" },
+  { "id": "12", "name": "Annecy - Col de la Forclaz", "lat": 45.8167, "lon": 6.2333, "altitude": 1240, "dept": "74", "windAvg": 8, "windMax": 17, "windDir": 200, "temp": 16.0, "humidity": 49, "updated": "2026-06-05T13:55:00Z" },
+  { "id": "200", "name": "Puy de Dôme", "lat": 45.7722, "lon": 2.9644, "altitude": 1465, "dept": "63", "windAvg": 28, "windMax": 46, "windDir": 270, "temp": 9.5, "humidity": 72, "updated": "2026-06-05T13:55:00Z" },
+  { "id": "150", "name": "Mont Caume (Toulon)", "lat": 43.2167, "lon": 5.9000, "altitude": 801, "dept": "83", "windAvg": 4, "windMax": 11, "windDir": 110, "temp": 21.3, "humidity": 41, "updated": "2026-06-05T13:55:00Z" },
+  { "id": "305", "name": "Planfoy (Saint-Étienne)", "lat": 45.3833, "lon": 4.4500, "altitude": 1100, "dept": "42", "windAvg": 18, "windMax": 33, "windDir": 340, "temp": 11.8, "humidity": 63, "updated": "2026-06-05T13:55:00Z" },
+  { "id": "410", "name": "Pic du Midi de Bigorre", "lat": 42.9369, "lon": 0.1411, "altitude": 2877, "dept": "65", "windAvg": 42, "windMax": 68, "windDir": 295, "temp": -1.4, "humidity": 88, "updated": "2026-06-05T13:55:00Z" },
+  { "id": "520", "name": "Dune du Pyla", "lat": 44.5897, "lon": -1.2131, "altitude": 100, "dept": "33", "windAvg": 22, "windMax": 31, "windDir": 250, "temp": 18.7, "humidity": 70, "updated": "2026-06-05T13:55:00Z" },
+  { "id": "610", "name": "Chamrousse", "lat": 45.1228, "lon": 5.8772, "altitude": 1700, "dept": "38", "windAvg": 0, "windMax": 6, "windDir": 0, "temp": 7.2, "humidity": 55, "updated": "2026-06-05T13:55:00Z" }
+]
