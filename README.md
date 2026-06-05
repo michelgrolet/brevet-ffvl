@@ -1,10 +1,57 @@
-# brevet-ffvl — carte des balises météo FFVL en temps réel
+# brevet-ffvl
+
+Outils autour du vol libre FFVL. Ce dépôt contient deux projets indépendants :
+
+| Projet | Description | Dossier |
+| --- | --- | --- |
+| **QCM FFVL** | Scraper du QCM officiel des brevets de pilote (→ CSV) **+** site statique de consultation/filtrage des questions. | `scrape_qcm_ffvl.py`, [`qcm-site/`](qcm-site/) |
+| **Carte des balises météo** | Application web qui place les balises météo FFVL sur une carte avec leurs relevés vent/température en temps réel. | `server.js`, `public/`, `src/` |
+
+## GitHub Pages
+
+Un unique site Pages est publié par [`.github/workflows/pages.yml`](.github/workflows/pages.yml) :
+
+- **`/`** → site QCM FFVL (consultation des questions)
+- **`/balise/`** → carte des balises météo
+
+---
+
+# 1. QCM FFVL
+
+## Scraper → CSV
+
+`scrape_qcm_ffvl.py` télécharge le QCM officiel (<https://qcm.ffvl.fr/#/qcm>, une
+SPA AngularJS qui charge tout depuis `https://qcm.ffvl.fr/generated/qcm_ffvl.json`)
+et exporte l'intégralité des données en CSV. Bibliothèque standard uniquement.
+
+```bash
+python3 scrape_qcm_ffvl.py                    # -> qcm_ffvl.csv
+python3 scrape_qcm_ffvl.py -o sortie.csv
+python3 scrape_qcm_ffvl.py --json brut.json   # exporte aussi le JSON brut
+```
+
+Le site est derrière Cloudflare (403 sur urllib via l'empreinte TLS) : le script
+envoie un User-Agent de navigateur et bascule automatiquement sur `curl`.
+
+**Format CSV** — une ligne par question : `code`, `question`, `categories`,
+`activities`, `levels`, `num_answers`, `num_correct`, `correct_answers`, puis
+`answer_N_text` / `answer_N_pts` / `answer_N_correct` (jusqu'à 5). Encodage
+UTF-8 BOM pour Excel.
+
+## Site de consultation
+
+[`qcm-site/`](qcm-site/) — site statique (HTML/CSS/JS pur) pour parcourir et
+filtrer toutes les questions par examen/niveau, activité, catégorie et recherche
+plein texte, bonnes réponses mises en évidence. Voir
+[`qcm-site/README.md`](qcm-site/README.md).
+
+---
+
+# 2. Carte des balises météo FFVL en temps réel
 
 A small web app that puts FFVL weather beacons (**balises**) on a map with their
 live wind / temperature readings. Zero npm dependencies — just Node 18+ and a
 Leaflet frontend.
-
-![source toggle: mock / ffvl / scrape](https://img.shields.io/badge/data%20source-mock%20%7C%20ffvl%20%7C%20scrape-blue)
 
 ## Quick start
 

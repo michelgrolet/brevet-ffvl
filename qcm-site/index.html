@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>QCM FFVL — Toutes les questions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Consultez et filtrez toutes les questions du QCM officiel des brevets de pilote FFVL, avec les bonnes réponses."
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <h1>QCM FFVL</h1>
+        <p class="subtitle">
+          Toutes les questions des brevets de pilote (Fédération Française de Vol Libre)
+          — <span id="version-tag">v?</span>
+        </p>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="filters" aria-label="Filtres">
+        <div class="field">
+          <label for="f-search">Recherche</label>
+          <input
+            type="search"
+            id="f-search"
+            placeholder="Mot-clé, code (ex. A1B), réponse…"
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="field">
+          <label for="f-activity">Activité</label>
+          <select id="f-activity">
+            <option value="">Toutes</option>
+            <option value="Parapente">Parapente</option>
+            <option value="Delta">Delta</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="f-level">Examen / Niveau</label>
+          <select id="f-level">
+            <option value="">Tous</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="f-category">Catégorie</label>
+          <select id="f-category">
+            <option value="">Toutes</option>
+          </select>
+        </div>
+
+        <div class="field field-toggles">
+          <label class="checkbox">
+            <input type="checkbox" id="f-reveal" checked />
+            Afficher les bonnes réponses
+          </label>
+        </div>
+
+        <button id="f-reset" class="btn-reset" type="button">Réinitialiser</button>
+      </section>
+
+      <p class="result-count"><span id="count">0</span> question(s)</p>
+
+      <section id="questions" class="questions" aria-live="polite"></section>
+      <p id="empty" class="empty" hidden>Aucune question ne correspond à ces filtres.</p>
+    </main>
+
+    <footer class="footer">
+      <p>
+        Données © FFVL — source&nbsp;:
+        <a href="https://qcm.ffvl.fr/" rel="noopener">qcm.ffvl.fr</a>
+        (projet
+        <a href="https://github.com/jruffet/qcmffvl" rel="noopener">jruffet/qcmffvl</a>).
+        Site de consultation non officiel.
+      </p>
+      <p><a href="./balise/">→ Carte des balises météo FFVL</a></p>
+    </footer>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
