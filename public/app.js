@@ -71,11 +71,22 @@ function render(balises) {
 
 const statusEl = document.getElementById('status');
 
+// Try the live server endpoint first; on a static host (e.g. GitHub Pages there
+// is no backend) fall back to a pre-generated balises.json next to index.html.
+async function fetchData() {
+  try {
+    const res = await fetch('/api/balises', { cache: 'no-store' });
+    if (res.ok) return await res.json();
+  } catch { /* no backend — fall through to the static snapshot */ }
+  const res = await fetch('./balises.json', { cache: 'no-store' });
+  if (!res.ok) throw new Error('aucune source de données disponible');
+  return await res.json();
+}
+
 async function load() {
   statusEl.textContent = 'chargement…';
   try {
-    const res = await fetch('/api/balises', { cache: 'no-store' });
-    const data = await res.json();
+    const data = await fetchData();
     if (data.error) throw new Error(data.error);
     render(data.balises);
     const t = new Date().toLocaleTimeString('fr-FR');
