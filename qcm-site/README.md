@@ -35,12 +35,14 @@ python3 -m http.server 8000
 
 ## Déploiement GitHub Pages
 
-Le workflow [`.github/workflows/deploy-pages.yml`](../.github/workflows/deploy-pages.yml)
-publie automatiquement le contenu de `qcm-site/` sur GitHub Pages à chaque push
-sur `main`.
+Le dépôt publie un site Pages unique via
+[`.github/workflows/pages.yml`](../.github/workflows/pages.yml) et
+[`scripts/build-static.js`](../scripts/build-static.js) :
 
-Pour l'activer : **Settings → Pages → Build and deployment → Source : GitHub
-Actions** (une seule fois).
+- **`/`** → ce site QCM (copié à la racine du build `_site/`)
+- **`/balise/`** → la carte des balises météo
+
+Le déploiement se déclenche à chaque push sur `main`.
 
 ---
 
