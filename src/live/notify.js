@@ -3,6 +3,9 @@
 // can be enabled at once. Zero dependencies — uses Node 18's global fetch.
 //
 // Channels (env):
+//   WHATSAPP_QR           WhatsApp via QR-code login (link your own account once,
+//                         post to a group — recipients do nothing). See
+//                         src/live/whatsapp-qr.js and README.
 //   WHATSAPP_RECIPIENTS   CallMeBot WhatsApp, free, no business account needed.
 //                         Format: "phone:apikey,phone:apikey". Each recipient
 //                         must message the CallMeBot number once for an apikey
@@ -10,6 +13,8 @@
 //   NTFY_TOPIC            ntfy.sh push topic (anyone subscribed sees it).
 //   NTFY_SERVER           ntfy server (default https://ntfy.sh)
 //   NOTIFY_WEBHOOK_URL    generic webhook — receives a JSON POST.
+
+const whatsappQr = require('./whatsapp-qr');
 
 function whatsappRecipients() {
   return (process.env.WHATSAPP_RECIPIENTS || '')
@@ -73,13 +78,15 @@ async function sendWebhook(payload) {
 /** True if at least one channel is configured. */
 function isConfigured() {
   return Boolean(
-    whatsappRecipients().length || process.env.NTFY_TOPIC || process.env.NOTIFY_WEBHOOK_URL,
+    whatsappQr.isEnabled() || whatsappRecipients().length
+    || process.env.NTFY_TOPIC || process.env.NOTIFY_WEBHOOK_URL,
   );
 }
 
 async function dispatch(event, { pilot, link, title, text }) {
   const withLink = link ? `${text}\n${link}` : text;
   await Promise.all([
+    whatsappQr.send(withLink),
     sendWhatsApp(withLink),
     sendNtfy(title, text, link),
     sendWebhook({ event, pilot, link, text, at: new Date().toISOString() }),
