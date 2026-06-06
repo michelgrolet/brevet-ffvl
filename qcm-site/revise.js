@@ -231,13 +231,23 @@ function renderOnboarding() {
 
 // ---------- Écran 2 : accueil du deck (résumé) ----------
 
+// Une carte est « sue par cœur » quand sa dernière note est « Bien » ou « Par cœur ».
+function isMastered(card) {
+  return !!card && (card.lastGrade === "bien" || card.lastGrade === "sur");
+}
+
+// Nombre de cartes du deck actuellement sues par cœur. Dérivé de l'état persistant
+// (state.cards) : la valeur est donc stable d'une session à l'autre et survit à un
+// rechargement de page — l'accueil et le compteur en cours de session l'utilisent.
+function masteredCount() {
+  return Object.keys(state.cards).filter((c) => BY_CODE[c] && isMastered(state.cards[c])).length;
+}
+
 function renderDeckHome() {
   const codes = Object.keys(state.cards).filter((c) => BY_CODE[c]);
   const total = codes.length;
   const fresh = codes.filter((c) => (state.cards[c].reps || 0) === 0).length;
-  const mastered = codes.filter(
-    (c) => state.cards[c].lastGrade === "bien" || state.cards[c].lastGrade === "sur",
-  ).length;
+  const mastered = masteredCount();
 
   app.innerHTML =
     '<div class="card deck-home">' +
@@ -358,7 +368,6 @@ function startSession() {
     queue,
     grades: { pas: 0, bof: 0, bien: 0, sur: 0 },
     reviewed: 0,
-    mastered: 0,
     total: queue.length,
   };
   renderCard();
@@ -430,7 +439,7 @@ function renderCard() {
     '<div class="card review">' +
     '<div class="review-top">' +
     `<span class="deck-badge">${escapeHtml(state.deck.activity)} · ${escapeHtml(state.deck.level)}</span>` +
-    `<span class="review-progress">${session.queue.length} en attente · ${session.mastered}/${session.total} sues</span>` +
+    `<span class="review-progress">${session.queue.length} en attente · ${masteredCount()}/${session.total} sues</span>` +
     "</div>" +
     `<p class="code-line">${masteryBadge}<span class="code">${escapeHtml(code)}</span>` +
     q.categories.map((c) => `<span class="tag cat">${escapeHtml(c)}</span>`).join("") +
@@ -477,11 +486,10 @@ function gradeCard(grade) {
   session.reviewed += 1;
   saveState();
   // Réinjection intensive dans le tour en cours :
-  //  - « Bien »/« Par cœur » : carte acquise, repoussée à la fin (sort de la file) ;
+  //  - « Bien »/« Par cœur » : carte acquise, elle sort de la file (sa progression
+  //    « sue par cœur » est déjà enregistrée plus haut via saveState) ;
   //  - « Pas »/« Bof » : remise quelques cartes plus loin pour repasser vite.
-  if (grade === "bien" || grade === "sur") {
-    session.mastered += 1;
-  } else {
+  if (grade !== "bien" && grade !== "sur") {
     const offset = REQUEUE_OFFSET[grade] || 4;
     session.queue.splice(Math.min(offset, session.queue.length), 0, code);
   }
