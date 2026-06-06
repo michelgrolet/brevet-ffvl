@@ -1,0 +1,359 @@
+/* Mode révision — styles spécifiques (s'appuie sur les variables et le bandeau
+   définis dans style.css, chargé avant ce fichier). */
+
+.loading,
+.error {
+  text-align: center;
+  color: var(--muted);
+  padding: 2rem;
+}
+.error {
+  color: var(--bad-ink);
+}
+
+/* Generic card container */
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.4rem 1.3rem;
+  max-width: 560px;
+  margin: 0 auto;
+}
+.card h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.3rem;
+}
+.muted {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+/* Onboarding form */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  margin: 1rem 0 0.6rem;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+.field > span {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  font-weight: 600;
+}
+.field select {
+  font: inherit;
+  padding: 0.55rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+}
+.field select:focus {
+  outline: 2px solid var(--brand);
+  border-color: var(--brand);
+}
+.count-preview {
+  margin: 0.2rem 0 1rem;
+  font-size: 0.9rem;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* Buttons */
+.btn {
+  font: inherit;
+  font-weight: 600;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--ink);
+}
+.btn:hover {
+  background: var(--neutral-bg);
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn-primary {
+  width: 100%;
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+  font-size: 1.02rem;
+  padding: 0.7rem 1rem;
+}
+.btn-primary:hover {
+  background: var(--brand-dark);
+}
+.btn-danger {
+  color: var(--bad-ink);
+  border-color: var(--bad-border);
+}
+.btn-danger:hover {
+  background: var(--bad-bg);
+}
+
+/* "ou" separator */
+.sep {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.82rem;
+  margin: 1.2rem 0;
+}
+.sep::before,
+.sep::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid var(--line);
+}
+.sep span {
+  padding: 0 0.7rem;
+}
+
+.import-block {
+  text-align: center;
+}
+.import-msg {
+  margin: 0.7rem 0 0;
+  font-size: 0.88rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: 8px;
+}
+.import-msg.error {
+  background: var(--bad-bg);
+  color: var(--bad-ink);
+  border: 1px solid var(--bad-border);
+}
+.import-msg.info {
+  background: #eef2ff;
+  color: #3730a3;
+  border: 1px solid #c7d2fe;
+}
+
+/* Deck home */
+.deck-home {
+  text-align: center;
+}
+.deck-badge {
+  display: inline-block;
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  color: #3730a3;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  margin-bottom: 0.6rem;
+}
+/* Pastille de niveau de confiance sur chaque carte. */
+.mastery-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid var(--neutral-border);
+  background: var(--neutral-bg);
+  color: #4b5563;
+  white-space: nowrap;
+}
+.mastery-badge.m-weak {
+  background: var(--bad-bg);
+  border-color: var(--bad-border);
+  color: var(--bad-ink);
+}
+.mastery-badge.m-mid {
+  background: #fff4e5;
+  border-color: #f0b67f;
+  color: #b45309;
+}
+.mastery-badge.m-good {
+  background: var(--good-bg);
+  border-color: var(--good-border);
+  color: var(--good-ink);
+}
+.mastery-badge.m-top {
+  background: #fef9e7;
+  border-color: #e0b400;
+  color: #8a6d00;
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 1.6rem;
+  margin: 1.1rem 0 1.3rem;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+}
+.stat-num {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: var(--brand-dark);
+  line-height: 1;
+}
+.stat-lbl {
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  margin-top: 0.25rem;
+}
+.next-step {
+  margin: 0.7rem 0 0;
+  font-style: italic;
+}
+.deck-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.4rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--line);
+}
+
+/* Review session */
+.review-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.7rem;
+}
+.review-progress {
+  font-size: 0.8rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.code-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  margin: 0 0 0.5rem;
+}
+.review .qtext {
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin: 0.2rem 0 0.85rem;
+}
+.review .answers {
+  margin-bottom: 0.3rem;
+}
+/* Answers stay neutral until revealed. */
+.ans-review .answer .mark {
+  visibility: hidden;
+}
+.ans-review.revealed .answer.good {
+  background: var(--good-bg);
+  border-color: var(--good-border);
+}
+.ans-review.revealed .answer.good .mark {
+  visibility: visible;
+  color: var(--good-ink);
+}
+.ans-review.revealed .answer.bad {
+  background: var(--bad-bg);
+  border-color: var(--bad-border);
+}
+.ans-review.revealed .answer.bad .mark {
+  visibility: visible;
+  color: var(--bad-ink);
+}
+.review-actions {
+  margin-top: 0.8rem;
+}
+.review-actions .btn-primary small {
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+/* Grade buttons */
+.grade-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  margin-top: 0.9rem;
+}
+.grade-buttons .btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.7rem 0.4rem;
+  font-size: 1.02rem;
+}
+.grade-buttons .btn small {
+  font-weight: 500;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+.grade-pas {
+  border-color: var(--bad-border);
+  color: var(--bad-ink);
+}
+.grade-pas:hover {
+  background: var(--bad-bg);
+}
+.grade-bof {
+  border-color: #d9a23a;
+  color: #8a5a00;
+}
+.grade-bof:hover {
+  background: #fdf3e2;
+}
+.grade-bien {
+  border-color: var(--good-border);
+  color: var(--good-ink);
+}
+.grade-bien:hover {
+  background: var(--good-bg);
+}
+.review-foot {
+  margin-top: 1rem;
+  text-align: center;
+}
+.btn-link {
+  border: none;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  text-decoration: underline;
+  padding: 0.3rem;
+}
+.btn-link:hover {
+  color: var(--ink);
+}
+.review-done {
+  text-align: center;
+}
+
+@media (max-width: 560px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  .stats {
+    gap: 1.1rem;
+  }
+}

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Révision QCM FFVL — Anki</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Mode révision (répétition espacée) du QCM FFVL : choisis un examen, révise carte par carte, progression mémorisée en local."
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./revise.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner topbar-flex">
+        <div>
+          <h1>Révision QCM FFVL</h1>
+          <p class="subtitle">Apprentissage intensif — tout le deck, répétition espacée</p>
+        </div>
+        <a class="topbar-link" href="./">← Toutes les questions</a>
+      </div>
+    </header>
+
+    <main class="container">
+      <section id="app" aria-live="polite">
+        <p class="loading">Chargement…</p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>
+        Données © FFVL — source&nbsp;:
+        <a href="https://qcm.ffvl.fr/" rel="noopener">qcm.ffvl.fr</a>.
+        Progression et réglages stockés localement dans votre navigateur.
+      </p>
+    </footer>
+
+    <script src="./revise.js"></script>
+  </body>
+</html>
