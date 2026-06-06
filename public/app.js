@@ -73,14 +73,16 @@ async function load() {
 let meLayer = null;
 const meStyle = { radius: 8, color: '#fff', weight: 2, fillColor: '#1e6fff', fillOpacity: 1 };
 
-document.getElementById('locate').addEventListener('click', () => {
+function locateMe() {
   if (!('geolocation' in navigator)) {
     statusEl.textContent = 'géolocalisation non disponible sur cet appareil';
     return;
   }
   statusEl.textContent = 'localisation…';
   map.locate({ setView: true, maxZoom: 12, enableHighAccuracy: true, timeout: 10000 });
-});
+}
+
+document.getElementById('locate').addEventListener('click', locateMe);
 
 map.on('locationfound', (e) => {
   if (meLayer) meLayer.remove();
@@ -95,4 +97,5 @@ map.on('locationerror', (e) => {
   statusEl.textContent = `localisation impossible : ${e.message}`;
 });
 
-load();
+// Load balises, then auto-locate on first visit (prompts for permission).
+load().then(locateMe);
