@@ -15,6 +15,13 @@ embarquées dans `data/qcm_ffvl.json` (généré par le scraper du dépôt).
 - **Recherche** plein texte (énoncé, réponses, code de question)
 - Affichage des **bonnes réponses** (✓ vert) et des mauvaises (✗ rouge) avec les
   points, ou masquage pour s'entraîner
+- **Explications pédagogiques** (brevet initial parapente) sous chaque question,
+  chargées depuis `data/explanations.json`
+- Page **[« Comprendre les nuages »](nuages.html)** (`nuages.html`) : fiche
+  pédagogique avec schémas (étages/strates, décodage des préfixes, cumulus de
+  beau temps, cumulonimbus). Les questions « nuage » du brevet initial pointent
+  vers la bonne section de cette page depuis leur explication, via le mapping
+  `nuages_link` de `data/explanations.json`.
 
 ## Lancer en local
 

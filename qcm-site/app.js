@@ -29,6 +29,9 @@ const els = {
 };
 
 let QUESTIONS = [];
+// Lien optionnel « pour aller plus loin » vers la page pédagogique sur les
+// nuages, ajouté dans l'explication des questions concernées (cf. explanations.json).
+let CLOUD_LINK = null; // { page, label, codes: { CODE: "ancre" } }
 
 init();
 
@@ -50,6 +53,7 @@ async function init() {
         for (const q of QUESTIONS) {
           if (byCode[q.code]) q.explanation = byCode[q.code];
         }
+        if (exp.nuages_link && exp.nuages_link.codes) CLOUD_LINK = exp.nuages_link;
       }
     } catch (_) {
       /* explications indisponibles : on continue sans */
@@ -138,6 +142,7 @@ function cardHtml(q, term, reveal) {
     ? `<div class="explanation">` +
       `<span class="exp-label">Explication</span>` +
       `<p>${highlight(q.explanation, term)}</p>` +
+      cloudLinkHtml(q.code) +
       `</div>`
     : "";
 
@@ -148,6 +153,21 @@ function cardHtml(q, term, reveal) {
     `<ul class="answers">${answers}</ul>` +
     explanation +
     `</article>`
+  );
+}
+
+// Lien vers la page pédagogique sur les nuages, pour les questions « nuage ».
+// L'ancre permet d'arriver directement sur la bonne section (étage, cumulonimbus…).
+function cloudLinkHtml(code) {
+  if (!CLOUD_LINK || !CLOUD_LINK.codes || !(code in CLOUD_LINK.codes)) return "";
+  const anchor = CLOUD_LINK.codes[code];
+  const href = CLOUD_LINK.page + (anchor ? "#" + anchor : "");
+  const label = CLOUD_LINK.label || "En savoir plus sur les nuages";
+  return (
+    `<a class="exp-link" href="${escapeHtml(href)}">` +
+    `<span class="exp-link-icon" aria-hidden="true">☁</span>` +
+    `${escapeHtml(label)} <span class="exp-link-arrow" aria-hidden="true">→</span>` +
+    `</a>`
   );
 }
 

@@ -1,0 +1,277 @@
+/* Page pédagogique « Comprendre les nuages » — complément à style.css.
+   Réutilise les variables (:root) et la topbar/footer définies dans style.css. */
+
+.nuage-main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1rem 1rem 3rem;
+}
+
+.backlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0.6rem 0 0.4rem;
+  color: var(--brand);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.backlink:hover {
+  text-decoration: underline;
+}
+
+.lead {
+  font-size: 1.02rem;
+  color: var(--ink);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--brand);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+  box-shadow: var(--shadow);
+}
+.lead strong {
+  color: var(--brand-dark);
+}
+
+/* Sommaire */
+.toc {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 0.9rem 1.1rem;
+  margin: 1.1rem 0;
+}
+.toc h2 {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.toc ol {
+  margin: 0;
+  padding-left: 1.2rem;
+  columns: 2;
+  column-gap: 1.5rem;
+}
+.toc a {
+  color: var(--brand);
+  text-decoration: none;
+}
+.toc a:hover {
+  text-decoration: underline;
+}
+
+/* Sections */
+.nuage-section {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.2rem 1.3rem;
+  margin: 1.2rem 0;
+  scroll-margin-top: 1rem;
+}
+.nuage-section > h2 {
+  margin: 0 0 0.6rem;
+  color: var(--brand-dark);
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.nuage-section h3 {
+  color: var(--brand-dark);
+  margin: 1.1rem 0 0.3rem;
+  scroll-margin-top: 1rem;
+}
+.nuage-section p {
+  margin: 0.5rem 0;
+}
+
+/* Encadré « astuce / à retenir » */
+.tip {
+  margin: 0.9rem 0;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid #cfe3d4;
+  border-left: 4px solid var(--good-border);
+  border-radius: 8px;
+  background: #f3faf5;
+  font-size: 0.95rem;
+}
+.tip .tip-label {
+  font-weight: 700;
+  color: var(--good-ink);
+}
+.warn {
+  margin: 0.9rem 0;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--bad-border);
+  border-left: 4px solid var(--bad-border);
+  border-radius: 8px;
+  background: var(--bad-bg);
+  font-size: 0.95rem;
+}
+.warn .warn-label {
+  font-weight: 700;
+  color: var(--bad-ink);
+}
+
+/* Décodeur de préfixes */
+.prefix-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+.prefix-card {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.8rem 0.9rem;
+  background: var(--neutral-bg);
+}
+.prefix-card .pfx {
+  font-weight: 800;
+  color: var(--brand);
+  font-size: 1.05rem;
+}
+.prefix-card .pfx small {
+  font-weight: 600;
+  color: var(--muted);
+}
+.prefix-card .meaning {
+  margin: 0.35rem 0 0;
+  font-size: 0.88rem;
+}
+
+/* Diagrammes SVG */
+.diagram {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem 0 0.3rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  overflow: visible;
+}
+.diagram-caption {
+  margin: 0.2rem 0 0.4rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* Cartes d'étage */
+.etage {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 0.9rem 0;
+  border-top: 1px solid var(--line);
+  scroll-margin-top: 1rem;
+}
+.etage:first-of-type {
+  border-top: none;
+}
+.etage .etage-badge {
+  flex: none;
+  width: 84px;
+  text-align: center;
+  padding: 0.5rem 0.3rem;
+  border-radius: 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #fff;
+}
+.etage .etage-badge .alt {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  opacity: 0.9;
+  margin-top: 0.2rem;
+}
+.b-haut {
+  background: linear-gradient(160deg, #5b8fd6, #2f6db5);
+}
+.b-moyen {
+  background: linear-gradient(160deg, #6fa8c9, #4a86a8);
+}
+.b-bas {
+  background: linear-gradient(160deg, #6cb98f, #3f9b6b);
+}
+.b-vertical {
+  background: linear-gradient(160deg, #8a93a0, #59636f);
+}
+.etage-body h3 {
+  margin: 0.1rem 0 0.25rem;
+}
+.etage-body p {
+  margin: 0.25rem 0;
+  font-size: 0.93rem;
+}
+.cloud-list {
+  margin: 0.3rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.cloud-list li {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  color: #3730a3;
+}
+
+/* Tableau récapitulatif */
+.recap-wrap {
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+.recap {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  min-width: 560px;
+}
+.recap th,
+.recap td {
+  border: 1px solid var(--line);
+  padding: 0.5rem 0.6rem;
+  text-align: left;
+  vertical-align: top;
+}
+.recap thead th {
+  background: var(--brand);
+  color: #fff;
+  position: sticky;
+  top: 0;
+}
+.recap tbody tr:nth-child(even) {
+  background: var(--neutral-bg);
+}
+.recap .fam {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+@media (max-width: 620px) {
+  .toc ol {
+    columns: 1;
+  }
+  .etage {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .etage .etage-badge {
+    width: 100%;
+  }
+}

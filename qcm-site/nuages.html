@@ -1,0 +1,697 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Comprendre les nuages — QCM FFVL</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Page pédagogique sur les nuages pour le brevet de pilote FFVL : les étages (strates), le décodage des préfixes (cirro, alto, strato, cumulus, nimbo), le cumulus de beau temps et le cumulonimbus, avec schémas."
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./nuages.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <h1>☁ Comprendre les nuages</h1>
+        <p class="subtitle">
+          Repère facilement quel nuage appartient à quelle strate (étage) — pour le QCM
+          FFVL et pour le vol
+        </p>
+        <nav class="topnav">
+          <a class="topnav-link" href="./index.html">← Retour au QCM</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="nuage-main">
+      <p class="lead">
+        Les nuages se classent par <strong>étages</strong> (on parle aussi de
+        <strong>strates</strong>) selon l'altitude de leur base. Bonne nouvelle&nbsp;: le
+        <strong>nom du nuage indique presque toujours son étage</strong>. Une fois le code
+        des préfixes compris, on sait reconnaître la famille d'un nuage rien qu'à son nom.
+        Cette page récapitule tout ça avec des schémas, puis détaille les deux nuages qui
+        comptent le plus pour nous&nbsp;: le <strong>cumulus de beau temps</strong> (notre
+        ami) et le <strong>cumulonimbus</strong> (notre pire ennemi).
+      </p>
+
+      <nav class="toc" aria-label="Sommaire">
+        <h2>Sur cette page</h2>
+        <ol>
+          <li><a href="#composition">De quoi est fait un nuage&nbsp;?</a></li>
+          <li><a href="#prefixes">Le code des préfixes (l'astuce)</a></li>
+          <li><a href="#etages">Les étages / strates en un schéma</a></li>
+          <li><a href="#etage-superieur">Étage supérieur (cirro‑)</a></li>
+          <li><a href="#etage-moyen">Étage moyen (alto‑)</a></li>
+          <li><a href="#etage-inferieur">Étage inférieur</a></li>
+          <li><a href="#developpement-vertical">À développement vertical</a></li>
+          <li><a href="#cumulus">Le cumulus de beau temps</a></li>
+          <li><a href="#cumulonimbus">Le cumulonimbus (danger)</a></li>
+          <li><a href="#recap">Tableau récapitulatif</a></li>
+        </ol>
+      </nav>
+
+      <!-- ================= Composition ================= -->
+      <section id="composition" class="nuage-section">
+        <h2>De quoi est fait un nuage&nbsp;?</h2>
+        <p>
+          Un nuage <strong>n'est pas fait de vapeur d'eau</strong>. La vapeur d'eau est un
+          <strong>gaz invisible</strong>. Le nuage devient visible uniquement quand cette
+          vapeur, en montant et en se refroidissant, atteint son
+          <strong>point de rosée</strong> et se <strong>condense</strong> : elle se
+          transforme alors en <strong>gouttelettes d'eau liquide</strong> en suspension, et
+          plus haut, où il fait très froid, en <strong>cristaux de glace</strong>.
+        </p>
+
+        <svg
+          class="diagram"
+          viewBox="0 0 880 300"
+          role="img"
+          aria-label="Schéma : la vapeur d'eau, gaz invisible, monte, se refroidit, puis se condense au point de rosée en gouttelettes et cristaux qui forment le nuage visible."
+        >
+          <defs>
+            <!-- Symboles de nuages réutilisés par tous les schémas de la page -->
+            <symbol id="ic-cumulus" viewBox="0 0 120 70" overflow="visible">
+              <g fill="#ffffff">
+                <ellipse cx="60" cy="48" rx="50" ry="15" />
+                <circle cx="38" cy="44" r="17" />
+                <circle cx="60" cy="32" r="24" />
+                <circle cx="82" cy="42" r="18" />
+              </g>
+              <line
+                x1="16"
+                y1="56"
+                x2="104"
+                y2="56"
+                stroke="#7d93a6"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+            </symbol>
+            <symbol id="ic-cirrus" viewBox="0 0 150 60" overflow="visible">
+              <g
+                fill="none"
+                stroke="#ffffff"
+                stroke-width="4.5"
+                stroke-linecap="round"
+              >
+                <path d="M12,36 Q72,14 144,24" />
+                <path d="M6,46 Q60,30 124,36" />
+                <path d="M44,27 Q82,12 120,15" />
+              </g>
+            </symbol>
+            <symbol id="ic-cirrocumulus" viewBox="0 0 130 56" overflow="visible">
+              <g fill="#ffffff">
+                <circle cx="18" cy="20" r="6" />
+                <circle cx="34" cy="18" r="6" />
+                <circle cx="50" cy="20" r="6" />
+                <circle cx="66" cy="18" r="6" />
+                <circle cx="82" cy="20" r="6" />
+                <circle cx="98" cy="18" r="6" />
+                <circle cx="114" cy="20" r="6" />
+                <circle cx="26" cy="34" r="6" />
+                <circle cx="42" cy="36" r="6" />
+                <circle cx="58" cy="34" r="6" />
+                <circle cx="74" cy="36" r="6" />
+                <circle cx="90" cy="34" r="6" />
+                <circle cx="106" cy="36" r="6" />
+              </g>
+            </symbol>
+            <symbol id="ic-altocumulus" viewBox="0 0 160 64" overflow="visible">
+              <g fill="#f3f6f9" stroke="#cbd6e0" stroke-width="1.4">
+                <ellipse cx="26" cy="26" rx="14" ry="10" />
+                <ellipse cx="54" cy="24" rx="14" ry="10" />
+                <ellipse cx="82" cy="26" rx="14" ry="10" />
+                <ellipse cx="110" cy="24" rx="14" ry="10" />
+                <ellipse cx="138" cy="26" rx="14" ry="10" />
+                <ellipse cx="40" cy="46" rx="14" ry="10" />
+                <ellipse cx="68" cy="48" rx="14" ry="10" />
+                <ellipse cx="96" cy="46" rx="14" ry="10" />
+                <ellipse cx="124" cy="48" rx="14" ry="10" />
+              </g>
+            </symbol>
+            <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#2c63a0" />
+              <stop offset="0.55" stop-color="#6ea6d8" />
+              <stop offset="1" stop-color="#cfe6f7" />
+            </linearGradient>
+          </defs>
+
+          <rect x="0" y="0" width="880" height="300" fill="#f7fbff" />
+
+          <!-- Gaz invisible -->
+          <g fill="#9fb4c6" opacity="0.6">
+            <circle cx="120" cy="210" r="5" />
+            <circle cx="150" cy="230" r="4" />
+            <circle cx="100" cy="240" r="4" />
+            <circle cx="170" cy="205" r="5" />
+            <circle cx="135" cy="255" r="4" />
+            <circle cx="185" cy="240" r="4" />
+          </g>
+          <text x="140" y="285" text-anchor="middle" font-size="14" font-weight="700" fill="#5a6b7b">
+            Vapeur d'eau
+          </text>
+          <text x="140" y="155" text-anchor="middle" font-size="12" fill="#5a6b7b">
+            (gaz invisible)
+          </text>
+
+          <!-- Flèche de montée + refroidissement -->
+          <line x1="270" y1="250" x2="430" y2="120" stroke="#2f6db5" stroke-width="3" />
+          <polygon points="430,120 414,128 424,138" fill="#2f6db5" />
+          <text x="350" y="150" text-anchor="middle" font-size="13" fill="#2f6db5" font-weight="600">
+            l'air monte
+          </text>
+          <text x="350" y="170" text-anchor="middle" font-size="13" fill="#2f6db5" font-weight="600">
+            et se refroidit
+          </text>
+          <text x="350" y="232" text-anchor="middle" font-size="12" fill="#7a4ea0" font-weight="700">
+            → point de rosée
+          </text>
+
+          <!-- Nuage visible -->
+          <use href="#ic-cumulus" x="500" y="60" width="280" height="160" />
+          <text x="640" y="240" text-anchor="middle" font-size="14" font-weight="700" fill="#33475b">
+            Nuage visible
+          </text>
+          <text x="640" y="100" text-anchor="middle" font-size="12" fill="#33475b">
+            gouttelettes d'eau
+          </text>
+          <text x="640" y="118" text-anchor="middle" font-size="12" fill="#33475b">
+            + cristaux de glace
+          </text>
+        </svg>
+        <p class="diagram-caption">
+          La vapeur (gaz) ne se voit pas&nbsp;: c'est la condensation qui « dessine » le nuage.
+        </p>
+
+        <div class="tip">
+          <span class="tip-label">À retenir —</span> nuage = eau
+          <strong>condensée</strong> (gouttelettes + cristaux), pas vapeur. C'est la réponse
+          de la question <strong>A3V</strong>.
+        </div>
+      </section>
+
+      <!-- ================= Préfixes ================= -->
+      <section id="prefixes" class="nuage-section">
+        <h2>Le code des préfixes : l'astuce pour situer un nuage</h2>
+        <p>
+          Le nom d'un nuage se lit comme un petit code. Chaque morceau du nom renseigne sur
+          son <strong>étage</strong> ou sa <strong>forme</strong>. Mémorise ces racines et tu
+          places n'importe quel nuage dans sa strate sans hésiter&nbsp;:
+        </p>
+
+        <div class="prefix-grid">
+          <div class="prefix-card">
+            <div class="pfx">cirro‑ <small>/ cirrus</small></div>
+            <p class="meaning">
+              <strong>Étage supérieur</strong> (&gt; 6000 m). Très haut, fait de
+              <strong>cristaux de glace</strong>. Fin et filandreux.
+            </p>
+          </div>
+          <div class="prefix-card">
+            <div class="pfx">alto‑</div>
+            <p class="meaning">
+              <strong>Étage moyen</strong> (2000 → 6000 m). Malgré le mot « alto » (haut en
+              musique), c'est l'étage <strong>du milieu</strong>.
+            </p>
+          </div>
+          <div class="prefix-card">
+            <div class="pfx">strato‑ / stratus</div>
+            <p class="meaning">
+              Forme « en <strong>couche</strong> » étalée et horizontale, ciel bouché. Sans
+              autre préfixe, c'est <strong>bas</strong>.
+            </p>
+          </div>
+          <div class="prefix-card">
+            <div class="pfx">cumulus / cumulo‑</div>
+            <p class="meaning">
+              Forme « en <strong>tas</strong> », bourgeonnante, à
+              <strong>développement vertical</strong>. Le cumulus simple est
+              <strong>bas</strong>.
+            </p>
+          </div>
+          <div class="prefix-card">
+            <div class="pfx">nimbo‑ / ‑nimbus</div>
+            <p class="meaning">
+              Nuage qui <strong>donne de la pluie</strong> (nimbus = pluie).
+              <em>Nimbo</em>stratus = pluie continue, cumulo<em>nimbus</em> = averses/orage.
+            </p>
+          </div>
+        </div>
+
+        <div class="tip">
+          <span class="tip-label">L'astuce —</span> on combine&nbsp;: <em>cirro</em> +
+          <em>cumulus</em> = <strong>cirrocumulus</strong> (petits tas, tout en haut, en
+          glace). <em>alto</em> + <em>stratus</em> = <strong>altostratus</strong> (couche,
+          étage moyen). <em>cumulo</em> + <em>nimbus</em> = <strong>cumulonimbus</strong>
+          (gros tas qui donne l'orage).
+        </div>
+      </section>
+
+      <!-- ================= Diagramme des étages ================= -->
+      <section id="etages" class="nuage-section">
+        <h2>Les étages (strates) en un seul schéma</h2>
+        <p>
+          Voici les <strong>trois étages</strong> et la famille des nuages
+          <strong>à développement vertical</strong>, qui eux traversent plusieurs étages à la
+          fois. Repère bien à quelle hauteur vit chaque nuage&nbsp;:
+        </p>
+
+        <svg
+          class="diagram"
+          viewBox="0 0 880 540"
+          role="img"
+          aria-label="Coupe verticale de l'atmosphère. Étage supérieur au-dessus de 6000 m : cirrus, cirrocumulus, cirrostratus (cristaux de glace). Étage moyen de 2000 à 6000 m : altocumulus, altostratus. Étage inférieur de 0 à 2000 m : stratus, stratocumulus, cumulus. À droite, les nuages à développement vertical cumulonimbus et nimbostratus traversent tous les étages."
+        >
+          <!-- Ciel + sol -->
+          <rect x="0" y="0" width="880" height="470" fill="url(#skyGrad)" />
+          <rect x="0" y="470" width="880" height="70" fill="#5aa06a" />
+          <rect x="0" y="470" width="880" height="10" fill="#6cb37c" />
+
+          <!-- Axe des altitudes -->
+          <line x1="66" y1="40" x2="66" y2="470" stroke="#ffffff" stroke-opacity="0.5" stroke-width="1.5" />
+          <g stroke="#ffffff" stroke-opacity="0.5" stroke-width="1.5">
+            <line x1="60" y1="470" x2="72" y2="470" />
+            <line x1="60" y1="350" x2="72" y2="350" />
+            <line x1="60" y1="195" x2="72" y2="195" />
+            <line x1="60" y1="40" x2="72" y2="40" />
+          </g>
+          <g fill="#eaf3ff" font-size="12" text-anchor="end">
+            <text x="56" y="474">0 m</text>
+            <text x="56" y="354">2 000 m</text>
+            <text x="56" y="199">6 000 m</text>
+            <text x="56" y="44">≈ 12 000 m</text>
+          </g>
+
+          <!-- Séparations des étages -->
+          <g stroke="#ffffff" stroke-opacity="0.45" stroke-width="1.5" stroke-dasharray="7 7">
+            <line x1="66" y1="350" x2="724" y2="350" />
+            <line x1="66" y1="195" x2="724" y2="195" />
+          </g>
+
+          <!-- Filigranes des étages -->
+          <g font-weight="800">
+            <text x="86" y="104" font-size="15" fill="#eaf3ff" opacity="0.95">ÉTAGE SUPÉRIEUR</text>
+            <text x="86" y="122" font-size="12" fill="#eaf3ff" opacity="0.85" font-weight="600">cirro‑ · cristaux de glace</text>
+
+            <text x="86" y="262" font-size="15" fill="#0d2a4a" opacity="0.55">ÉTAGE MOYEN</text>
+            <text x="86" y="280" font-size="12" fill="#0d2a4a" opacity="0.5" font-weight="600">alto‑</text>
+
+            <text x="86" y="400" font-size="15" fill="#0d2a4a" opacity="0.6">ÉTAGE INFÉRIEUR</text>
+            <text x="86" y="418" font-size="12" fill="#0d2a4a" opacity="0.55" font-weight="600">0 → 2 000 m</text>
+          </g>
+
+          <!-- Nuages : étage supérieur -->
+          <use href="#ic-cirrus" x="300" y="62" width="150" height="60" />
+          <use href="#ic-cirrocumulus" x="472" y="62" width="110" height="48" />
+          <g fill="#ffffff" opacity="0.85">
+            <ellipse cx="660" cy="108" rx="58" ry="14" />
+          </g>
+
+          <!-- Nuages : étage moyen -->
+          <use href="#ic-altocumulus" x="290" y="214" width="170" height="68" />
+          <rect x="520" y="248" width="170" height="26" rx="13" fill="#b9c4cf" />
+
+          <!-- Nuages : étage inférieur -->
+          <ellipse cx="250" cy="408" rx="70" ry="13" fill="#b3bdc7" />
+          <g fill="#aab5c0">
+            <circle cx="400" cy="404" r="15" />
+            <circle cx="424" cy="400" r="17" />
+            <circle cx="450" cy="404" r="15" />
+            <circle cx="474" cy="402" r="14" />
+            <rect x="386" y="404" width="100" height="14" />
+          </g>
+          <use href="#ic-cumulus" x="556" y="358" width="150" height="84" />
+
+          <!-- Étiquettes (chips) -->
+          <g font-size="12.5" font-weight="600" text-anchor="middle">
+            <g>
+              <rect x="338" y="150" width="74" height="20" rx="10" fill="#ffffff" opacity="0.9" />
+              <text x="375" y="164" fill="#1f2933">Cirrus</text>
+            </g>
+            <g>
+              <rect x="470" y="150" width="110" height="20" rx="10" fill="#ffffff" opacity="0.9" />
+              <text x="525" y="164" fill="#1f2933">Cirrocumulus</text>
+            </g>
+            <g>
+              <rect x="608" y="150" width="104" height="20" rx="10" fill="#ffffff" opacity="0.9" />
+              <text x="660" y="164" fill="#1f2933">Cirrostratus</text>
+            </g>
+
+            <g>
+              <rect x="322" y="312" width="106" height="20" rx="10" fill="#ffffff" opacity="0.9" />
+              <text x="375" y="326" fill="#1f2933">Altocumulus</text>
+            </g>
+            <g>
+              <rect x="556" y="312" width="98" height="20" rx="10" fill="#ffffff" opacity="0.9" />
+              <text x="605" y="326" fill="#1f2933">Altostratus</text>
+            </g>
+
+            <g>
+              <rect x="212" y="432" width="76" height="20" rx="10" fill="#ffffff" opacity="0.92" />
+              <text x="250" y="446" fill="#1f2933">Stratus</text>
+            </g>
+            <g>
+              <rect x="378" y="432" width="118" height="20" rx="10" fill="#ffffff" opacity="0.92" />
+              <text x="437" y="446" fill="#1f2933">Stratocumulus</text>
+            </g>
+            <g>
+              <rect x="588" y="432" width="86" height="20" rx="10" fill="#ffffff" opacity="0.92" />
+              <text x="631" y="446" fill="#1f2933">Cumulus</text>
+            </g>
+          </g>
+
+          <!-- Colonne « développement vertical » -->
+          <rect x="744" y="58" width="120" height="412" rx="14" fill="#46505b" opacity="0.82" />
+          <text x="804" y="84" text-anchor="middle" font-size="11.5" font-weight="800" fill="#ffffff">DÉVELOPPEMENT</text>
+          <text x="804" y="99" text-anchor="middle" font-size="11.5" font-weight="800" fill="#ffffff">VERTICAL</text>
+          <!-- double flèche verticale -->
+          <line x1="804" y1="118" x2="804" y2="392" stroke="#ffffff" stroke-width="2.5" />
+          <polygon points="804,110 797,124 811,124" fill="#ffffff" />
+          <polygon points="804,400 797,386 811,386" fill="#ffffff" />
+          <text x="804" y="430" text-anchor="middle" font-size="11.5" font-weight="700" fill="#ffffff">Cumulonimbus</text>
+          <text x="804" y="448" text-anchor="middle" font-size="11.5" font-weight="700" fill="#ffffff">Nimbostratus</text>
+          <text x="804" y="252" text-anchor="middle" font-size="10.5" fill="#dfe6ee">traversent</text>
+          <text x="804" y="266" text-anchor="middle" font-size="10.5" fill="#dfe6ee">tous les</text>
+          <text x="804" y="280" text-anchor="middle" font-size="10.5" fill="#dfe6ee">étages</text>
+        </svg>
+        <p class="diagram-caption">
+          Plus la base est haute, plus le nuage est « cirro / alto » ; les deux nuages de
+          droite, eux, montent à travers tout.
+        </p>
+      </section>
+
+      <!-- ================= Détails par étage ================= -->
+      <section class="nuage-section">
+        <h2>Chaque étage en détail</h2>
+
+        <div id="etage-superieur" class="etage">
+          <div class="etage-badge b-haut">SUPÉRIEUR<span class="alt">&gt; 6000 m</span></div>
+          <div class="etage-body">
+            <h3>Étage supérieur — préfixe <em>cirro‑</em></h3>
+            <p>
+              Tout en haut (au-dessus d'environ 6000 m), où il fait très froid&nbsp;: ces
+              nuages sont faits de <strong>cristaux de glace</strong>, fins et élevés. Leur
+              apparition, surtout s'ils s'épaississent, <strong>annonce souvent l'arrivée
+              d'une perturbation</strong>. C'est la réponse de la question
+              <strong>A8V</strong>.
+            </p>
+            <ul class="cloud-list">
+              <li>Cirrus</li>
+              <li>Cirrocumulus</li>
+              <li>Cirrostratus</li>
+            </ul>
+          </div>
+        </div>
+
+        <div id="etage-moyen" class="etage">
+          <div class="etage-badge b-moyen">MOYEN<span class="alt">2000–6000 m</span></div>
+          <div class="etage-body">
+            <h3>Étage moyen — préfixe <em>alto‑</em></h3>
+            <p>
+              Entre 2000 et 6000 m environ. Un <strong>voile d'altostratus qui
+              s'épaissit</strong> signale généralement l'approche d'un front. C'est la réponse
+              de la question <strong>A9V</strong>.
+            </p>
+            <ul class="cloud-list">
+              <li>Altocumulus</li>
+              <li>Altostratus</li>
+            </ul>
+          </div>
+        </div>
+
+        <div id="etage-inferieur" class="etage">
+          <div class="etage-badge b-bas">INFÉRIEUR<span class="alt">0–2000 m</span></div>
+          <div class="etage-body">
+            <h3>Étage inférieur — de la surface à ~2000 m</h3>
+            <p>
+              De la surface jusqu'à environ 2000 m. C'est <strong>notre étage</strong>&nbsp;:
+              le <strong>cumulus de beau temps</strong>, marqueur d'ascendance thermique, naît
+              à la base de cette couche — c'est lui que le parapentiste cherche. C'est la
+              réponse de la question <strong>A10V</strong>.
+            </p>
+            <ul class="cloud-list">
+              <li>Stratus</li>
+              <li>Stratocumulus</li>
+              <li>Cumulus</li>
+            </ul>
+          </div>
+        </div>
+
+        <div id="developpement-vertical" class="etage">
+          <div class="etage-badge b-vertical">VERTICAL<span class="alt">plusieurs étages</span></div>
+          <div class="etage-body">
+            <h3>À grand développement vertical</h3>
+            <p>
+              Le <strong>cumulonimbus</strong> (nuage d'orage) et le
+              <strong>nimbostratus</strong> (pluie continue) ont un très grand développement
+              vertical&nbsp;: ils s'étendent sur <strong>plusieurs étages à la fois</strong>,
+              de la basse couche jusqu'à la haute altitude. Un cumulonimbus peut culminer à
+              plus de 10 000 m. C'est la réponse de la question <strong>A11V</strong>.
+            </p>
+            <ul class="cloud-list">
+              <li>Cumulonimbus</li>
+              <li>Nimbostratus</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= Cumulus de beau temps ================= -->
+      <section id="cumulus" class="nuage-section">
+        <h2>☀ Le cumulus de beau temps — l'ami du parapentiste</h2>
+        <p>
+          Le <strong>cumulus</strong> de beau temps marque le sommet d'une
+          <strong>ascendance thermique</strong>. Le sol réchauffé par le soleil chauffe l'air
+          au-dessus de lui&nbsp;; cet air, plus chaud donc plus léger, s'élève. En montant il
+          se refroidit jusqu'au point de rosée&nbsp;: l'humidité s'y condense et dessine la
+          <strong>base plate du cumulus</strong>. Sous ce nuage se trouve souvent une zone
+          montante exploitable.
+        </p>
+
+        <svg
+          class="diagram"
+          viewBox="0 0 880 380"
+          role="img"
+          aria-label="Schéma du cumulus thermique : le soleil chauffe le sol, une bulle d'air chaud monte, se condense et forme un cumulus à base plate, sous lequel un parapente s'enroule dans l'ascendance."
+        >
+          <rect x="0" y="0" width="880" height="320" fill="url(#skyGrad)" />
+          <rect x="0" y="320" width="880" height="60" fill="#5aa06a" />
+
+          <!-- Soleil -->
+          <circle cx="100" cy="74" r="30" fill="#ffd24d" />
+          <g stroke="#ffd24d" stroke-width="4" stroke-linecap="round">
+            <line x1="100" y1="20" x2="100" y2="36" />
+            <line x1="100" y1="112" x2="100" y2="128" />
+            <line x1="46" y1="74" x2="62" y2="74" />
+            <line x1="138" y1="74" x2="154" y2="74" />
+            <line x1="62" y1="36" x2="74" y2="48" />
+            <line x1="126" y1="100" x2="138" y2="112" />
+            <line x1="138" y1="36" x2="126" y2="48" />
+            <line x1="62" y1="112" x2="74" y2="100" />
+          </g>
+          <line x1="120" y1="96" x2="320" y2="300" stroke="#ffd24d" stroke-width="3" stroke-dasharray="3 6" opacity="0.8" />
+
+          <!-- Sol réchauffé -->
+          <rect x="280" y="320" width="160" height="10" fill="#8a5a2b" />
+          <text x="360" y="352" text-anchor="middle" font-size="13" fill="#fff" font-weight="600">
+            sol réchauffé
+          </text>
+
+          <!-- Bulle d'air chaud qui monte -->
+          <g stroke="#e76f51" stroke-width="3" fill="none" stroke-linecap="round">
+            <path d="M360,318 q-12,-30 0,-60 q12,-30 0,-60" />
+            <path d="M390,318 q12,-30 0,-60 q-12,-30 0,-60" />
+          </g>
+          <polygon points="360,150 352,168 368,168" fill="#e76f51" />
+          <polygon points="390,150 382,168 398,168" fill="#e76f51" />
+          <text x="375" y="250" text-anchor="middle" font-size="12.5" fill="#c44a30" font-weight="700">
+            air chaud
+          </text>
+          <text x="375" y="266" text-anchor="middle" font-size="12.5" fill="#c44a30" font-weight="700">
+            qui monte
+          </text>
+
+          <!-- Cumulus à base plate -->
+          <use href="#ic-cumulus" x="300" y="50" width="280" height="150" />
+          <text x="440" y="44" text-anchor="middle" font-size="13" font-weight="700" fill="#33475b">
+            base plate = sommet de l'ascendance
+          </text>
+
+          <!-- Parapente qui s'enroule -->
+          <g transform="translate(560,150)">
+            <path d="M-26,0 Q0,-18 26,0" fill="none" stroke="#1565c0" stroke-width="5" stroke-linecap="round" />
+            <line x1="-22" y1="2" x2="0" y2="26" stroke="#33475b" stroke-width="1.2" />
+            <line x1="22" y1="2" x2="0" y2="26" stroke="#33475b" stroke-width="1.2" />
+            <line x1="0" y1="-12" x2="0" y2="26" stroke="#33475b" stroke-width="1.2" />
+            <circle cx="0" cy="30" r="4" fill="#1f2933" />
+          </g>
+          <path d="M540,210 a40,18 0 1 0 80,0" fill="none" stroke="#1565c0" stroke-width="2" stroke-dasharray="4 5" />
+          <polygon points="540,210 548,204 549,216" fill="#1565c0" />
+          <text x="640" y="200" font-size="12.5" fill="#1565c0" font-weight="700">le parapente</text>
+          <text x="640" y="216" font-size="12.5" fill="#1565c0" font-weight="700">cherche l'ascendance</text>
+        </svg>
+        <p class="diagram-caption">
+          Pas de cumulus sans thermique sous-jacent — d'où son intérêt pour nous.
+        </p>
+
+        <div class="warn">
+          <span class="warn-label">Attention —</span> un cumulus n'est jamais « toujours
+          inoffensif »&nbsp;: un <strong>gros cumulus isolé</strong> peut entretenir une
+          ascendance plus forte que vos possibilités d'en sortir (aspiration vers la base) et
+          <strong>évoluer en cumulonimbus</strong>. C'est la réponse de la question
+          <strong>U65V</strong>.
+        </div>
+      </section>
+
+      <!-- ================= Cumulonimbus ================= -->
+      <section id="cumulonimbus" class="nuage-section">
+        <h2>⛈ Le cumulonimbus — danger absolu</h2>
+        <p>
+          Le cumulonimbus (le nuage d'orage) est <strong>le plus dangereux pour le vol
+          libre</strong>. Il engendre de violentes <strong>turbulences</strong>, il est le
+          siège d'<strong>ascendances si puissantes qu'elles peuvent aspirer l'aile</strong>
+          vers sa base (où l'on perd toute référence), et les <strong>rafales</strong> qu'il
+          provoque au sol rendent décollage et atterrissage très dangereux. On ne l'approche
+          <strong>jamais</strong> — il est dangereux <strong>à l'intérieur mais aussi à
+          plusieurs kilomètres alentour</strong>.
+        </p>
+
+        <svg
+          class="diagram"
+          viewBox="0 0 880 440"
+          role="img"
+          aria-label="Schéma du cumulonimbus : nuage immense à enclume avec base sombre, éclair, pluie, et front de rafales au sol. Zone de danger sur plusieurs kilomètres autour."
+        >
+          <rect x="0" y="0" width="880" height="380" fill="url(#skyGrad)" />
+          <rect x="0" y="380" width="880" height="60" fill="#5aa06a" />
+
+          <!-- Tour du cumulonimbus -->
+          <g fill="#eef3f8">
+            <circle cx="400" cy="320" r="56" />
+            <circle cx="470" cy="312" r="62" />
+            <circle cx="440" cy="252" r="72" />
+            <circle cx="412" cy="196" r="58" />
+            <circle cx="466" cy="176" r="56" />
+          </g>
+          <!-- Enclume -->
+          <ellipse cx="470" cy="128" rx="170" ry="34" fill="#f4f8fb" />
+          <path d="M620,118 q44,-2 70,10 q-40,8 -70,2 Z" fill="#f4f8fb" />
+          <text x="600" y="118" font-size="12.5" fill="#33475b" font-weight="700">enclume</text>
+
+          <!-- Base sombre -->
+          <ellipse cx="438" cy="372" rx="120" ry="22" fill="#5f6d7c" />
+          <text x="438" y="376" text-anchor="middle" font-size="12" fill="#fff" font-weight="600">base sombre</text>
+
+          <!-- Pluie -->
+          <g stroke="#2f6db5" stroke-width="2" stroke-linecap="round" opacity="0.8">
+            <line x1="370" y1="390" x2="362" y2="430" />
+            <line x1="400" y1="390" x2="392" y2="430" />
+            <line x1="430" y1="390" x2="422" y2="430" />
+            <line x1="460" y1="390" x2="452" y2="430" />
+            <line x1="490" y1="390" x2="482" y2="430" />
+          </g>
+
+          <!-- Éclair -->
+          <polygon points="436,300 410,360 432,360 408,418 470,344 444,344 466,300" fill="#ffd24d" stroke="#e0a800" stroke-width="1" />
+
+          <!-- Front de rafales au sol -->
+          <g stroke="#c0392b" stroke-width="3" fill="none" stroke-linecap="round">
+            <path d="M300,398 q-60,-4 -120,6" />
+            <path d="M576,398 q60,-4 120,6" />
+          </g>
+          <polygon points="180,404 196,396 194,412" fill="#c0392b" />
+          <polygon points="696,404 680,396 682,412" fill="#c0392b" />
+          <text x="120" y="430" font-size="12" fill="#c0392b" font-weight="700">rafales</text>
+          <text x="720" y="430" font-size="12" fill="#c0392b" font-weight="700">rafales</text>
+
+          <!-- Zone de danger -->
+          <ellipse cx="438" cy="398" rx="320" ry="30" fill="none" stroke="#c0392b" stroke-width="2" stroke-dasharray="8 7" opacity="0.7" />
+          <text x="438" y="36" text-anchor="middle" font-size="14" fill="#fff" font-weight="800">
+            On ne s'en approche JAMAIS — danger sur plusieurs km
+          </text>
+
+          <!-- Parapente qui fuit -->
+          <g transform="translate(786,150)">
+            <path d="M-20,0 Q0,-14 20,0" fill="none" stroke="#1565c0" stroke-width="4" stroke-linecap="round" />
+            <line x1="-16" y1="2" x2="0" y2="20" stroke="#33475b" stroke-width="1" />
+            <line x1="16" y1="2" x2="0" y2="20" stroke="#33475b" stroke-width="1" />
+            <circle cx="0" cy="24" r="3.5" fill="#1f2933" />
+          </g>
+          <line x1="760" y1="180" x2="700" y2="210" stroke="#1565c0" stroke-width="2" />
+          <polygon points="700,210 716,206 712,220" fill="#1565c0" />
+          <text x="724" y="170" text-anchor="middle" font-size="11.5" fill="#1565c0" font-weight="700">on s'éloigne</text>
+        </svg>
+        <p class="diagram-caption">
+          Reconnaissable à son enclume, sa base sombre, ses averses et son électricité.
+        </p>
+
+        <div class="warn">
+          <span class="warn-label">Questions A21V &amp; A22V —</span> le cumulonimbus est
+          dangereux <strong>à l'intérieur ET tout autour</strong> (rafales de front de rafale,
+          aspiration sous la base, grains), à cause de ses <strong>turbulences</strong>, de
+          ses <strong>ascendances aspirantes</strong> et des <strong>rafales au sol</strong>.
+        </div>
+      </section>
+
+      <!-- ================= Tableau récapitulatif ================= -->
+      <section id="recap" class="nuage-section">
+        <h2>Tableau récapitulatif : quel nuage dans quelle strate&nbsp;?</h2>
+        <div class="recap-wrap">
+          <table class="recap">
+            <thead>
+              <tr>
+                <th>Étage / famille</th>
+                <th>Altitude</th>
+                <th>Indice dans le nom</th>
+                <th>Nuages</th>
+                <th>Pour le parapente</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="fam">Supérieur</td>
+                <td>&gt; 6000 m</td>
+                <td><em>cirro‑</em> (glace)</td>
+                <td>Cirrus, Cirrocumulus, Cirrostratus</td>
+                <td>Annoncent souvent une perturbation</td>
+              </tr>
+              <tr>
+                <td class="fam">Moyen</td>
+                <td>2000 – 6000 m</td>
+                <td><em>alto‑</em></td>
+                <td>Altocumulus, Altostratus</td>
+                <td>Voile qui s'épaissit = front qui approche</td>
+              </tr>
+              <tr>
+                <td class="fam">Inférieur</td>
+                <td>0 – 2000 m</td>
+                <td>stratus / cumulus</td>
+                <td>Stratus, Stratocumulus, Cumulus</td>
+                <td>Le cumulus de beau temps = ascendance&nbsp;!</td>
+              </tr>
+              <tr>
+                <td class="fam">Développement vertical</td>
+                <td>de la base à &gt; 10 000 m</td>
+                <td><em>‑nimbus</em> / <em>nimbo‑</em> (pluie)</td>
+                <td>Cumulonimbus, Nimbostratus</td>
+                <td>Cumulonimbus = danger absolu, à fuir</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <p class="backlink"><a class="backlink" href="./index.html">← Revenir aux questions du QCM</a></p>
+    </main>
+
+    <footer class="footer">
+      <p>
+        Page pédagogique — contenu de révision pour le brevet FFVL. Données du QCM © FFVL —
+        source&nbsp;: <a href="https://qcm.ffvl.fr/" rel="noopener">qcm.ffvl.fr</a>.
+      </p>
+      <p><a href="./index.html">→ Toutes les questions du QCM</a></p>
+    </footer>
+  </body>
+</html>

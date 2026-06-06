@@ -32,7 +32,7 @@ async function main() {
 
   // 1. QCM site at the root. Only the web assets (skip README / scripts).
   const qcmSrc = path.join(ROOT, 'qcm-site');
-  for (const name of ['index.html', 'app.js', 'style.css']) {
+  for (const name of ['index.html', 'nuages.html', 'app.js', 'style.css', 'nuages.css']) {
     fs.copyFileSync(path.join(qcmSrc, name), path.join(OUT, name));
   }
   copyDir(path.join(qcmSrc, 'data'), path.join(OUT, 'data'));
