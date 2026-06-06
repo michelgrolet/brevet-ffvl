@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - claude/qcm-ffvl-scraper-2iy74
       - claude/meteo-scraper-map-69G8g
   workflow_dispatch:
 
