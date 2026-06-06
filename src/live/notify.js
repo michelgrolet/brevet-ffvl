@@ -3,15 +3,10 @@
 // can be enabled at once. Zero dependencies — uses Node 18's global fetch.
 //
 // Channels (env):
-//   TELEGRAM_BOT_TOKEN    Telegram bot token from @BotFather. With
-//   TELEGRAM_CHAT_ID      group/channel/person id(s), comma-separated, sends to
-//                         a whole group — everyone in it receives the alert.
-//                         Recipients just need Telegram + to be in the group;
-//                         no per-person key, and YOU set it all up. See README.
 //   WHATSAPP_RECIPIENTS   CallMeBot WhatsApp, free, no business account needed.
 //                         Format: "phone:apikey,phone:apikey". Each recipient
 //                         must message the CallMeBot number once for an apikey
-//                         (no groups) — see README.
+//                         (one-time consent required by WhatsApp) — see README.
 //   NTFY_TOPIC            ntfy.sh push topic (anyone subscribed sees it).
 //   NTFY_SERVER           ntfy server (default https://ntfy.sh)
 //   NOTIFY_WEBHOOK_URL    generic webhook — receives a JSON POST.
@@ -26,29 +21,6 @@ function whatsappRecipients() {
       return { phone: pair.slice(0, i).trim(), apikey: pair.slice(i + 1).trim() };
     })
     .filter((r) => r.phone && r.apikey);
-}
-
-function telegramChats() {
-  return (process.env.TELEGRAM_CHAT_ID || '')
-    .split(',').map((s) => s.trim()).filter(Boolean);
-}
-
-async function sendTelegram(text) {
-  const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chats = telegramChats();
-  if (!token || !chats.length) return;
-  await Promise.all(chats.map(async (chat_id) => {
-    try {
-      const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id, text, disable_web_page_preview: false }),
-      });
-      if (!res.ok) console.error(`notify: Telegram to ${chat_id} -> HTTP ${res.status}`);
-    } catch (err) {
-      console.error(`notify: Telegram to ${chat_id} failed:`, err.message);
-    }
-  }));
 }
 
 async function sendWhatsApp(text) {
@@ -101,15 +73,13 @@ async function sendWebhook(payload) {
 /** True if at least one channel is configured. */
 function isConfigured() {
   return Boolean(
-    (process.env.TELEGRAM_BOT_TOKEN && telegramChats().length)
-    || whatsappRecipients().length || process.env.NTFY_TOPIC || process.env.NOTIFY_WEBHOOK_URL,
+    whatsappRecipients().length || process.env.NTFY_TOPIC || process.env.NOTIFY_WEBHOOK_URL,
   );
 }
 
 async function dispatch(event, { pilot, link, title, text }) {
   const withLink = link ? `${text}\n${link}` : text;
   await Promise.all([
-    sendTelegram(withLink),
     sendWhatsApp(withLink),
     sendNtfy(title, text, link),
     sendWebhook({ event, pilot, link, text, at: new Date().toISOString() }),

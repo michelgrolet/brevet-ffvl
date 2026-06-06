@@ -5,8 +5,7 @@
 #
 # Après le 1er déploiement, renseigne dans l'onglet Environment du service :
 #   PILOT_NAME            ton nom affiché (ex: Michel)
-#   TELEGRAM_BOT_TOKEN    jeton du bot (créé via @BotFather — voir README §3)
-#   TELEGRAM_CHAT_ID      id du groupe Telegram (tout le monde du groupe reçoit)
+#   WHATSAPP_RECIPIENTS   numero:apikey  (clé obtenue via CallMeBot — voir README §3)
 #
 # L'URL publique du service (https://<nom>.onrender.com) est :
 #   - à mettre comme "serveur" dans XCTrack (sans https://) pour le livetracking
@@ -26,7 +25,5 @@ services:
       # À renseigner dans le dashboard (sync:false = non versionné, sécurisé).
       - key: PILOT_NAME
         sync: false
-      - key: TELEGRAM_BOT_TOKEN
-        sync: false
-      - key: TELEGRAM_CHAT_ID
+      - key: WHATSAPP_RECIPIENTS
         sync: false
