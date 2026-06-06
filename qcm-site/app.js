@@ -49,8 +49,13 @@ async function init() {
       if (expResp.ok) {
         const exp = await expResp.json();
         const byCode = exp.explanations || {};
+        // Encart de rappel partagé (les 3 angles), rattaché aux questions listées.
+        const memo = exp.angleMemo;
+        const memoCodes =
+          memo && Array.isArray(memo.codes) ? new Set(memo.codes) : null;
         for (const q of QUESTIONS) {
           if (byCode[q.code]) q.explanation = byCode[q.code];
+          if (memoCodes && memoCodes.has(q.code)) q.angleMemo = memo;
         }
       }
     } catch (_) {
@@ -176,12 +181,15 @@ function cardHtml(q, term, reveal) {
     })
     .join("");
 
-  const explanation = q.explanation
-    ? `<div class="explanation">` +
-      `<span class="exp-label">Explication</span>` +
-      `<p>${highlight(q.explanation, term)}</p>` +
-      `</div>`
-    : "";
+  const memo = memoHtml(q.angleMemo);
+  const explanation =
+    q.explanation || memo
+      ? `<div class="explanation">` +
+        `<span class="exp-label">Explication</span>` +
+        (q.explanation ? `<p>${highlight(q.explanation, term)}</p>` : "") +
+        memo +
+        `</div>`
+      : "";
 
   return (
     `<article class="qcard${reveal ? " reveal" : ""}">` +
@@ -217,6 +225,25 @@ function populateSelect(select, values) {
     opt.textContent = v;
     select.appendChild(opt);
   }
+}
+
+// Encart de rappel (ex. les 3 angles) rendu sous l'explication d'une question
+// qui y est rattachée. Tout le texte est échappé : aucun HTML n'est injecté.
+function memoHtml(memo) {
+  if (!memo || !Array.isArray(memo.items)) return "";
+  const items = memo.items
+    .map(
+      (it) =>
+        `<li><strong>${escapeHtml(it.name)}</strong> : ` +
+        `${escapeHtml(it.between)} — <em>${escapeHtml(it.role)}</em></li>`
+    )
+    .join("");
+  return (
+    `<div class="angle-memo">` +
+    `<span class="memo-label">${escapeHtml(memo.title)}</span>` +
+    `<ul class="memo-list">${items}</ul>` +
+    `</div>`
+  );
 }
 
 function escapeHtml(str) {

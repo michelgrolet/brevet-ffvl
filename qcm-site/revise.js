@@ -46,8 +46,15 @@ async function init() {
     try {
       const expResp = await fetch(EXPLANATIONS_URL);
       if (expResp.ok) {
-        const byCode = (await expResp.json()).explanations || {};
-        for (const q of QUESTIONS) if (byCode[q.code]) q.explanation = byCode[q.code];
+        const exp = await expResp.json();
+        const byCode = exp.explanations || {};
+        const memo = exp.angleMemo;
+        const memoCodes =
+          memo && Array.isArray(memo.codes) ? new Set(memo.codes) : null;
+        for (const q of QUESTIONS) {
+          if (byCode[q.code]) q.explanation = byCode[q.code];
+          if (memoCodes && memoCodes.has(q.code)) q.angleMemo = memo;
+        }
       }
     } catch (_) {
       /* explications indisponibles : on continue sans */
@@ -353,10 +360,15 @@ function renderCard() {
     })
     .join("");
 
-  const explanation = q.explanation
-    ? '<div class="explanation" id="r-explanation" hidden>' +
-      `<span class="exp-label">Explication</span><p>${escapeHtml(q.explanation)}</p></div>`
-    : "";
+  const memo = memoHtml(q.angleMemo);
+  const explanation =
+    q.explanation || memo
+      ? '<div class="explanation" id="r-explanation" hidden>' +
+        '<span class="exp-label">Explication</span>' +
+        (q.explanation ? `<p>${escapeHtml(q.explanation)}</p>` : "") +
+        memo +
+        "</div>"
+      : "";
 
   app.innerHTML =
     '<div class="card review">' +
@@ -523,6 +535,25 @@ function sortedLevels(levels) {
     if (ib === -1) return -1;
     return ia - ib;
   });
+}
+
+// Encart de rappel (ex. les 3 angles) rendu sous l'explication d'une carte qui
+// y est rattachée. Tout le texte est échappé : aucun HTML n'est injecté.
+function memoHtml(memo) {
+  if (!memo || !Array.isArray(memo.items)) return "";
+  const items = memo.items
+    .map(
+      (it) =>
+        `<li><strong>${escapeHtml(it.name)}</strong> : ` +
+        `${escapeHtml(it.between)} — <em>${escapeHtml(it.role)}</em></li>`
+    )
+    .join("");
+  return (
+    '<div class="angle-memo">' +
+    `<span class="memo-label">${escapeHtml(memo.title)}</span>` +
+    `<ul class="memo-list">${items}</ul>` +
+    "</div>"
+  );
 }
 
 function escapeHtml(str) {
