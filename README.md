@@ -154,21 +154,38 @@ Téléphone (XCTrack) ──LiveTrack24──▶ /track.php (ce serveur)
    hébergeur Node convient (Render, Fly.io, Railway, un VPS…). Lance simplement
    `node server.js` ; le port par défaut est `3000`.
 
-2. **Configure les notifications** (`.env`, voir [`.env.example`](.env.example)) :
+2. **Configure les notifications** (`.env`, voir [`.env.example`](.env.example)).
+   Deux façons de faire du WhatsApp :
+
+   **Option A — connexion par QR code (les destinataires ne font RIEN)** 🟢
+   Tu connectes **ton propre compte WhatsApp** une fois (comme WhatsApp Web), et
+   le serveur poste dans un **groupe** : ta copine et tes amis n'ont qu'à être
+   dans le groupe, aucune clé.
    - `PILOT_NAME` — ton nom affiché.
-   - `WHATSAPP_RECIPIENTS` — WhatsApp **gratuit** via
-     [CallMeBot](https://www.callmebot.com/blog/free-api-whatsapp-messages/).
-     **Chaque** destinataire (ta copine, des amis…) doit, **une seule fois**,
-     enregistrer le numéro **+34 644 51 95 23** et lui envoyer sur WhatsApp le
-     message exact **« I allow callmebot to send me messages »** ; il répond avec
-     une **`apikey`**. Tu mets ensuite `numero:apikey` (numéro avec indicatif pays
-     **sans le `+`**), séparés par des virgules pour plusieurs personnes :
-     `33612345678:123456,33698765432:654321`.
-     *(Cette autorisation unique est imposée par WhatsApp/Meta — impossible de
-     l'éviter pour du WhatsApp gratuit ; ensuite le destinataire ne fait plus
-     jamais rien.)*
-   - (option) `NTFY_TOPIC` pour une notif push libre, `NOTIFY_WEBHOOK_URL` pour
-     un webhook JSON générique.
+   - `WHATSAPP_QR=1` — active ce mode.
+   - Après déploiement, ouvre **`https://ton-host/whatsapp-setup`** et scanne le
+     QR depuis ton téléphone (*WhatsApp → Réglages → Appareils connectés →
+     Connecter un appareil*).
+   - Une fois connecté, la page liste tes **groupes** et leurs identifiants. Crée
+     un groupe avec les gens à prévenir, copie son id et mets-le dans
+     `WHATSAPP_GROUP_JID` (ex. `12036304@g.us`). Vide = ça t'écrit à toi.
+
+   > ⚠️ **À savoir.** Méthode **non-officielle** (lib type WhatsApp Web) → petit
+   > risque de blocage de ton compte. Et la session de connexion est stockée sur
+   > disque (`WHATSAPP_AUTH_DIR`, défaut `data/wa-auth`) : sur un hébergeur au
+   > disque éphémère (Render *free*) elle est effacée à chaque redéploiement → tu
+   > re-scannes le QR. Pour éviter ça : machine allumée en permanence (PC,
+   > Raspberry) ou disque persistant. La dépendance s'installe via `npm install`.
+
+   **Option B — CallMeBot (gratuit, mais une autorisation par personne)**
+   - `WHATSAPP_RECIPIENTS` — chaque destinataire envoie **une seule fois**
+     **« I allow callmebot to send me messages »** au **+34 644 51 95 23**
+     ([CallMeBot](https://www.callmebot.com/blog/free-api-whatsapp-messages/)),
+     reçoit une `apikey`, et tu mets `numero:apikey` (indicatif **sans `+`**,
+     virgules pour plusieurs). *Autorisation imposée par WhatsApp/Meta.*
+
+   *(Autres canaux, option : `NTFY_TOPIC` pour une notif push libre,
+   `NOTIFY_WEBHOOK_URL` pour un webhook JSON générique.)*
 
 3. **Configure XCTrack** : *Préférences → Livetracking* → activer le livetracking,
    choisir le protocole **LiveTrack24**, et mettre comme **serveur** l'hôte de ton
@@ -190,7 +207,8 @@ bancaire**. Le dépôt contient un blueprint [`render.yaml`](render.yaml) :
    Render lit `render.yaml` et crée le service (offre *free*).
 2. Dans le service → onglet **Environment**, renseigne :
    - `PILOT_NAME` = ton nom,
-   - `WHATSAPP_RECIPIENTS` = `numero:apikey` (clé CallMeBot, voir ci-dessus).
+   - pour le QR : `WHATSAPP_QR` = `1` puis (après scan) `WHATSAPP_GROUP_JID`,
+   - ou pour CallMeBot : `WHATSAPP_RECIPIENTS` = `numero:apikey`.
 3. Tu obtiens une URL `https://<nom>.onrender.com`. Mets `<nom>.onrender.com`
    (sans `https://`) comme **serveur LiveTrack24** dans XCTrack, et partage
    `https://<nom>.onrender.com/live`.
@@ -227,8 +245,10 @@ src/live/
   livetrack24.js   réception protocole LiveTrack24 (/track.php, /client.php),
                    détection décollage (vitesse/déplacement) et atterrissage
   store.js         vols + traces en mémoire (persistés dans data/live-sessions.json)
-  notify.js        canaux de notif : WhatsApp (CallMeBot), ntfy, webhook
+  notify.js        canaux de notif : WhatsApp (QR / CallMeBot), ntfy, webhook
+  whatsapp-qr.js   connexion WhatsApp par QR (Baileys), envoi vers un groupe
 public/live.html · live.js · live.css   page publique de suivi (Leaflet)
+public/whatsapp-setup.html              scan du QR + liste des groupes
 scripts/simulate-flight.js              simulateur de vol pour tester
 ```
 

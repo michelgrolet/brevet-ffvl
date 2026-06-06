@@ -5,7 +5,14 @@
 #
 # Après le 1er déploiement, renseigne dans l'onglet Environment du service :
 #   PILOT_NAME            ton nom affiché (ex: Michel)
-#   WHATSAPP_RECIPIENTS   numero:apikey  (clé obtenue via CallMeBot — voir README §3)
+#   WHATSAPP_QR=1         active la connexion WhatsApp par QR code
+#   WHATSAPP_GROUP_JID    id du groupe (visible sur /whatsapp-setup après le scan)
+# puis ouvre https://<nom>.onrender.com/whatsapp-setup pour scanner le QR.
+#
+# ⚠️ Disque éphémère sur l'offre free : la session WhatsApp est effacée à chaque
+# redéploiement → tu devras re-scanner le QR. Pour éviter ça : héberge sur une
+# machine allumée en permanence, ou ajoute un disque persistant Render (payant)
+# monté sur data/wa-auth. (Alternative sans QR : CallMeBot via WHATSAPP_RECIPIENTS.)
 #
 # L'URL publique du service (https://<nom>.onrender.com) est :
 #   - à mettre comme "serveur" dans XCTrack (sans https://) pour le livetracking
@@ -25,5 +32,7 @@ services:
       # À renseigner dans le dashboard (sync:false = non versionné, sécurisé).
       - key: PILOT_NAME
         sync: false
-      - key: WHATSAPP_RECIPIENTS
+      - key: WHATSAPP_QR
+        sync: false
+      - key: WHATSAPP_GROUP_JID
         sync: false

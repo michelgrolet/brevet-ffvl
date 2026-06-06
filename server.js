@@ -13,6 +13,7 @@ const path = require('path');
 
 const liveStore = require('./src/live/store');
 const livetrack = require('./src/live/livetrack24');
+const whatsappQr = require('./src/live/whatsapp-qr');
 
 const PORT = Number(process.env.PORT) || 3000;
 const DATA_SOURCE = (process.env.DATA_SOURCE || 'static').toLowerCase();
@@ -125,9 +126,19 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // Pretty path for the live page.
+  // WhatsApp QR-login setup: status + QR + list of groups to pick a target.
+  if (req.url.startsWith('/api/whatsapp-qr')) {
+    res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
+    res.end(JSON.stringify(whatsappQr.status()));
+    return;
+  }
+
+  // Pretty paths.
   if (req.url === '/live' || req.url.split('?')[0] === '/live') {
     req.url = '/live.html' + (req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '');
+  }
+  if (req.url === '/whatsapp-setup' || req.url.split('?')[0] === '/whatsapp-setup') {
+    req.url = '/whatsapp-setup.html';
   }
 
   if (req.url.startsWith('/api/balises')) {
@@ -154,8 +165,10 @@ const server = http.createServer(async (req, res) => {
 });
 
 livetrack.startLandingSweep();
+whatsappQr.init();   // no-op unless WHATSAPP_QR=1
 
 server.listen(PORT, () => {
   console.log(`brevet-ffvl running on http://localhost:${PORT}  (DATA_SOURCE=${DATA_SOURCE})`);
   console.log(`  live tracking ingest: POST/GET /track.php  ·  public page: /live`);
+  if (whatsappQr.isEnabled()) console.log('  WhatsApp QR login: open /whatsapp-setup to scan & link');
 });
