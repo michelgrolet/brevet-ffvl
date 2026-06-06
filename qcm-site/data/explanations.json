@@ -4,6 +4,20 @@
     "count": 174,
     "note": "Explications pédagogiques rédigées pour le brevet initial parapente FFVL. La bonne réponse de chaque question vient du QCM officiel FFVL ; l'explication justifie pourquoi elle est correcte et pourquoi les autres sont fausses."
   },
+  "nuages_link": {
+    "page": "nuages.html",
+    "label": "Page pédagogique : comprendre les nuages et leurs étages",
+    "codes": {
+      "A3V": "composition",
+      "A8V": "etage-superieur",
+      "A9V": "etage-moyen",
+      "A10V": "etage-inferieur",
+      "A11V": "developpement-vertical",
+      "A21V": "cumulonimbus",
+      "A22V": "cumulonimbus",
+      "U65V": "cumulus"
+    }
+  },
   "explanations": {
     "A3V": "Un nuage est constitué d'eau à l'état condensé : des gouttelettes d'eau liquide en suspension et, plus haut où il fait froid, des cristaux de glace. La vapeur d'eau, elle, est un gaz invisible : tant que l'eau reste gazeuse, il n'y a pas de nuage. Le nuage devient visible précisément quand cette vapeur se condense (au point de rosée) en gouttelettes ou se solidifie en cristaux.",
     "A8V": "Le préfixe « cirro » désigne les nuages de l'étage supérieur (au-dessus d'environ 6000 m), formés de cristaux de glace. Cirrus, cirrocumulus et cirrostratus sont fins et très élevés ; leur apparition annonce souvent l'arrivée d'une perturbation.",
