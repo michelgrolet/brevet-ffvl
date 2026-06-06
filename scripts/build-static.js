@@ -32,20 +32,23 @@ async function main() {
   fs.mkdirSync(OUT, { recursive: true });
 
   // 1. QCM site at the root. Only the web assets (skip README / scripts).
-  //    app.js/style.css get a content-hash query in index.html so browsers
-  //    fetch the new version as soon as the file changes (GitHub Pages caches
-  //    assets for 10 min, which otherwise serves stale JS after a deploy).
+  //    Each HTML page references its JS/CSS with a content-hash query so
+  //    browsers fetch the new version as soon as a file changes (GitHub Pages
+  //    caches assets for 10 min, which otherwise serves stale JS after deploy).
   const qcmSrc = path.join(ROOT, 'qcm-site');
   const shortHash = (buf) => crypto.createHash('sha1').update(buf).digest('hex').slice(0, 8);
-  const appJs = fs.readFileSync(path.join(qcmSrc, 'app.js'));
-  const css = fs.readFileSync(path.join(qcmSrc, 'style.css'));
-  fs.writeFileSync(path.join(OUT, 'app.js'), appJs);
-  fs.writeFileSync(path.join(OUT, 'style.css'), css);
-  const indexHtml = fs
-    .readFileSync(path.join(qcmSrc, 'index.html'), 'utf8')
-    .replace('./style.css', `./style.css?v=${shortHash(css)}`)
-    .replace('./app.js', `./app.js?v=${shortHash(appJs)}`);
-  fs.writeFileSync(path.join(OUT, 'index.html'), indexHtml);
+  // Emit an HTML page, copying its referenced assets and appending ?v=<hash>.
+  const emitPage = (htmlName, assets) => {
+    let html = fs.readFileSync(path.join(qcmSrc, htmlName), 'utf8');
+    for (const asset of assets) {
+      const buf = fs.readFileSync(path.join(qcmSrc, asset));
+      fs.writeFileSync(path.join(OUT, asset), buf);
+      html = html.split(`./${asset}`).join(`./${asset}?v=${shortHash(buf)}`);
+    }
+    fs.writeFileSync(path.join(OUT, htmlName), html);
+  };
+  emitPage('index.html', ['style.css', 'app.js']);
+  emitPage('revise.html', ['style.css', 'revise.css', 'revise.js']);
   copyDir(path.join(qcmSrc, 'data'), path.join(OUT, 'data'));
 
   // 2. Balise map under /balise/. The frontend uses relative asset paths and

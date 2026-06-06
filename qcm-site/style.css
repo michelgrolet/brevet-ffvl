@@ -40,6 +40,26 @@ body {
   margin: 0 auto;
   padding: 1.4rem 1rem;
 }
+.topbar-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.topbar-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  opacity: 0.95;
+  white-space: nowrap;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+}
+.topbar-link:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
 .topbar h1 {
   margin: 0;
   font-size: 1.6rem;
