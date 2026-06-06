@@ -24,8 +24,13 @@
 //                        "12036304@g.us". Open /whatsapp-setup after linking to
 //                        list your groups and their ids. If empty, sends to
 //                        yourself (your own number).
+//
+// On an ephemeral-disk host (Render free), set UPSTASH_REDIS_REST_URL/TOKEN to
+// keep the session across redeploys (see wa-auth-upstash.js) — otherwise the
+// login lives on disk and you'd re-scan the QR after each deploy.
 
 const path = require('path');
+const upstash = require('./wa-auth-upstash');
 
 const ENABLED = /^(1|true|yes)$/i.test(process.env.WHATSAPP_QR || '');
 const AUTH_DIR = process.env.WHATSAPP_AUTH_DIR
@@ -51,6 +56,7 @@ function status() {
     qr: currentQR,
     groups,
     error: lastError,
+    persistence: upstash.isConfigured() ? 'upstash' : 'disk',
   };
 }
 
@@ -94,7 +100,15 @@ async function connect() {
   const makeWASocket = b.default || b.makeWASocket;
   const { useMultiFileAuthState, fetchLatestBaileysVersion, DisconnectReason } = b;
 
-  const { state, saveCreds } = await useMultiFileAuthState(AUTH_DIR);
+  // Persist the login in Upstash if configured (survives ephemeral disks),
+  // otherwise fall back to a local folder.
+  let state, saveCreds;
+  if (upstash.isConfigured()) {
+    console.log('whatsapp-qr: using Upstash to persist the session');
+    ({ state, saveCreds } = await upstash.useUpstashAuthState(b));
+  } else {
+    ({ state, saveCreds } = await useMultiFileAuthState(AUTH_DIR));
+  }
   let version;
   try { ({ version } = await fetchLatestBaileysVersion()); } catch { /* use default */ }
 
