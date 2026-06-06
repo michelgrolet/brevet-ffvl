@@ -1,9 +1,11 @@
 "use strict";
 
-// Mode révision (répétition espacée) du QCM FFVL.
-// Étape 1 : choix de l'examen (activité + niveau) si aucun état n'existe en
-// localStorage, ou import d'une sauvegarde JSON. Le modèle de données est posé
-// pour les étapes suivantes (révision carte par carte + algorithme SRS).
+// Mode révision (apprentissage intensif) du QCM FFVL.
+// On choisit un examen (activité + niveau) — ou on importe une sauvegarde — puis
+// on révise carte par carte. Le deck contient TOUJOURS toutes les questions de
+// l'examen : une session les fait toutes défiler, des moins maîtrisées (début)
+// aux sues par cœur (repoussées à la fin). La progression (champs SRS par carte)
+// est mémorisée en localStorage, format rétro-compatible avec les sauvegardes v1.
 
 const DATA_URL = "./data/qcm_ffvl.json";
 const EXPLANATIONS_URL = "./data/explanations.json";
@@ -12,10 +14,16 @@ const EXPLANATIONS_URL = "./data/explanations.json";
 // faire évoluer le format sans casser d'anciennes sauvegardes.
 const STATE_KEY = "qcm-ffvl:srs:v1";
 const SCHEMA = 1;
-// Nombre maximum de cartes proposées par session de révision.
-const SESSION_LIMIT = 20;
-// Millisecondes par jour, pour les échéances SRS.
+// Millisecondes par jour, pour les échéances SRS (mémoire long terme des cartes).
 const DAY_MS = 86400000;
+
+// Apprentissage intensif : une session parcourt TOUT le deck, ordonné des
+// cartes les moins maîtrisées (au début) aux cartes sues par cœur (repoussées
+// à la fin). Quand on note une carte, on la réinjecte plus loin dans la file
+// selon la note : « Pas » revient très vite, « Bof » un peu plus loin, « Bien »
+// sort du passage (carte acquise). Décalages = nombre de cartes avant la
+// prochaine réapparition dans le tour en cours.
+const REQUEUE_OFFSET = { pas: 2, bof: 8 };
 
 // Ordre d'affichage des niveaux (du plus simple au plus avancé).
 const LEVEL_ORDER = [
@@ -224,11 +232,10 @@ function renderOnboarding() {
 // ---------- Écran 2 : accueil du deck (résumé) ----------
 
 function renderDeckHome() {
-  const codes = Object.keys(state.cards);
+  const codes = Object.keys(state.cards).filter((c) => BY_CODE[c]);
   const total = codes.length;
-  const now = Date.now();
-  const due = codes.filter((c) => (state.cards[c].due || 0) <= now).length;
   const fresh = codes.filter((c) => (state.cards[c].reps || 0) === 0).length;
+  const mastered = codes.filter((c) => state.cards[c].lastGrade === "bien").length;
 
   app.innerHTML =
     '<div class="card deck-home">' +
@@ -240,16 +247,19 @@ function renderDeckHome() {
     "<h2>Ton deck est prêt</h2>" +
     '<div class="stats">' +
     `<div class="stat"><span class="stat-num">${total}</span><span class="stat-lbl">cartes</span></div>` +
-    `<div class="stat"><span class="stat-num">${due}</span><span class="stat-lbl">à réviser</span></div>` +
     `<div class="stat"><span class="stat-num">${fresh}</span><span class="stat-lbl">jamais vues</span></div>` +
+    `<div class="stat"><span class="stat-num">${mastered}</span><span class="stat-lbl">sues par cœur</span></div>` +
     "</div>" +
-    `<button class="btn btn-primary" id="d-start" type="button"${due === 0 ? " disabled" : ""}>` +
-    (due === 0
-      ? "Rien à réviser pour l'instant"
-      : `Réviser ${Math.min(due, SESSION_LIMIT)} carte${Math.min(due, SESSION_LIMIT) > 1 ? "s" : ""}`) +
+    `<button class="btn btn-primary" id="d-start" type="button"${total === 0 ? " disabled" : ""}>` +
+    (total === 0
+      ? "Deck vide"
+      : `Réviser le deck (${total} carte${total > 1 ? "s" : ""})`) +
     "</button>" +
-    '<p class="muted next-step">Tu révèles la réponse, puis tu t\'auto-évalues : ' +
-    "<b>Pas</b> / <b>Bof</b> / <b>Bien</b>. La carte est reprogrammée en conséquence.</p>" +
+    '<p class="muted next-step">Tout le deck défile, des questions les moins ' +
+    "maîtrisées d'abord. Tu révèles la réponse, puis tu t'auto-évalues : " +
+    "<b>Pas</b> (revient tout de suite) / <b>Bof</b> (revient bientôt) / " +
+    "<b>Bien</b> (repoussée à la fin). On boucle sur les questions faibles " +
+    "jusqu'à ce qu'elles passent en « Bien ».</p>" +
     '<div class="deck-actions">' +
     '<button class="btn" id="d-export" type="button">Exporter ma progression</button>' +
     '<input type="file" id="d-import" accept="application/json,.json" hidden />' +
@@ -287,21 +297,40 @@ function renderDeckHome() {
 
 // ---------- Écran 3 : session de révision ----------
 
-// Codes des cartes dues (échéance passée), de la plus en retard à la moins.
-function dueCodes() {
-  const now = Date.now();
+// « Force » d'une carte : plus c'est élevé, mieux elle est connue. Dérivée des
+// champs SRS déjà présents dans l'état (rétro-compatible avec les sauvegardes v1).
+function strength(card) {
+  if (!card || (card.reps || 0) === 0) return 0; // jamais vue → à voir tôt
+  let s = (card.intervalDays || 0) + (card.reps || 0) * 0.5 - (card.lapses || 0);
+  if (card.lastGrade === "pas") s -= 5;
+  else if (card.lastGrade === "bof") s -= 1;
+  else if (card.lastGrade === "bien") s += 2;
+  return s;
+}
+
+// Tout le deck, ordonné des cartes les moins maîtrisées (début) aux mieux
+// connues (fin). Léger aléa pour varier l'ordre à force égale entre deux passages.
+function orderedDeck() {
   return Object.keys(state.cards)
-    .filter((c) => BY_CODE[c] && (state.cards[c].due || 0) <= now)
-    .sort((a, b) => (state.cards[a].due || 0) - (state.cards[b].due || 0));
+    .filter((c) => BY_CODE[c])
+    .map((c) => ({ c, s: strength(state.cards[c]), r: Math.random() }))
+    .sort((a, b) => a.s - b.s || a.r - b.r)
+    .map((x) => x.c);
 }
 
 function startSession() {
-  const due = dueCodes();
-  if (due.length === 0) {
+  const queue = orderedDeck();
+  if (queue.length === 0) {
     renderDeckHome();
     return;
   }
-  session = { queue: due.slice(0, SESSION_LIMIT), grades: { pas: 0, bof: 0, bien: 0 }, reviewed: 0 };
+  session = {
+    queue,
+    grades: { pas: 0, bof: 0, bien: 0 },
+    reviewed: 0,
+    mastered: 0,
+    total: queue.length,
+  };
   renderCard();
 }
 
@@ -326,11 +355,11 @@ function schedule(card, grade) {
   return { ...card, ease, reps, lapses, intervalDays, lastGrade: grade, due: now + intervalDays * DAY_MS };
 }
 
-// Aperçu du délai avant réapparition, affiché sur les boutons de notation.
-function previewLabel(card, grade) {
-  if (grade === "pas") return "< 1 min";
-  const next = schedule(card, grade);
-  return next.intervalDays <= 1 ? "1 j" : next.intervalDays + " j";
+// Aperçu de la prochaine réapparition dans ce passage, sur les boutons.
+function previewLabel(grade) {
+  if (grade === "pas") return "tout de suite";
+  if (grade === "bof") return "bientôt";
+  return "fin du deck";
 }
 
 function renderCard() {
@@ -340,7 +369,6 @@ function renderCard() {
   }
   const code = session.queue[0];
   const q = BY_CODE[code];
-  const card = state.cards[code];
 
   const answers = q.answers
     .map((a) => {
@@ -362,7 +390,7 @@ function renderCard() {
     '<div class="card review">' +
     '<div class="review-top">' +
     `<span class="deck-badge">${escapeHtml(state.deck.activity)} · ${escapeHtml(state.deck.level)}</span>` +
-    `<span class="review-progress">${session.queue.length} en attente</span>` +
+    `<span class="review-progress">${session.queue.length} en attente · ${session.mastered}/${session.total} sues</span>` +
     "</div>" +
     `<p class="code-line"><span class="code">${escapeHtml(code)}</span>` +
     q.categories.map((c) => `<span class="tag cat">${escapeHtml(c)}</span>`).join("") +
@@ -374,9 +402,9 @@ function renderCard() {
     '<button class="btn btn-primary" id="r-reveal" type="button">Afficher la réponse <small>(Espace)</small></button>' +
     "</div>" +
     '<div class="grade-buttons" id="r-grades" hidden>' +
-    `<button class="btn grade-pas" data-g="pas" type="button">Pas<small>${previewLabel(card, "pas")}</small></button>` +
-    `<button class="btn grade-bof" data-g="bof" type="button">Bof<small>${previewLabel(card, "bof")}</small></button>` +
-    `<button class="btn grade-bien" data-g="bien" type="button">Bien<small>${previewLabel(card, "bien")}</small></button>` +
+    `<button class="btn grade-pas" data-g="pas" type="button">Pas<small>${previewLabel("pas")}</small></button>` +
+    `<button class="btn grade-bof" data-g="bof" type="button">Bof<small>${previewLabel("bof")}</small></button>` +
+    `<button class="btn grade-bien" data-g="bien" type="button">Bien<small>${previewLabel("bien")}</small></button>` +
     "</div>" +
     '<div class="review-foot"><button class="btn-link" id="r-quit" type="button">Terminer la session</button></div>' +
     "</div>";
@@ -403,31 +431,44 @@ function gradeCard(grade) {
   const ans = document.getElementById("r-answers");
   if (ans && !ans.classList.contains("revealed")) return; // noter après révélation
   const code = session.queue.shift();
-  state.cards[code] = schedule(state.cards[code], grade);
+  state.cards[code] = schedule(state.cards[code], grade); // progression long terme
   session.grades[grade] = (session.grades[grade] || 0) + 1;
   session.reviewed += 1;
   saveState();
-  if (grade === "pas") session.queue.push(code); // revue dans la même session
+  // Réinjection intensive dans le tour en cours :
+  //  - « Bien » : carte acquise, repoussée à la fin (elle sort de la file) ;
+  //  - « Pas »/« Bof » : remise quelques cartes plus loin pour repasser vite.
+  if (grade === "bien") {
+    session.mastered += 1;
+  } else {
+    const offset = REQUEUE_OFFSET[grade] || 4;
+    session.queue.splice(Math.min(offset, session.queue.length), 0, code);
+  }
   renderCard();
 }
 
 function endSession() {
   const g = session ? session.grades : { pas: 0, bof: 0, bien: 0 };
   const reviewed = session ? session.reviewed : 0;
+  const remaining = session ? session.queue.length : 0;
+  const completed = remaining === 0;
   session = null;
-  const remaining = dueCodes().length;
   app.innerHTML =
     '<div class="card review-done">' +
-    "<h2>Session terminée 🎉</h2>" +
-    `<p class="muted">${reviewed} révision${reviewed > 1 ? "s" : ""} effectuée${reviewed > 1 ? "s" : ""}.</p>` +
+    (completed ? "<h2>Tout le deck est passé 🎉</h2>" : "<h2>Passage en pause ⏸️</h2>") +
+    `<p class="muted">${reviewed} révision${reviewed > 1 ? "s" : ""} effectuée${reviewed > 1 ? "s" : ""}` +
+    (remaining > 0
+      ? `, ${remaining} carte${remaining > 1 ? "s" : ""} encore en attente.`
+      : ".") +
+    "</p>" +
     '<div class="stats">' +
     `<div class="stat"><span class="stat-num">${g.bien}</span><span class="stat-lbl">Bien</span></div>` +
     `<div class="stat"><span class="stat-num">${g.bof}</span><span class="stat-lbl">Bof</span></div>` +
     `<div class="stat"><span class="stat-num">${g.pas}</span><span class="stat-lbl">Pas</span></div>` +
     "</div>" +
-    (remaining > 0
-      ? `<button class="btn btn-primary" id="s-again" type="button">Continuer (${Math.min(remaining, SESSION_LIMIT)})</button>`
-      : '<p class="muted">Plus aucune carte due pour le moment. Reviens plus tard !</p>') +
+    `<button class="btn btn-primary" id="s-again" type="button">${
+      completed ? "Refaire un passage" : "Continuer le deck"
+    }</button>` +
     '<div class="deck-actions"><button class="btn" id="s-home" type="button">Retour au deck</button></div>' +
     "</div>";
   const again = document.getElementById("s-again");
