@@ -4,6 +4,28 @@
     "count": 174,
     "note": "Explications pédagogiques rédigées pour le brevet initial parapente FFVL. La bonne réponse de chaque question vient du QCM officiel FFVL ; l'explication justifie pourquoi elle est correcte et pourquoi les autres sont fausses."
   },
+  "angleMemo": {
+    "note": "Encart de rappel affiché sous l'explication des questions de définition d'angle (brevet initial), pour distinguer les trois angles souvent confondus.",
+    "title": "Les 3 angles à ne pas confondre",
+    "codes": ["E50V", "E51V", "E52V", "E54V", "G19V"],
+    "items": [
+      {
+        "name": "Angle de plané",
+        "between": "entre la trajectoire et l'horizontale",
+        "role": "définit la finesse et la performance de descente"
+      },
+      {
+        "name": "Angle d'incidence",
+        "between": "entre la corde de l'aile et la trajectoire (le vent relatif)",
+        "role": "gère la portance et le risque de décrochage"
+      },
+      {
+        "name": "Angle d'assiette",
+        "between": "entre la corde de l'aile et l'horizontale",
+        "role": "définit l'attitude visuelle de l'aile par rapport au paysage"
+      }
+    ]
+  },
   "nuages_link": {
     "page": "nuages.html",
     "label": "Page pédagogique : comprendre les nuages et leurs étages",
