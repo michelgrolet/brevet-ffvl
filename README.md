@@ -154,14 +154,30 @@ Téléphone (XCTrack) ──LiveTrack24──▶ /track.php (ce serveur)
    hébergeur Node convient (Render, Fly.io, Railway, un VPS…). Lance simplement
    `node server.js` ; le port par défaut est `3000`.
 
-2. **Configure les notifications** (`.env`, voir [`.env.example`](.env.example)) :
+2. **Configure les notifications** (`.env`, voir [`.env.example`](.env.example)).
+   Plusieurs canaux possibles, combinables :
+
+   **🟢 Recommandé — groupe Telegram** (tu configures tout toi-même, tout le
+   monde du groupe reçoit, gratuit) :
    - `PILOT_NAME` — ton nom affiché.
-   - `WHATSAPP_RECIPIENTS` — WhatsApp **gratuit** via [CallMeBot](https://www.callmebot.com/blog/free-api-whatsapp-messages/).
-     Chaque destinataire envoie une fois **« I allow callmebot to send me messages »**
-     au **+34 644 51 95 23**, reçoit une `apikey`, et tu mets `numero:apikey`
-     (séparés par des virgules pour plusieurs personnes).
-   - (option) `NTFY_TOPIC` pour une notif push libre, `NOTIFY_WEBHOOK_URL` pour
-     un webhook JSON générique.
+   - `TELEGRAM_BOT_TOKEN` — créé en 2 min : sur Telegram, écris à
+     [@BotFather](https://t.me/BotFather) → `/newbot` → il te donne un **token**.
+   - `TELEGRAM_CHAT_ID` — l'id du groupe : crée un groupe Telegram, **ajoute ton
+     bot** dedans (et les gens à prévenir : ta copine, des amis…), envoie un
+     message dans le groupe, puis ouvre
+     `https://api.telegram.org/bot<TON_TOKEN>/getUpdates` et copie le
+     `chat.id` (un nombre négatif pour un groupe, ex. `-1001234567890`). Astuce :
+     ajouter [@myidbot](https://t.me/myidbot) au groupe et taper `/getgroupid`.
+     Les destinataires n'ont **rien** à configurer : juste avoir Telegram et être
+     dans le groupe.
+
+   **Autres canaux** (option) :
+   - `WHATSAPP_RECIPIENTS` — WhatsApp via [CallMeBot](https://www.callmebot.com/blog/free-api-whatsapp-messages/),
+     **gratuit mais sans groupe** : *chaque* destinataire doit envoyer une fois
+     **« I allow callmebot to send me messages »** au **+34 644 51 95 23**, récupère
+     une `apikey`, et tu mets `numero:apikey` (virgules pour plusieurs personnes).
+   - `NTFY_TOPIC` pour une notif push libre, `NOTIFY_WEBHOOK_URL` pour un webhook
+     JSON générique.
 
 3. **Configure XCTrack** : *Préférences → Livetracking* → activer le livetracking,
    choisir le protocole **LiveTrack24**, et mettre comme **serveur** l'hôte de ton
@@ -183,7 +199,7 @@ bancaire**. Le dépôt contient un blueprint [`render.yaml`](render.yaml) :
    Render lit `render.yaml` et crée le service (offre *free*).
 2. Dans le service → onglet **Environment**, renseigne :
    - `PILOT_NAME` = ton nom,
-   - `WHATSAPP_RECIPIENTS` = `numero:apikey` (clé CallMeBot, voir ci-dessus).
+   - `TELEGRAM_BOT_TOKEN` et `TELEGRAM_CHAT_ID` (groupe Telegram, voir ci-dessus).
 3. Tu obtiens une URL `https://<nom>.onrender.com`. Mets `<nom>.onrender.com`
    (sans `https://`) comme **serveur LiveTrack24** dans XCTrack, et partage
    `https://<nom>.onrender.com/live`.
@@ -220,7 +236,7 @@ src/live/
   livetrack24.js   réception protocole LiveTrack24 (/track.php, /client.php),
                    détection décollage (vitesse/déplacement) et atterrissage
   store.js         vols + traces en mémoire (persistés dans data/live-sessions.json)
-  notify.js        canaux de notif : WhatsApp (CallMeBot), ntfy, webhook
+  notify.js        canaux de notif : Telegram (groupe), WhatsApp, ntfy, webhook
 public/live.html · live.js · live.css   page publique de suivi (Leaflet)
 scripts/simulate-flight.js              simulateur de vol pour tester
 ```
