@@ -6,6 +6,8 @@
 const DATA_URL = "./data/qcm_ffvl.json";
 // Explications pédagogiques (brevet initial parapente), indexées par code question.
 const EXPLANATIONS_URL = "./data/explanations.json";
+// Clé localStorage pour mémoriser les derniers filtres sélectionnés.
+const FILTERS_KEY = "qcm-ffvl:filters";
 
 // Ordre d'affichage des niveaux (du plus simple au plus avancé) + treuil.
 const LEVEL_ORDER = [
@@ -72,6 +74,10 @@ async function init() {
     unique(QUESTIONS.flatMap((q) => q.categories)).sort((a, b) => a.localeCompare(b, "fr")),
   );
 
+  // Restaure les derniers filtres mémorisés (après remplissage des listes,
+  // pour que les valeurs sauvegardées correspondent à des options existantes).
+  restoreFilters();
+
   for (const el of [els.search, els.activity, els.level, els.category, els.reveal]) {
     el.addEventListener("input", render);
   }
@@ -87,7 +93,43 @@ async function init() {
   render();
 }
 
+// Mémorise l'état courant des filtres dans le localStorage.
+function saveFilters() {
+  try {
+    localStorage.setItem(
+      FILTERS_KEY,
+      JSON.stringify({
+        search: els.search.value,
+        activity: els.activity.value,
+        level: els.level.value,
+        category: els.category.value,
+        reveal: els.reveal.checked,
+      }),
+    );
+  } catch (_) {
+    /* localStorage indisponible (navigation privée, quota) : on ignore */
+  }
+}
+
+// Restaure les filtres mémorisés. Une valeur dont l'option n'existe plus est
+// ignorée par le <select> (il reste sur « Tous »), donc sans danger.
+function restoreFilters() {
+  let saved = null;
+  try {
+    saved = JSON.parse(localStorage.getItem(FILTERS_KEY) || "null");
+  } catch (_) {
+    saved = null;
+  }
+  if (!saved || typeof saved !== "object") return;
+  if (typeof saved.search === "string") els.search.value = saved.search;
+  if (typeof saved.activity === "string") els.activity.value = saved.activity;
+  if (typeof saved.level === "string") els.level.value = saved.level;
+  if (typeof saved.category === "string") els.category.value = saved.category;
+  if (typeof saved.reveal === "boolean") els.reveal.checked = saved.reveal;
+}
+
 function render() {
+  saveFilters();
   const term = els.search.value.trim().toLowerCase();
   const activity = els.activity.value;
   const level = els.level.value;
