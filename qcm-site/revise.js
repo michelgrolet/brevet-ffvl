@@ -235,7 +235,9 @@ function renderDeckHome() {
   const codes = Object.keys(state.cards).filter((c) => BY_CODE[c]);
   const total = codes.length;
   const fresh = codes.filter((c) => (state.cards[c].reps || 0) === 0).length;
-  const mastered = codes.filter((c) => state.cards[c].lastGrade === "bien").length;
+  const mastered = codes.filter(
+    (c) => state.cards[c].lastGrade === "bien" || state.cards[c].lastGrade === "sur",
+  ).length;
 
   app.innerHTML =
     '<div class="card deck-home">' +
@@ -258,8 +260,9 @@ function renderDeckHome() {
     '<p class="muted next-step">Tout le deck défile, des questions les moins ' +
     "maîtrisées d'abord. Tu révèles la réponse, puis tu t'auto-évalues : " +
     "<b>Pas</b> (revient tout de suite) / <b>Bof</b> (revient bientôt) / " +
-    "<b>Bien</b> (repoussée à la fin). On boucle sur les questions faibles " +
-    "jusqu'à ce qu'elles passent en « Bien ».</p>" +
+    "<b>Bien</b> (repoussée à la fin) / <b>★ Par cœur</b> (acquise, espacée " +
+    "longtemps). On boucle sur les questions faibles jusqu'à ce qu'elles " +
+    "passent en « Bien » ou « Par cœur ».</p>" +
     '<div class="deck-actions">' +
     '<button class="btn" id="d-export" type="button">Exporter ma progression</button>' +
     '<input type="file" id="d-import" accept="application/json,.json" hidden />' +
@@ -318,7 +321,7 @@ function masteryLevel(card) {
   if (reps === 0) return { label: "Nouvelle", cls: "m-new", icon: "•" };
   if (last === "pas") return { label: "Fragile", cls: "m-weak", icon: "✕" };
   if (last === "bof") return { label: "À consolider", cls: "m-mid", icon: "~" };
-  if ((card.intervalDays || 0) >= 7 || reps >= 4)
+  if (last === "sur" || (card.intervalDays || 0) >= 7 || reps >= 4)
     return { label: "Sue par cœur", cls: "m-top", icon: "★" };
   return { label: "Bien sue", cls: "m-good", icon: "✓" };
 }
@@ -327,7 +330,7 @@ function masteryLevel(card) {
 function masteryTitle(card) {
   const reps = (card && card.reps) || 0;
   if (reps === 0) return "Jamais révisée";
-  const labels = { pas: "Pas", bof: "Bof", bien: "Bien" };
+  const labels = { pas: "Pas", bof: "Bof", bien: "Bien", sur: "Par cœur" };
   const parts = [`${reps} révision${reps > 1 ? "s" : ""}`];
   const lapses = (card && card.lapses) || 0;
   if (lapses > 0) parts.push(`${lapses} oubli${lapses > 1 ? "s" : ""}`);
@@ -353,7 +356,7 @@ function startSession() {
   }
   session = {
     queue,
-    grades: { pas: 0, bof: 0, bien: 0 },
+    grades: { pas: 0, bof: 0, bien: 0, sur: 0 },
     reviewed: 0,
     mastered: 0,
     total: queue.length,
@@ -362,9 +365,10 @@ function startSession() {
 }
 
 // Algorithme SRS simplifié : calcule le nouvel état d'une carte selon la note.
-//  - Pas  : échec, revient dans la même session (~1 min), ease abaissé, lapse.
-//  - Bof  : réussite difficile, intervalle qui croît lentement, ease abaissé.
-//  - Bien : réussite, intervalle multiplié par l'ease.
+//  - Pas      : échec, revient dans la même session (~1 min), ease abaissé, lapse.
+//  - Bof      : réussite difficile, intervalle qui croît lentement, ease abaissé.
+//  - Bien     : réussite, intervalle multiplié par l'ease.
+//  - Par cœur : réussite franche, gros bond d'intervalle (bonus « facile »).
 function schedule(card, grade) {
   const now = Date.now();
   let { intervalDays = 0, ease = 2.5, reps = 0, lapses = 0 } = card;
@@ -376,6 +380,9 @@ function schedule(card, grade) {
   if (grade === "bof") {
     ease = Math.max(1.3, ease - 0.15);
     intervalDays = intervalDays < 1 ? 1 : Math.max(1, Math.round(intervalDays * 1.2));
+  } else if (grade === "sur") {
+    ease = Math.min(3.0, ease + 0.05);
+    intervalDays = intervalDays < 1 ? 4 : Math.max(4, Math.round(intervalDays * ease * 1.3));
   } else {
     intervalDays = intervalDays < 1 ? 1 : Math.max(1, Math.round(intervalDays * ease));
   }
@@ -386,6 +393,7 @@ function schedule(card, grade) {
 function previewLabel(grade) {
   if (grade === "pas") return "tout de suite";
   if (grade === "bof") return "bientôt";
+  if (grade === "sur") return "acquise";
   return "fin du deck";
 }
 
@@ -437,6 +445,7 @@ function renderCard() {
     `<button class="btn grade-pas" data-g="pas" type="button">Pas<small>${previewLabel("pas")}</small></button>` +
     `<button class="btn grade-bof" data-g="bof" type="button">Bof<small>${previewLabel("bof")}</small></button>` +
     `<button class="btn grade-bien" data-g="bien" type="button">Bien<small>${previewLabel("bien")}</small></button>` +
+    `<button class="btn grade-sur" data-g="sur" type="button">★ Par cœur<small>${previewLabel("sur")}</small></button>` +
     "</div>" +
     '<div class="review-foot"><button class="btn-link" id="r-quit" type="button">Terminer la session</button></div>' +
     "</div>";
@@ -468,9 +477,9 @@ function gradeCard(grade) {
   session.reviewed += 1;
   saveState();
   // Réinjection intensive dans le tour en cours :
-  //  - « Bien » : carte acquise, repoussée à la fin (elle sort de la file) ;
+  //  - « Bien »/« Par cœur » : carte acquise, repoussée à la fin (sort de la file) ;
   //  - « Pas »/« Bof » : remise quelques cartes plus loin pour repasser vite.
-  if (grade === "bien") {
+  if (grade === "bien" || grade === "sur") {
     session.mastered += 1;
   } else {
     const offset = REQUEUE_OFFSET[grade] || 4;
@@ -522,6 +531,9 @@ function onGlobalKey(e) {
     } else if (e.key === "3") {
       e.preventDefault();
       gradeCard("bien");
+    } else if (e.key === "4") {
+      e.preventDefault();
+      gradeCard("sur");
     }
   } else if (reveal && (e.key === " " || e.key === "Enter")) {
     e.preventDefault();

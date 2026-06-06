@@ -291,7 +291,7 @@
 /* Grade buttons */
 .grade-buttons {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 0.6rem;
   margin-top: 0.9rem;
 }
@@ -329,6 +329,14 @@
 .grade-bien:hover {
   background: var(--good-bg);
 }
+.grade-sur {
+  border-color: #e0b400;
+  color: #8a6d00;
+  font-weight: 700;
+}
+.grade-sur:hover {
+  background: #fef9e7;
+}
 .review-foot {
   margin-top: 1rem;
   text-align: center;
@@ -355,5 +363,8 @@
   }
   .stats {
     gap: 1.1rem;
+  }
+  .grade-buttons {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
