@@ -345,6 +345,36 @@ body {
   transform: translateX(2px);
 }
 
+/* Reusable reference memo (e.g. the 3 angles) shown inside an explanation. */
+.angle-memo {
+  margin-top: 0.6rem;
+  padding-top: 0.55rem;
+  border-top: 1px dashed #cfe3d4;
+}
+.angle-memo .memo-label {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--good-ink);
+  margin-bottom: 0.35rem;
+}
+.angle-memo .memo-list {
+  margin: 0;
+  padding-left: 1.15rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--ink);
+}
+.angle-memo .memo-list li {
+  margin: 0.15rem 0;
+}
+.angle-memo .memo-list em {
+  color: var(--muted);
+  font-style: italic;
+}
+
 .empty {
   text-align: center;
   color: var(--muted);

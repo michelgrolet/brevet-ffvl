@@ -18,6 +18,28 @@
       "U65V": "cumulus"
     }
   },
+  "angleMemo": {
+    "note": "Encart de rappel affiché sous l'explication des questions de définition d'angle (brevet initial), pour distinguer les trois angles souvent confondus.",
+    "title": "Les 3 angles à ne pas confondre",
+    "codes": ["E50V", "E51V", "E52V", "E54V", "G19V"],
+    "items": [
+      {
+        "name": "Angle de plané",
+        "between": "entre la trajectoire et l'horizontale",
+        "role": "définit la finesse et la performance de descente"
+      },
+      {
+        "name": "Angle d'incidence",
+        "between": "entre la corde de l'aile et la trajectoire (le vent relatif)",
+        "role": "gère la portance et le risque de décrochage"
+      },
+      {
+        "name": "Angle d'assiette",
+        "between": "entre la corde de l'aile et l'horizontale",
+        "role": "définit l'attitude visuelle de l'aile par rapport au paysage"
+      }
+    ]
+  },
   "explanations": {
     "A3V": "Un nuage est constitué d'eau à l'état condensé : des gouttelettes d'eau liquide en suspension et, plus haut où il fait froid, des cristaux de glace. La vapeur d'eau, elle, est un gaz invisible : tant que l'eau reste gazeuse, il n'y a pas de nuage. Le nuage devient visible précisément quand cette vapeur se condense (au point de rosée) en gouttelettes ou se solidifie en cristaux.",
     "A8V": "Le préfixe « cirro » désigne les nuages de l'étage supérieur (au-dessus d'environ 6000 m), formés de cristaux de glace. Cirrus, cirrocumulus et cirrostratus sont fins et très élevés ; leur apparition annonce souvent l'arrivée d'une perturbation.",
