@@ -4,6 +4,8 @@
 // Données statiques chargées depuis ./data/qcm_ffvl.json (généré par le scraper).
 
 const DATA_URL = "./data/qcm_ffvl.json";
+// Explications pédagogiques (brevet initial parapente), indexées par code question.
+const EXPLANATIONS_URL = "./data/explanations.json";
 
 // Ordre d'affichage des niveaux (du plus simple au plus avancé) + treuil.
 const LEVEL_ORDER = [
@@ -37,6 +39,21 @@ async function init() {
     const data = await resp.json();
     QUESTIONS = data.questions || [];
     els.version.textContent = "v" + (data.version || "?");
+
+    // Charge les explications (fichier séparé, optionnel) et les rattache aux
+    // questions par leur code. Une erreur ici ne doit pas empêcher l'affichage.
+    try {
+      const expResp = await fetch(EXPLANATIONS_URL);
+      if (expResp.ok) {
+        const exp = await expResp.json();
+        const byCode = exp.explanations || {};
+        for (const q of QUESTIONS) {
+          if (byCode[q.code]) q.explanation = byCode[q.code];
+        }
+      }
+    } catch (_) {
+      /* explications indisponibles : on continue sans */
+    }
   } catch (err) {
     els.list.innerHTML =
       '<p class="empty">Impossible de charger les données (' +
@@ -117,11 +134,19 @@ function cardHtml(q, term, reveal) {
     })
     .join("");
 
+  const explanation = q.explanation
+    ? `<div class="explanation">` +
+      `<span class="exp-label">Explication</span>` +
+      `<p>${highlight(q.explanation, term)}</p>` +
+      `</div>`
+    : "";
+
   return (
     `<article class="qcard${reveal ? " reveal" : ""}">` +
     `<div class="qcard-head"><span class="code">${escapeHtml(q.code)}</span>${tags}</div>` +
     `<p class="qtext">${highlight(q.question, term)}</p>` +
     `<ul class="answers">${answers}</ul>` +
+    explanation +
     `</article>`
   );
 }

@@ -247,6 +247,34 @@ body {
   visibility: hidden;
 }
 
+/* Explanation block (brevet initial parapente) */
+.explanation {
+  margin-top: 0.75rem;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid #cfe3d4;
+  border-left: 4px solid var(--good-border);
+  border-radius: 8px;
+  background: #f3faf5;
+}
+.explanation .exp-label {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--good-ink);
+  margin-bottom: 0.3rem;
+}
+.explanation p {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--ink);
+}
+/* The explanation reveals the answer, so it follows the reveal toggle. */
+.qcard:not(.reveal) .explanation {
+  display: none;
+}
+
 .empty {
   text-align: center;
   color: var(--muted);
