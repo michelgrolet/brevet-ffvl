@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vol en direct — FFVL</title>
+  <meta name="description" content="Suivi en direct du vol en parapente." />
+  <meta property="og:title" content="Vol en direct 🪂" />
+  <meta property="og:description" content="Suis le vol en parapente en temps réel." />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <link rel="stylesheet" href="live.css" />
+</head>
+<body>
+  <header id="bar">
+    <strong id="title">Vol en direct</strong>
+    <span id="status">connexion…</span>
+    <span id="live-dot" class="off" title="État"></span>
+  </header>
+  <div id="map"></div>
+  <div id="panel" class="hidden">
+    <div class="row"><span class="k">Pilote</span><span id="p-pilot" class="v">—</span></div>
+    <div class="row"><span class="k">Altitude</span><span id="p-alt" class="v">—</span></div>
+    <div class="row"><span class="k">Vitesse sol</span><span id="p-spd" class="v">—</span></div>
+    <div class="row"><span class="k">Durée</span><span id="p-dur" class="v">—</span></div>
+    <div class="row"><span class="k">Dernier point</span><span id="p-age" class="v">—</span></div>
+  </div>
+  <div id="empty" class="hidden">
+    <div class="empty-card">
+      <div class="empty-emoji">🪂</div>
+      <div id="empty-msg">Aucun vol en cours pour le moment.</div>
+      <div class="empty-sub">Cette page se met à jour automatiquement dès qu'un vol démarre.</div>
+    </div>
+  </div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="live.js"></script>
+</body>
+</html>
