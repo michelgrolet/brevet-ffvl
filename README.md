@@ -1,11 +1,12 @@
 # brevet-ffvl
 
-Outils autour du vol libre FFVL. Ce dépôt contient deux projets indépendants :
+Outils autour du vol libre FFVL. Ce dépôt contient plusieurs projets indépendants :
 
 | Projet | Description | Dossier |
 | --- | --- | --- |
 | **QCM FFVL** | Scraper du QCM officiel des brevets de pilote (→ CSV) **+** site statique de consultation/filtrage des questions. | `scrape_qcm_ffvl.py`, [`qcm-site/`](qcm-site/) |
 | **Carte des balises météo** | Application web qui place les balises météo FFVL sur une carte avec leurs relevés vent/température en temps réel. | `server.js`, `public/`, `src/` |
+| **Suivi de vol en direct** | Reçoit le livetracking de XCTrack, affiche une page `/live` partageable et prévient quelqu'un (WhatsApp…) au décollage / à l'atterrissage. | `src/live/`, `public/live.*` |
 
 ## GitHub Pages
 
@@ -126,3 +127,85 @@ normalized balises, and register it in `server.js`.
   stale data if an upstream refresh fails, so the map degrades gracefully.
 - Respect the source: don't poll faster than balises update (~1–5 min) and keep
   the FFVL attribution visible (it's in the map footer).
+
+---
+
+# 3. Suivi de vol en direct + notification (XCTrack)
+
+Le même serveur Node sait recevoir le **livetracking de XCTrack** : il publie une
+page `/live` que **n'importe qui** peut ouvrir (ta copine, des amis…) et envoie
+un **message WhatsApp avec le lien direct** quand tu décolles, puis quand tu te
+poses.
+
+XCTrack sait pousser sa position toutes les ~60 s vers n'importe quel serveur
+compatible **LiveTrack24** ; on en fournit un, donc pas besoin de compte XContest.
+
+```
+Téléphone (XCTrack) ──LiveTrack24──▶ /track.php (ce serveur)
+                                        │
+                       page publique ◀──┤── notification WhatsApp / ntfy / webhook
+                       /live (carte)    │      « 🪂 Michel vient de décoller … »
+```
+
+## Mise en route
+
+1. **Héberge le serveur sur une URL publique.** GitHub Pages ne suffit pas (c'est
+   statique) : XCTrack doit pouvoir *appeler* le serveur. N'importe quel petit
+   hébergeur Node convient (Render, Fly.io, Railway, un VPS…). Lance simplement
+   `node server.js` ; le port par défaut est `3000`.
+
+2. **Configure les notifications** (`.env`, voir [`.env.example`](.env.example)) :
+   - `PILOT_NAME` — ton nom affiché.
+   - `WHATSAPP_RECIPIENTS` — WhatsApp **gratuit** via [CallMeBot](https://www.callmebot.com/blog/free-api-whatsapp-messages/).
+     Chaque destinataire envoie une fois **« I allow callmebot to send me messages »**
+     au **+34 644 51 95 23**, reçoit une `apikey`, et tu mets `numero:apikey`
+     (séparés par des virgules pour plusieurs personnes).
+   - (option) `NTFY_TOPIC` pour une notif push libre, `NOTIFY_WEBHOOK_URL` pour
+     un webhook JSON générique.
+
+3. **Configure XCTrack** : *Préférences → Livetracking* → activer le livetracking,
+   choisir le protocole **LiveTrack24**, et mettre comme **serveur** l'hôte de ton
+   déploiement (ex. `your-host.example.com`, sans `http://`). Le login/mot de passe
+   ne sont pas vérifiés par ce serveur, mets ce que tu veux. XCTrack peut envoyer
+   le nom de ta voile (`vname`), il sera utilisé comme nom de pilote.
+
+4. **Partage le lien.** Au décollage, le message WhatsApp contient l'URL
+   `…/live?flight=…`. La page `/live` toute seule affiche automatiquement le vol
+   en cours, donc tu peux aussi épingler `https://ton-host/live` une fois pour
+   toutes.
+
+## Tester sans téléphone
+
+Lance le serveur, puis simule un vol (envoie les paquets LiveTrack24 décollage →
+points → atterrissage) :
+
+```bash
+node server.js
+# dans un autre terminal :
+node scripts/simulate-flight.js
+# → ouvre l'URL /live?flight=… affichée, tu verras la trace avancer
+```
+
+Pour vérifier aussi l'envoi des notifications sans WhatsApp, pointe un webhook
+local : `NOTIFY_WEBHOOK_URL=http://localhost:4555 node server.js`.
+
+## Comment ça marche
+
+```
+src/live/
+  livetrack24.js   réception protocole LiveTrack24 (/track.php, /client.php),
+                   détection décollage (vitesse/déplacement) et atterrissage
+  store.js         vols + traces en mémoire (persistés dans data/live-sessions.json)
+  notify.js        canaux de notif : WhatsApp (CallMeBot), ntfy, webhook
+public/live.html · live.js · live.css   page publique de suivi (Leaflet)
+scripts/simulate-flight.js              simulateur de vol pour tester
+```
+
+- Endpoints serveur : `GET /track.php` & `/client.php` (ingestion XCTrack),
+  `GET /api/live` (vols actifs) / `?flight=ID` (trace complète), page `/live`.
+- « Décollage » = première position réellement en mouvement (vitesse sol
+  ≥ `TAKEOFF_SPEED_KMH`, ou déplacement/gain d'altitude), pas juste l'appli
+  ouverte au déco. « Atterrissage » = paquet de fin XCTrack, ou plus aucun point
+  pendant `LANDING_TIMEOUT_MIN`.
+- Aucune authentification : c'est **ton** serveur, ne publie pas l'URL d'ingestion
+  inutilement. Les notifications ne partent que si au moins un canal est configuré.

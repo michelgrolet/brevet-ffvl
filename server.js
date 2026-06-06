@@ -11,6 +11,9 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
+const liveStore = require('./src/live/store');
+const livetrack = require('./src/live/livetrack24');
+
 const PORT = Number(process.env.PORT) || 3000;
 const DATA_SOURCE = (process.env.DATA_SOURCE || 'mock').toLowerCase();
 const CACHE_TTL_MS = Number(process.env.CACHE_TTL_MS) || 60_000;
@@ -76,7 +79,56 @@ function serveStatic(req, res) {
   });
 }
 
+// Build the JSON the /live page polls. Points are compact arrays to keep long
+// flights small: [lat, lon, alt, sog, cog, t].
+function liveResponse(flightId) {
+  if (flightId) {
+    const f = liveStore.get(flightId);
+    if (!f) return { flight: null };
+    return {
+      flight: {
+        id: f.id, pilot: f.pilot,
+        startedAt: f.startedAt, endedAt: f.endedAt, lastSeen: f.lastSeen,
+        live: liveStore.isLive(f),
+        points: f.points.map((p) => [p.lat, p.lon, p.alt, p.sog, p.cog, p.t]),
+      },
+    };
+  }
+  const active = liveStore.activeFlights().map((f) => {
+    const last = f.points[f.points.length - 1] || null;
+    return {
+      id: f.id, pilot: f.pilot, startedAt: f.startedAt, lastSeen: f.lastSeen,
+      pointCount: f.points.length,
+      last: last ? { lat: last.lat, lon: last.lon, alt: last.alt, sog: last.sog, t: last.t } : null,
+    };
+  });
+  return { now: Date.now(), active };
+}
+
 const server = http.createServer(async (req, res) => {
+  // Live-tracking ingest from XCTrack (LiveTrack24 protocol). Derive the public
+  // base URL from the first request if it wasn't configured, so notification
+  // links work out of the box.
+  if (!process.env.PUBLIC_BASE_URL && req.headers.host) {
+    const proto = req.headers['x-forwarded-proto'] || 'http';
+    livetrack.setPublicBaseUrl(`${proto}://${req.headers.host}`);
+  }
+  if (req.url.startsWith('/track.php') || req.url.startsWith('/client.php')) {
+    if (livetrack.handle(req, res)) return;
+  }
+
+  if (req.url.startsWith('/api/live')) {
+    const flightId = new URL(req.url, 'http://x').searchParams.get('flight');
+    res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
+    res.end(JSON.stringify(liveResponse(flightId)));
+    return;
+  }
+
+  // Pretty path for the live page.
+  if (req.url === '/live' || req.url.split('?')[0] === '/live') {
+    req.url = '/live.html' + (req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '');
+  }
+
   if (req.url.startsWith('/api/balises')) {
     try {
       const balises = await getBalises();
@@ -100,6 +152,9 @@ const server = http.createServer(async (req, res) => {
   serveStatic(req, res);
 });
 
+livetrack.startLandingSweep();
+
 server.listen(PORT, () => {
   console.log(`brevet-ffvl running on http://localhost:${PORT}  (DATA_SOURCE=${DATA_SOURCE})`);
+  console.log(`  live tracking ingest: POST/GET /track.php  ·  public page: /live`);
 });

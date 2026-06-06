@@ -4,5 +4,6 @@ node_modules/
 *.log
 .DS_Store
 _site/
+data/live-sessions.json
 __pycache__/
 *.pyc
