@@ -170,12 +170,21 @@ Téléphone (XCTrack) ──LiveTrack24──▶ /track.php (ce serveur)
      un groupe avec les gens à prévenir, copie son id et mets-le dans
      `WHATSAPP_GROUP_JID` (ex. `12036304@g.us`). Vide = ça t'écrit à toi.
 
-   > ⚠️ **À savoir.** Méthode **non-officielle** (lib type WhatsApp Web) → petit
-   > risque de blocage de ton compte. Et la session de connexion est stockée sur
-   > disque (`WHATSAPP_AUTH_DIR`, défaut `data/wa-auth`) : sur un hébergeur au
-   > disque éphémère (Render *free*) elle est effacée à chaque redéploiement → tu
-   > re-scannes le QR. Pour éviter ça : machine allumée en permanence (PC,
-   > Raspberry) ou disque persistant. La dépendance s'installe via `npm install`.
+   **Garder la session sur Render gratuit (pour ne scanner qu'une fois) :**
+   par défaut la session est sur le disque local (`WHATSAPP_AUTH_DIR`), effacé à
+   chaque redéploiement sur Render *free* → re-scan. Pour l'éviter **sans payer
+   ni machine perso**, stocke-la dans **Upstash** (Redis gratuit) :
+   - crée une base sur [console.upstash.com](https://console.upstash.com) (gratuit,
+     sans carte) → copie son **REST URL** et son **REST token** ;
+   - mets-les dans `UPSTASH_REDIS_REST_URL` et `UPSTASH_REDIS_REST_TOKEN`.
+   La page `/whatsapp-setup` confirme alors « Session sauvegardée sur Upstash ✅ ».
+   - **Garde le service éveillé** avec un ping toutes les 10 min vers
+     `https://ton-host/` ([cron-job.org](https://cron-job.org), gratuit) : ça
+     maintient la connexion WhatsApp active (un service Render free réveillé à
+     froid mettrait quelques secondes à se reconnecter et pourrait rater l'alerte).
+
+   > ⚠️ Méthode **non-officielle** (lib type WhatsApp Web) → petit risque de
+   > blocage de ton compte. La dépendance s'installe via `npm install`.
 
    **Option B — CallMeBot (gratuit, mais une autorisation par personne)**
    - `WHATSAPP_RECIPIENTS` — chaque destinataire envoie **une seule fois**
@@ -247,6 +256,7 @@ src/live/
   store.js         vols + traces en mémoire (persistés dans data/live-sessions.json)
   notify.js        canaux de notif : WhatsApp (QR / CallMeBot), ntfy, webhook
   whatsapp-qr.js   connexion WhatsApp par QR (Baileys), envoi vers un groupe
+  wa-auth-upstash.js  sauvegarde la session WhatsApp dans Upstash (Render free)
 public/live.html · live.js · live.css   page publique de suivi (Leaflet)
 public/whatsapp-setup.html              scan du QR + liste des groupes
 scripts/simulate-flight.js              simulateur de vol pour tester

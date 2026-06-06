@@ -31,6 +31,7 @@
     <h1>🪂 Notifications WhatsApp — connexion par QR code</h1>
     <div class="card">
       <div id="status">Chargement…</div>
+      <p id="persist" class="muted" style="margin:6px 0 0"></p>
 
       <div id="scan" class="hidden">
         <p class="muted">Sur ton téléphone : <b>WhatsApp → Réglages → Appareils
@@ -99,6 +100,10 @@
       show('disabled', !s.enabled);
       show('error', Boolean(s.error) && !s.ready);
       if (s.error && !s.ready) $('error').textContent = s.error;
+
+      $('persist').textContent = s.persistence === 'upstash'
+        ? 'Session sauvegardée sur Upstash — pas de re-scan après un redéploiement. ✅'
+        : (s.enabled ? '⚠️ Session sur disque local : sur Render gratuit elle sera perdue au prochain déploiement (configure Upstash pour éviter le re-scan).' : '');
 
       if (!s.enabled) { $('status').textContent = 'Canal QR désactivé'; show('scan', false); show('linked', false); return; }
 
