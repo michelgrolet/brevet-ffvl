@@ -1,0 +1,1496 @@
+[
+{
+"id": "10",
+"name": "Mont Jovet",
+"lat": 45.5003,
+"lon": 6.6505,
+"altitude": 2558,
+"dept": "73",
+"note": null
+},
+{
+"id": "11",
+"name": "Aiguebelette",
+"lat": 45.6029,
+"lon": 5.80628,
+"altitude": 1150,
+"dept": "73",
+"note": "Les Ailes du Lac d'Aiguebelette http://www.lesailesdulac.fr"
+},
+{
+"id": "12",
+"name": "Allevard les Plagnes",
+"lat": 45.6497,
+"lon": 6.25444,
+"altitude": 2087,
+"dept": "38",
+"note": "La balise est installée sur le chalet de la gare d'arrivée du télésiège, côté Nord. Elle prend, en principe, le vent météo plutôt que le thermique qui déclenche dans la combe du Veyton\r\nAllevard les Plagnes"
+},
+{
+"id": "13",
+"name": "La Scia",
+"lat": 45.345,
+"lon": 5.84556,
+"altitude": 1650,
+"dept": "38",
+"note": "Air Gus Vol Libre Chartreuse"
+},
+{
+"id": "14",
+"name": "Villard Cote 2000",
+"lat": 45.0424,
+"lon": 5.56685,
+"altitude": 1665,
+"dept": "38",
+"note": "Villard Vol Libre"
+},
+{
+"id": "15",
+"name": "Moucherotte",
+"lat": 45.1647,
+"lon": 5.69694,
+"altitude": 1844,
+"dept": "38",
+"note": "Codevoli"
+},
+{
+"id": "16",
+"name": "Grand Ratz",
+"lat": 45.3272,
+"lon": 5.63611,
+"altitude": 810,
+"dept": "38",
+"note": "Arcs en Ciel"
+},
+{
+"id": "17",
+"name": "Crozet",
+"lat": 46.2873,
+"lon": 5.96306,
+"altitude": 1660,
+"dept": "01",
+"note": "Vol Libre Gessien http://vlg.torton.org"
+},
+{
+"id": "18",
+"name": "Roocourt La Cote",
+"lat": 48.214,
+"lon": 5.15289,
+"altitude": 342,
+"dept": "52",
+"note": "http://parapente52.free.fr/"
+},
+{
+"id": "19",
+"name": "Grand Colombier",
+"lat": 45.881,
+"lon": 5.75769,
+"altitude": 1436,
+"dept": "01",
+"note": "Natur'Ailes Bugey http://naturailebugey.free.fr/"
+},
+{
+"id": "20",
+"name": "Catray",
+"lat": 46.1097,
+"lon": 5.74833,
+"altitude": 1170,
+"dept": "01",
+"note": "Les Milans du Cret d'Eau http://lesmilans.com/"
+},
+{
+"id": "21",
+"name": "Ajaccio",
+"lat": 41.9792,
+"lon": 8.74186,
+"altitude": 522,
+"dept": "20",
+"note": "Lucif'air http://perso.wanadoo.fr/lucif-air/"
+},
+{
+"id": "22",
+"name": "Aspres la Longeagne",
+"lat": 44.5518,
+"lon": 5.77486,
+"altitude": 1560,
+"dept": "05",
+"note": "Entre Ciel et Buech"
+},
+{
+"id": "23",
+"name": "Tuchan",
+"lat": 42.8975,
+"lon": 2.66611,
+"altitude": 850,
+"dept": "11",
+"note": "Golfe Du Lion Vol Libre"
+},
+{
+"id": "24",
+"name": "Serre de Barre",
+"lat": 44.3969,
+"lon": 4.08306,
+"altitude": 900,
+"dept": "07",
+"note": "Sud Ardeche Vol Libre http://www.sudardeche.ffvl.fr"
+},
+{
+"id": "25",
+"name": "Bisanne",
+"lat": 45.7469,
+"lon": 6.50417,
+"altitude": 1970,
+"dept": "73",
+"note": "Les Volatiles des Saisies\r\nhttp://www.clubvolatiles.ffvl.fr"
+},
+{
+"id": "26",
+"name": "Plateau des Saix",
+"lat": 46.0539,
+"lon": 6.69778,
+"altitude": 1650,
+"dept": "74",
+"note": "Pegase Air Samoens http://www.parapente-samoens.com"
+},
+{
+"id": "27",
+"name": "Pic de Brau",
+"lat": 43.0119,
+"lon": 2.22556,
+"altitude": 670,
+"dept": "11",
+"note": "Los Montos en l'Aire du Pic de Brau http://www.lvllr.net"
+},
+{
+"id": "28",
+"name": "Les Limouches",
+"lat": 44.8917,
+"lon": 5.13417,
+"altitude": 952,
+"dept": "26",
+"note": "Les Tichodromes http://tichodromes.free.fr"
+},
+{
+"id": "29",
+"name": "Jargoy",
+"lat": 45.9454,
+"lon": 5.51367,
+"altitude": 953,
+"dept": "01",
+"note": "Les Ailes du Bugey http://ailesdubugey.free.fr"
+},
+{
+"id": "30",
+"name": "Mt Chouvé Job Ambert",
+"lat": 45.6308,
+"lon": 3.78111,
+"altitude": 1465,
+"dept": "63",
+"note": "Delta Club Livradois http://dclf.free.fr"
+},
+{
+"id": "31",
+"name": "Le Maupuy",
+"lat": 46.1561,
+"lon": 1.835,
+"altitude": 650,
+"dept": "23",
+"note": "Marche en l'Air http://www.volfree.info/limousinvollibre/site3.php"
+},
+{
+"id": "32",
+"name": "Mieussy",
+"lat": 46.144,
+"lon": 6.54758,
+"altitude": 1670,
+"dept": "74",
+"note": "Choucas Club"
+},
+{
+"id": "33",
+"name": "Luc en Diois",
+"lat": 44.6083,
+"lon": 5.44194,
+"altitude": 1075,
+"dept": "26",
+"note": "Les Passe Montagne du Diois http://perso.orange.fr/vollibre.diois"
+},
+{
+"id": "34",
+"name": "Le Soubeyrand",
+"lat": 44.1691,
+"lon": 6.85533,
+"altitude": 1299,
+"dept": "26",
+"note": "Les Ailes des Baronnies http://ailes.des.baronnies.free.fr"
+},
+{
+"id": "35",
+"name": "Laragne Chabre",
+"lat": 44.3143,
+"lon": 5.8237,
+"altitude": 0,
+"dept": "05",
+"note": null
+},
+{
+"id": "36",
+"name": "La Jasserie",
+"lat": 45.3851,
+"lon": 4.56783,
+"altitude": 1370,
+"dept": "42",
+"note": "CDVL 42"
+},
+{
+"id": "37",
+"name": "Chabanet Privas",
+"lat": 44.69,
+"lon": 4.60972,
+"altitude": 720,
+"dept": "07",
+"note": "Les Coirons d'Air http://lescoironsdair.free.fr"
+},
+{
+"id": "38",
+"name": "Mont d'Or",
+"lat": 46.7292,
+"lon": 6.35695,
+"altitude": 1450,
+"dept": "25",
+"note": "Trans-Jura V L -Longevilles-Mont d'Or-Metabief"
+},
+{
+"id": "40",
+"name": "La Tranche sur Mer",
+"lat": 46.3431,
+"lon": 1.43667,
+"altitude": 0,
+"dept": "85",
+"note": "Cercle nautique tranchais http://perso.wanadoo.fr/cnt"
+},
+{
+"id": "41",
+"name": "La Mine d'Or à Penes",
+"lat": 47.4811,
+"lon": -2.49417,
+"altitude": 0,
+"dept": "56",
+"note": "A tire d'ailes  Ailes d'or http://perso.orange.fr/club.ata/"
+},
+{
+"id": "42",
+"name": "Libarderie",
+"lat": 46.0611,
+"lon": 0.986389,
+"altitude": 292,
+"dept": "87",
+"note": "ESTIVOL http://www.estivol.com"
+},
+{
+"id": "43",
+"name": "Baigura",
+"lat": 43.2946,
+"lon": -1.28878,
+"altitude": 865,
+"dept": "64",
+"note": "Haize hegoa http://www.haizehegoa.ffvl.fr"
+},
+{
+"id": "44",
+"name": "Targasonne Mauroux",
+"lat": 42.5172,
+"lon": 1.99083,
+"altitude": 2076,
+"dept": "66",
+"note": "CDVL 66 http://www.cdvl66.com"
+},
+{
+"id": "45",
+"name": "Reinhardsmunster",
+"lat": 48.6775,
+"lon": 7.31194,
+"altitude": 440,
+"dept": "67",
+"note": "Club Aero-Zorn http://aerozorn.free.fr"
+},
+{
+"id": "46",
+"name": "Sommet Puy de Dome",
+"lat": 45.7718,
+"lon": 2.96157,
+"altitude": 1465,
+"dept": "63",
+"note": "Ligue De Vol Libre D Auvergne http://ligue-auvergne.ffvl.fr"
+},
+{
+"id": "47",
+"name": "St Pierre",
+"lat": 42.4556,
+"lon": 3.14889,
+"altitude": 319,
+"dept": "66",
+"note": null
+},
+{
+"id": "49",
+"name": "Mont Lachens",
+"lat": 43.7449,
+"lon": 6.65347,
+"altitude": 1680,
+"dept": "83",
+"note": "Club Lachens vol libre http://www.lachens.com"
+},
+{
+"id": "50",
+"name": "Montbrun",
+"lat": 44.5194,
+"lon": 1.90667,
+"altitude": 394,
+"dept": "46",
+"note": "Causses en ailes"
+},
+{
+"id": "51",
+"name": "Col du Devès, Roynac",
+"lat": 44.6594,
+"lon": 4.93611,
+"altitude": 450,
+"dept": "26",
+"note": "Les Tichodromes http://tichodromes.free.fr"
+},
+{
+"id": "52",
+"name": "Montagne Noire",
+"lat": 43.4417,
+"lon": 2.07028,
+"altitude": 568,
+"dept": "81",
+"note": "Les buses de la montagne noire http://les.buses.free.fr"
+},
+{
+"id": "53",
+"name": "Monts d'Ambazac",
+"lat": 46.005,
+"lon": 1.44556,
+"altitude": 650,
+"dept": "87",
+"note": "Thermiques Verts Du Limousin\r\nhttp://www.unilim.fr/lec/vollibre"
+},
+{
+"id": "54",
+"name": "Malleval en Vercors",
+"lat": 45.1353,
+"lon": 5.40528,
+"altitude": 1180,
+"dept": "38",
+"note": "Vercors envol http://www.vercorsenvol.ffvl.fr"
+},
+{
+"id": "55",
+"name": "La Côte des 2 Amants",
+"lat": 49.3183,
+"lon": 1.24806,
+"altitude": 115,
+"dept": "27",
+"note": "Eur' En Ciel\r\nhttp://perso.orange.fr/eurenciel"
+},
+{
+"id": "56",
+"name": "St Aubin Sausemare",
+"lat": 49.8928,
+"lon": 0.862122,
+"altitude": 0,
+"dept": "76",
+"note": "Saane vol libre"
+},
+{
+"id": "57",
+"name": "Le Marais Vernier",
+"lat": 49.4028,
+"lon": 1.46754,
+"altitude": 80,
+"dept": "27",
+"note": "Optivol http://optivol.free.fr"
+},
+{
+"id": "58",
+"name": "Cervioni",
+"lat": 42.3286,
+"lon": 9.48361,
+"altitude": 760,
+"dept": "20",
+"note": "Club Cime Ale http://cimeale.free.fr"
+},
+{
+"id": "59",
+"name": "Vicdessos",
+"lat": 42.7428,
+"lon": 1.52083,
+"altitude": 1755,
+"dept": "09",
+"note": "Volarem tans que pourem"
+},
+{
+"id": "60",
+"name": "L'Andran Digne les Bains",
+"lat": 44.1157,
+"lon": 6.21364,
+"altitude": 1217,
+"dept": "04",
+"note": "Bleon'ailes http://bleonailes.free.fr"
+},
+{
+"id": "61",
+"name": "St Hilaire du Touvet",
+"lat": 45.3103,
+"lon": 5.88778,
+"altitude": 0,
+"dept": "38",
+"note": null
+},
+{
+"id": "62",
+"name": "Senepy",
+"lat": 44.9071,
+"lon": 5.72103,
+"altitude": 1769,
+"dept": "38",
+"note": "Envol Matheysin"
+},
+{
+"id": "63",
+"name": "Gourdon",
+"lat": 43.7164,
+"lon": 6.9798,
+"altitude": 0,
+"dept": "06",
+"note": null
+},
+{
+"id": "64",
+"name": "Pyla Pilat",
+"lat": 44.5667,
+"lon": -1.23432,
+"altitude": 55,
+"dept": "33",
+"note": "CDVL de Gironde http://www.parapyla.free.fr"
+},
+{
+"id": "65",
+"name": "Signal d'Uchon",
+"lat": 46.813,
+"lon": 4.25803,
+"altitude": 650,
+"dept": "71",
+"note": "Creusot vol libre"
+},
+{
+"id": "66",
+"name": "La Puncho d'Agast",
+"lat": 44.1105,
+"lon": 3.10303,
+"altitude": 828,
+"dept": "12",
+"note": "CDVL de l'Aveyron http://aveyronvollibre.free.fr"
+},
+{
+"id": "67",
+"name": "Le Semnoz",
+"lat": 45.797,
+"lon": 6.1043,
+"altitude": 1704,
+"dept": "74",
+"note": "Annecy vol de pente http://annecyvoldepente.free.fr"
+},
+{
+"id": "68",
+"name": "Domme en Dordogne",
+"lat": 44.7933,
+"lon": 1.24472,
+"altitude": 298,
+"dept": "24",
+"note": "Perigord Parapente http://perso.orange.fr/perigord-parapente"
+},
+{
+"id": "70",
+"name": "Port",
+"lat": 46.1594,
+"lon": 5.57417,
+"altitude": 750,
+"dept": "01",
+"note": "Ain'Pulsion Parapente http://fr.groups.yahoo.com/group/ainpulsionparapente"
+},
+{
+"id": "71",
+"name": "St Sébastien",
+"lat": 44.3136,
+"lon": 4.14472,
+"altitude": 435,
+"dept": "07",
+"note": "Sud Ardeche Vol Libre http://www.sudardeche.ffvl.fr"
+},
+{
+"id": "72",
+"name": "Gensac sur Garonne",
+"lat": 43.1897,
+"lon": 1.16611,
+"altitude": 0,
+"dept": "31",
+"note": "Gensac d'Air"
+},
+{
+"id": "73",
+"name": "Bar sur Aube",
+"lat": 48.22,
+"lon": 4.71056,
+"altitude": 340,
+"dept": "10",
+"note": "Les ailes de Ste Germaine"
+},
+{
+"id": "74",
+"name": "Breitenbach",
+"lat": 48.3725,
+"lon": 7.30778,
+"altitude": 950,
+"dept": "67",
+"note": "Ecole de Parapente Gd Vol http://www.grandvol.com"
+},
+{
+"id": "75",
+"name": "Montmin",
+"lat": 45.8139,
+"lon": 6.24667,
+"altitude": 1270,
+"dept": "74",
+"note": "Les Chamois Volants et le SIVU des hauts du lac http://leschamoisvolants.free.fr"
+},
+{
+"id": "76",
+"name": "La Sotière",
+"lat": 48.0428,
+"lon": 6.79306,
+"altitude": 920,
+"dept": "88",
+"note": "Les Counailles http://lescounailles.blogspot.com"
+},
+{
+"id": "77",
+"name": "Burdignes",
+"lat": 45.2669,
+"lon": 4.58667,
+"altitude": 940,
+"dept": "42",
+"note": "Club Accro d'Aile http://accro.daile.free.fr/accro.htm"
+},
+{
+"id": "78",
+"name": "Teghime",
+"lat": 42.6736,
+"lon": 9.37683,
+"altitude": 671,
+"dept": "20",
+"note": "Club Ecole Piu Altu http://www.piualtu.com"
+},
+{
+"id": "79",
+"name": "Massif des Monedieres",
+"lat": 45.4681,
+"lon": 1.84611,
+"altitude": 890,
+"dept": "19",
+"note": "Monédières Millevaches Vol Libre http://www.volfree.info/mmvl/"
+},
+{
+"id": "80",
+"name": "Serre en Don",
+"lat": 44.8708,
+"lon": 4.39528,
+"altitude": 1200,
+"dept": "07",
+"note": "Les ailes du Mezenc http://ailesdumezenc.free.fr"
+},
+{
+"id": "82",
+"name": "Chaspinhac",
+"lat": 45.1022,
+"lon": 3.92696,
+"altitude": 930,
+"dept": "43",
+"note": null
+},
+{
+"id": "83",
+"name": "Douelle",
+"lat": 44.4636,
+"lon": 1.37222,
+"altitude": 305,
+"dept": "46",
+"note": "Le vol libre Cadurcien http://www.vol-libre-cadurcien.net/"
+},
+{
+"id": "84",
+"name": "Les Ilettes",
+"lat": 45.5911,
+"lon": 6.75167,
+"altitude": 759,
+"dept": "73",
+"note": "CSA 7eme BCA http://www.7bcaparapente.fr"
+},
+{
+"id": "85",
+"name": "Le Menez-Hom",
+"lat": 48.2128,
+"lon": -4.24694,
+"altitude": 297,
+"dept": "29",
+"note": "Club Celtic de vol libre http://celtic-vol-libre.fr"
+},
+{
+"id": "86",
+"name": "Monts du Beaujolais",
+"lat": 46.1083,
+"lon": 4.61917,
+"altitude": 480,
+"dept": "69",
+"note": "Les ailes beaujolaises http://www.ailesbeaujolaises.com/"
+},
+{
+"id": "87",
+"name": "Passy Varan",
+"lat": 45.9448,
+"lon": 6.68217,
+"altitude": 1644,
+"dept": "74",
+"note": "Club Mont Blanc Vol libre http://passy-mtblanc-vol-libre.over-blog.com"
+},
+{
+"id": "88",
+"name": "Le Rosalc'h",
+"lat": 48.2072,
+"lon": -4.11778,
+"altitude": 142,
+"dept": "29",
+"note": "Club Celtic De Vol Libre\r\nhttp://www.celtic-vol-libre.fr"
+},
+{
+"id": "89",
+"name": "Plérin",
+"lat": 48.5533,
+"lon": -2.71611,
+"altitude": 68,
+"dept": "22",
+"note": "Club des goelands d'armor http://www.goelandarmor.fr"
+},
+{
+"id": "90",
+"name": "Oraison",
+"lat": 43.9,
+"lon": 5.92111,
+"altitude": 520,
+"dept": "04",
+"note": null
+},
+{
+"id": "91",
+"name": "Cordes sur Ciel",
+"lat": 44.0636,
+"lon": 1.96896,
+"altitude": 300,
+"dept": "81",
+"note": "Wagga Cap En Ciel http://waggaclubparapente.fr/"
+},
+{
+"id": "92",
+"name": "Mont Poupet",
+"lat": 46.9722,
+"lon": 5.86472,
+"altitude": 820,
+"dept": "39",
+"note": "Club Poupet Vol Libre http://www.poupet.fr"
+},
+{
+"id": "93",
+"name": "Saint Antonin",
+"lat": 44.1436,
+"lon": 1.77222,
+"altitude": 355,
+"dept": "82",
+"note": "CDVL 82 http://la.volada.free.fr/"
+},
+{
+"id": "94",
+"name": "Le Brévent",
+"lat": 45.963,
+"lon": 6.85817,
+"altitude": 2525,
+"dept": "74",
+"note": "Les gratte ciel http://www.lesgratteciel.org"
+},
+{
+"id": "95",
+"name": "Charamillon",
+"lat": 46.0158,
+"lon": 6.95883,
+"altitude": 1850,
+"dept": "74",
+"note": "Les gratte ciel http://www.lesgratteciel.org"
+},
+{
+"id": "96",
+"name": "Houlgate",
+"lat": 49.3014,
+"lon": -0.082222,
+"altitude": 4,
+"dept": "14",
+"note": "Voiles libres pays d'Auge http://www.h-a-k.net/vlpa.html"
+},
+{
+"id": "97",
+"name": "Carolles Plage",
+"lat": 48.7578,
+"lon": -1.5725,
+"altitude": 60,
+"dept": "50",
+"note": "Les archanges"
+},
+{
+"id": "98",
+"name": "Col de Bleyne",
+"lat": 43.8136,
+"lon": 6.81083,
+"altitude": 1513,
+"dept": "06",
+"note": null
+},
+{
+"id": "99",
+"name": "Le Prat d'Albis",
+"lat": 42.9217,
+"lon": 1.58147,
+"altitude": 1402,
+"dept": "09",
+"note": "Les aigles de Cabaillere http://lestivol.free.fr"
+},
+{
+"id": "100",
+"name": "Col du Joly",
+"lat": 45.785,
+"lon": 6.6739,
+"altitude": 2003,
+"dept": "74",
+"note": "JolyJumper's http://www.joly-jumpers.org"
+},
+{
+"id": "101",
+"name": "Le Mont Chery",
+"lat": 46.1681,
+"lon": 6.64639,
+"altitude": 1826,
+"dept": "74",
+"note": "Legetsud"
+},
+{
+"id": "102",
+"name": "Les Gravières",
+"lat": 44.179,
+"lon": 5.27264,
+"altitude": 1806,
+"dept": "84",
+"note": "CDVL 84"
+},
+{
+"id": "103",
+"name": "Troissy",
+"lat": 49.0769,
+"lon": 3.71573,
+"altitude": 137,
+"dept": "51",
+"note": "Champagne vol libre http://champagnevollibre.free.fr"
+},
+{
+"id": "104",
+"name": "Massif Nord Ardennes",
+"lat": 49.7,
+"lon": 4.7,
+"altitude": 0,
+"dept": "08",
+"note": null
+},
+{
+"id": "105",
+"name": "Montagne de Ruy",
+"lat": 44.5081,
+"lon": 5.15778,
+"altitude": 960,
+"dept": "26",
+"note": "Club des Goélands http://goelands.forumpro.fr/index.htm"
+},
+{
+"id": "106",
+"name": "Signes",
+"lat": 43.3005,
+"lon": 5.86971,
+"altitude": 710,
+"dept": "83",
+"note": "Les Ailes de Signes http://www.ailesdesignes.com"
+},
+{
+"id": "107",
+"name": "Pignu",
+"lat": 42.6964,
+"lon": 9.40005,
+"altitude": 962,
+"dept": "20",
+"note": "Club Ecole Piu Altu http://www.piualtu.com"
+},
+{
+"id": "108",
+"name": "SAINT GENIEZ",
+"lat": 44.2492,
+"lon": 6.06639,
+"altitude": 1326,
+"dept": "04",
+"note": null
+},
+{
+"id": "109",
+"name": "St André les Alpes",
+"lat": 44.6381,
+"lon": 6.80139,
+"altitude": 1540,
+"dept": "04",
+"note": null
+},
+{
+"id": "110",
+"name": "Mont Bouquet Gard",
+"lat": 44.1331,
+"lon": 4.28694,
+"altitude": 620,
+"dept": "30",
+"note": "Ales en l'Air \r\nhttp://www.alesenlair.fr"
+},
+{
+"id": "111",
+"name": "Argeliers",
+"lat": 43.3258,
+"lon": 2.88528,
+"altitude": 203,
+"dept": "11",
+"note": "CDVL 11 http://www.lvllr.net"
+},
+{
+"id": "112",
+"name": "Lagarde Rustrel",
+"lat": 43.9417,
+"lon": 5.47611,
+"altitude": 970,
+"dept": "84",
+"note": "Voler au pays http://www.voler-au-pays.com"
+},
+{
+"id": "113",
+"name": "Tonnerre",
+"lat": 47.8281,
+"lon": 3.98,
+"altitude": 0,
+"dept": "89",
+"note": "AST Parapente Les aigles ou Parapente Tonnerrois ou Les Aigles Tonnerrois"
+},
+{
+"id": "114",
+"name": "Ispagnac Paros",
+"lat": 44.3764,
+"lon": 3.51,
+"altitude": 920,
+"dept": "48",
+"note": "CDVL Lozere http://www.lvllr.net/rubrique.php3?id_rubrique=29&"
+},
+{
+"id": "115",
+"name": "Petit St Bernard",
+"lat": 45.6799,
+"lon": 6.88356,
+"altitude": 2188,
+"dept": "73",
+"note": "FlyMountains 1436, Darenta Kite 1337, Aero Dynamic 1183 http://www.ecole-snowkite.fr"
+},
+{
+"id": "116",
+"name": "Pointe de Bilfot",
+"lat": 48.7656,
+"lon": -2.95417,
+"altitude": 60,
+"dept": "22",
+"note": "Breizh-y-'ailes http://perso.orange.fr/byza/Pages/BYZA.html"
+},
+{
+"id": "117",
+"name": "Mont Lachat",
+"lat": 45.9587,
+"lon": 6.4772,
+"altitude": 2050,
+"dept": "74",
+"note": null
+},
+{
+"id": "118",
+"name": "Courchevel",
+"lat": 45.4111,
+"lon": 6.61472,
+"altitude": 2150,
+"dept": "73",
+"note": null
+},
+{
+"id": "119",
+"name": "Lac de Serre Poncon",
+"lat": 44.5454,
+"lon": 6.45806,
+"altitude": 790,
+"dept": "05",
+"note": "B'aile Ve D'Air Embrunais http://parapente.embrun.free.fr"
+},
+{
+"id": "120",
+"name": "ARC SOUS CICON",
+"lat": 47.0372,
+"lon": 6.38278,
+"altitude": 910,
+"dept": "25",
+"note": null
+},
+{
+"id": "121",
+"name": "St Girons Moulis",
+"lat": 43.0709,
+"lon": 1.17459,
+"altitude": 560,
+"dept": "09",
+"note": "Effet de Fun"
+},
+{
+"id": "122",
+"name": "Saint Omer",
+"lat": 48.9315,
+"lon": -0.443528,
+"altitude": 240,
+"dept": "14",
+"note": "A.s. Icare De Basse Normandie http://www.asicare.com"
+},
+{
+"id": "123",
+"name": "St Die des Vosges",
+"lat": 48.2569,
+"lon": 6.93209,
+"altitude": 690,
+"dept": "88",
+"note": "Icare club Deodatien http://icaredeltaparapente.free.fr"
+},
+{
+"id": "124",
+"name": "Cuchon d'Ancelle",
+"lat": 44.6363,
+"lon": 6.22456,
+"altitude": 2001,
+"dept": "05",
+"note": "Ayasses http://www.lesayasses.org/"
+},
+{
+"id": "125",
+"name": "Plomb du Cantal",
+"lat": 45.0622,
+"lon": 2.76083,
+"altitude": 1800,
+"dept": "15",
+"note": "CAF Cantal http://federation.ffvl.fr/structure/719/sites/15007"
+},
+{
+"id": "126",
+"name": "Jeufosse",
+"lat": 49.0358,
+"lon": 1.53889,
+"altitude": 125,
+"dept": "78",
+"note": "Le Thermique Francilien http://thermiquefrancilien.org/"
+},
+{
+"id": "127",
+"name": "Chau-Dormillouse",
+"lat": 44.7006,
+"lon": 6.37167,
+"altitude": 1820,
+"dept": "04",
+"note": "Club Blanche Ascendance"
+},
+{
+"id": "130",
+"name": "Moustier ste Marie",
+"lat": 44.0039,
+"lon": 6.31,
+"altitude": 1650,
+"dept": "04",
+"note": "Thermodynamique Club"
+},
+{
+"id": "131",
+"name": "Saut de Vesoles",
+"lat": 43.5603,
+"lon": 2.82556,
+"altitude": 1080,
+"dept": "34",
+"note": null
+},
+{
+"id": "132",
+"name": "La Séranne",
+"lat": 43.8931,
+"lon": 3.65317,
+"altitude": 940,
+"dept": "34",
+"note": null
+},
+{
+"id": "133",
+"name": "Pic de Vissou",
+"lat": 43.5978,
+"lon": 3.35667,
+"altitude": 360,
+"dept": "34",
+"note": null
+},
+{
+"id": "134",
+"name": "Sainte Victoire",
+"lat": 43.5389,
+"lon": 5.64528,
+"altitude": 1011,
+"dept": "13",
+"note": "Montagne de Sainte Victoire, Bouches du Rhone."
+},
+{
+"id": "135",
+"name": "Moroges",
+"lat": 46.7364,
+"lon": 4.66528,
+"altitude": 465,
+"dept": "71",
+"note": null
+},
+{
+"id": "136",
+"name": "Le Treh, Markstein",
+"lat": 47.9269,
+"lon": 7.01722,
+"altitude": 68,
+"dept": "68",
+"note": "Balise montée sur un pylone de remonte pente."
+},
+{
+"id": "137",
+"name": "Aérodrome d'Aspres",
+"lat": 44.5181,
+"lon": 5.73833,
+"altitude": 820,
+"dept": "05",
+"note": null
+},
+{
+"id": "138",
+"name": "Accous",
+"lat": 43.0244,
+"lon": -0.654444,
+"altitude": 1524,
+"dept": "64",
+"note": "Nous plaçons la balise sur le sommet du Layens car il est sous l'influence du vent meteo. Au déco, elle serait trop sous l'influence de la brise."
+},
+{
+"id": "139",
+"name": "Haraumont",
+"lat": 49.3528,
+"lon": 5.30528,
+"altitude": 388,
+"dept": "55",
+"note": null
+},
+{
+"id": "140",
+"name": "Charance",
+"lat": 44.5681,
+"lon": 6.01667,
+"altitude": 1550,
+"dept": "05",
+"note": null
+},
+{
+"id": "141",
+"name": "Le Mourtis",
+"lat": 42.9,
+"lon": 0.767222,
+"altitude": 1784,
+"dept": "31",
+"note": null
+},
+{
+"id": "142",
+"name": "Bus à St Michel en G",
+"lat": 48.6733,
+"lon": -3.5758,
+"altitude": 75,
+"dept": "22",
+"note": "Parking le long de la route bitumée"
+},
+{
+"id": "144",
+"name": "Chamrousse",
+"lat": 45.1076,
+"lon": 5.87544,
+"altitude": 1839,
+"dept": "38",
+"note": null
+},
+{
+"id": "145",
+"name": "Puech de Dolgue",
+"lat": 43.8251,
+"lon": 3.85924,
+"altitude": 346,
+"dept": "34",
+"note": "Balise du Roc des Mates Hérault"
+},
+{
+"id": "146",
+"name": "Laffrey",
+"lat": 45.0366,
+"lon": 5.78757,
+"altitude": 998,
+"dept": "38",
+"note": null
+},
+{
+"id": "147",
+"name": "Le Drumont",
+"lat": 47.8746,
+"lon": 6.8627,
+"altitude": 1183,
+"dept": "88",
+"note": null
+},
+{
+"id": "148",
+"name": "Mont Vouillot",
+"lat": 47.1157,
+"lon": 6.63216,
+"altitude": 1140,
+"dept": "25",
+"note": null
+},
+{
+"id": "149",
+"name": "Saint Cômes",
+"lat": 43.8337,
+"lon": 4.19705,
+"altitude": 180,
+"dept": "30",
+"note": null
+},
+{
+"id": "150",
+"name": "Chabanon",
+"lat": 44.3414,
+"lon": 6.295,
+"altitude": 1900,
+"dept": "04",
+"note": "Conditions relatives aux Alpes du Sud, forte brise en été."
+},
+{
+"id": "151",
+"name": "Puy Saint Romain",
+"lat": 45.6773,
+"lon": 3.25557,
+"altitude": 780,
+"dept": "63",
+"note": null
+},
+{
+"id": "152",
+"name": "Velars Darois",
+"lat": 47.3831,
+"lon": 4.94361,
+"altitude": 475,
+"dept": "21",
+"note": null
+},
+{
+"id": "153",
+"name": "Superbagnères Luchon",
+"lat": 42.7667,
+"lon": 0.579167,
+"altitude": 1785,
+"dept": "31",
+"note": null
+},
+{
+"id": "154",
+"name": "St Hilaire du Rorota",
+"lat": 4.88722,
+"lon": -52.2503,
+"altitude": 100,
+"dept": "0",
+"note": null
+},
+{
+"id": "155",
+"name": "Gréolières",
+"lat": 43.8145,
+"lon": 6.96829,
+"altitude": 1778,
+"dept": "06",
+"note": null
+},
+{
+"id": "156",
+"name": "Léoncel",
+"lat": 44.8881,
+"lon": 5.21194,
+"altitude": 1450,
+"dept": "26",
+"note": null
+},
+{
+"id": "157",
+"name": "La Colmiane",
+"lat": 44.0889,
+"lon": 7.21722,
+"altitude": 2300,
+"dept": "06",
+"note": null
+},
+{
+"id": "158",
+"name": "Commes",
+"lat": 49.3461,
+"lon": -0.711389,
+"altitude": 70,
+"dept": "14",
+"note": null
+},
+{
+"id": "159",
+"name": "Blanc Nez",
+"lat": 50.9214,
+"lon": 1.72306,
+"altitude": 138,
+"dept": "62",
+"note": "Balise du Blanc Nez suivant site FFVL Escalles 62020 et Sangatte 62014"
+},
+{
+"id": "160",
+"name": "St Pabu",
+"lat": 48.6019,
+"lon": -2.51028,
+"altitude": 10,
+"dept": "22",
+"note": "orientation: N,N-NW decollage haut\r\norientation: N,N-NW decollage bas"
+},
+{
+"id": "161",
+"name": "St Urbain",
+"lat": 48.4056,
+"lon": 5.17694,
+"altitude": 325,
+"dept": "52",
+"note": null
+},
+{
+"id": "162",
+"name": "Monts Madeleine",
+"lat": 45.9858,
+"lon": 3.92444,
+"altitude": 846,
+"dept": "42",
+"note": "Décollage Roches de Sainte Agathe"
+},
+{
+"id": "163",
+"name": "Mont Gros",
+"lat": 43.7653,
+"lon": 7.4425,
+"altitude": 658,
+"dept": "06",
+"note": null
+},
+{
+"id": "164",
+"name": "Kelonia",
+"lat": -21.175,
+"lon": 5.27972,
+"altitude": 9,
+"dept": "0",
+"note": null
+},
+{
+"id": "165",
+"name": "Pech de Berre",
+"lat": 44.3242,
+"lon": 0.349167,
+"altitude": 162,
+"dept": "47",
+"note": null
+},
+{
+"id": "166",
+"name": "La Comté",
+"lat": 50.7019,
+"lon": 2.89389,
+"altitude": 180,
+"dept": "62",
+"note": "En remplacement de l'ancienne balise."
+},
+{
+"id": "167",
+"name": "Salève",
+"lat": 46.1281,
+"lon": 6.17333,
+"altitude": 1270,
+"dept": "74",
+"note": null
+},
+{
+"id": "168",
+"name": "Nyons Garde Grosse",
+"lat": 44.3366,
+"lon": 5.15444,
+"altitude": 918,
+"dept": "26",
+"note": null
+},
+{
+"id": "169",
+"name": "Matouta",
+"lat": -21.3586,
+"lon": 55.6961,
+"altitude": 481,
+"dept": "0",
+"note": null
+},
+{
+"id": "170",
+"name": "Piton Maido 2000",
+"lat": -21.0592,
+"lon": 55.3817,
+"altitude": 2160,
+"dept": "0",
+"note": null
+},
+{
+"id": "171",
+"name": "Bellemène 700",
+"lat": -21.0222,
+"lon": 55.3219,
+"altitude": 760,
+"dept": "0",
+"note": null
+},
+{
+"id": "172",
+"name": "Piton Textor",
+"lat": -21.1875,
+"lon": 55.635,
+"altitude": 2140,
+"dept": "0",
+"note": null
+},
+{
+"id": "174",
+"name": "Roquefeuil",
+"lat": 42.817,
+"lon": 2.0,
+"altitude": 1173,
+"dept": "11",
+"note": "Observations/Dangers: Aérologie malsaine par vent d'ouest (déco-attéro).\r\nLigne EDF haute tension sur l'attéro (attention).\r\nAttérissage interdit avant coupe des foins."
+},
+{
+"id": "5000",
+"name": "Eckbolsheim",
+"lat": 48.5756,
+"lon": 7.68694,
+"altitude": 144,
+"dept": "67",
+"note": "Nouvelle balise en cours de tests."
+},
+{
+"id": "5001",
+"name": "Grendelbruch",
+"lat": 48.4925,
+"lon": 7.32306,
+"altitude": 746,
+"dept": "67",
+"note": "Nouvelle balise en cours de tests."
+},
+{
+"id": "5002",
+"name": "J9",
+"lat": 48.6217,
+"lon": 7.68361,
+"altitude": 179,
+"dept": "67",
+"note": null
+},
+{
+"id": "5003",
+"name": "Schwartzbach",
+"lat": 48.4992,
+"lon": 7.28167,
+"altitude": 451,
+"dept": "67",
+"note": null
+},
+{
+"id": "5004",
+"name": "Crête de Beaumont",
+"lat": 44.3836,
+"lon": 5.685,
+"altitude": 1503,
+"dept": "05",
+"note": null
+},
+{
+"id": "5005",
+"name": "Céuze",
+"lat": 44.5097,
+"lon": 5.93056,
+"altitude": 1793,
+"dept": "05",
+"note": null
+},
+{
+"id": "6000",
+"name": "Attéro St-Hilaire",
+"lat": 45.3031,
+"lon": 5.90687,
+"altitude": 220,
+"dept": "38",
+"note": "En test"
+},
+{
+"id": "6001",
+"name": "St Vallier de Thiey",
+"lat": 43.7108,
+"lon": 6.82985,
+"altitude": 1000,
+"dept": "06",
+"note": "Site sensible, prendre contact pour avoir un briefing sur les zones strictement interdite de survol en approche www.cds.spiritparapente.fr\r\n\r\nHistorique de la balise :\r\nhttp://cds.spiritparapente.fr/balise/\r\n\r\nLes vitesses de vent min & max sont sur les 20 dernieres minutes. (pas sur la derniere heure)"
+},
+{
+"id": "6003",
+"name": "La colle du maçon",
+"lat": 43.7168,
+"lon": 6.88077,
+"altitude": 1150,
+"dept": "06",
+"note": "Site sensible, prendre contact pour avoir un briefing sur les zones strictement interdite de survol en approche http://www.cieldesiagne.fr/ \r\n\r\nHistorique de la balise : http://www.cieldesiagne.fr/balise/doublier"
+}
+]

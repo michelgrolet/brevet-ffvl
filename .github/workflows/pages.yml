@@ -26,9 +26,9 @@ jobs:
           node-version: 20
       - name: Build static site
         env:
-          # Use the live FFVL API when a key secret is configured; otherwise
-          # the build falls back to bundled sample data so the demo still works.
-          DATA_SOURCE: ${{ secrets.FFVL_API_KEY != '' && 'ffvl' || 'mock' }}
+          # Use the live FFVL API when a key secret is configured; otherwise fall
+          # back to the full static balise list (166 positions, no live wind).
+          DATA_SOURCE: ${{ secrets.FFVL_API_KEY != '' && 'ffvl' || 'static' }}
           FFVL_API_KEY: ${{ secrets.FFVL_API_KEY }}
         run: node scripts/build-static.js
       - name: Configure Pages
