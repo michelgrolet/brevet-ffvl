@@ -1,85 +1,59 @@
-/* Leaflet frontend for the FFVL balise map.
- * Pulls normalized balise data from our own /api/balises endpoint and renders
- * each balise as a wind arrow coloured by wind strength. Auto-refreshes. */
+/* Leaflet map of FFVL weather beacons (balises).
+ * Each balise is a pin placed at its exact coordinates; clicking it opens the
+ * official balisemeteo.com page in a new tab. A "locate me" button centres the
+ * map on the user so they can click the balises around them. No live data is
+ * fetched — the official page shows the wind. */
 
-const REFRESH_MS = 60_000;
-
-const map = L.map('map', { zoomControl: true }).setView([46.2, 2.4], 6); // France
+const map = L.map('map', { zoomControl: true }).setView([46.6, 2.4], 6); // France
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 18,
   attribution:
-    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · données balises &copy; <a href="https://www.balisemeteo.com">FFVL</a>',
+    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · balises &copy; <a href="https://www.balisemeteo.com">FFVL</a>',
 }).addTo(map);
 
 const layer = L.layerGroup().addTo(map);
+const statusEl = document.getElementById('status');
 
-function windColor(kmh) {
-  if (kmh == null) return '#888';
-  if (kmh < 10) return '#3b8a3b';
-  if (kmh < 20) return '#c9a227';
-  if (kmh < 35) return '#d2691e';
-  return '#c0392b';
-}
+// Teardrop pin whose POINT (bottom tip) sits exactly on the coordinate.
+const PIN_SVG =
+  '<svg width="26" height="36" viewBox="0 0 26 36" xmlns="http://www.w3.org/2000/svg">' +
+  '<path d="M13 35C13 35 24 21.5 24 13A11 11 0 1 0 2 13C2 21.5 13 35 13 35Z" ' +
+  'fill="#c0392b" stroke="#fff" stroke-width="2"/>' +
+  '<circle cx="13" cy="13" r="4.2" fill="#fff"/></svg>';
 
-// An arrow icon rotated to the wind direction. windDir = where wind comes FROM,
-// so the arrow (which we draw pointing "up"=North) is rotated by windDir degrees.
-function windIcon(b) {
-  const color = windColor(b.windAvg);
-  const hasDir = b.windDir != null && b.windAvg != null && b.windAvg > 0;
-  const rot = hasDir ? b.windDir : 0;
-  const shape = hasDir
-    ? `<path d="M12 2 L17 13 L12 10.5 L7 13 Z" fill="${color}"/>`   // arrow
-    : `<circle cx="12" cy="12" r="5" fill="${color}"/>`;            // calm: dot
-  const html =
-    `<div class="balise-marker" style="transform:rotate(${rot}deg)">` +
-    `<svg width="24" height="24" viewBox="0 0 24 24">${shape}</svg></div>`;
-  return L.divIcon({ html, className: '', iconSize: [24, 24], iconAnchor: [12, 12] });
-}
+const baliseIcon = L.divIcon({
+  html: PIN_SVG,
+  className: 'balise-pin',
+  iconSize: [26, 36],
+  iconAnchor: [13, 35],   // tip of the teardrop
+  tooltipAnchor: [0, -30],
+});
 
-function row(label, val, unit) {
-  if (val == null) return '';
-  return `<b>${label}</b><span>${val}${unit || ''}</span>`;
-}
-
-function popupHtml(b) {
-  const when = b.updated ? new Date(b.updated).toLocaleString('fr-FR') : '—';
-  return (
-    `<div class="popup-name">${b.name || 'Balise ' + b.id}</div>` +
-    `<div class="popup-grid">` +
-      row('Vent moyen', b.windAvg, ' km/h') +
-      row('Rafales', b.windMax, ' km/h') +
-      row('Direction', b.windDir, '°') +
-      row('Température', b.temp, ' °C') +
-      row('Humidité', b.humidity, ' %') +
-      row('Altitude', b.altitude, ' m') +
-    `</div>` +
-    `<div class="popup-meta">Mesuré : ${when}` +
-      (b.url ? ` · <a href="${b.url}" target="_blank" rel="noopener">détails</a>` : '') +
-    `</div>`
-  );
+function officialUrl(b) {
+  return b.url || `https://www.balisemeteo.com/balise.php?idBalise=${b.id}`;
 }
 
 function render(balises) {
   layer.clearLayers();
   for (const b of balises) {
-    L.marker([b.lat, b.lon], { icon: windIcon(b) })
-      .bindPopup(popupHtml(b))
-      .bindTooltip(b.name || `Balise ${b.id}`, { direction: 'top' })
+    if (b.lat == null || b.lon == null) continue;
+    const label =
+      `${b.name || 'Balise ' + b.id}` + (b.altitude != null ? ` · ${b.altitude} m` : '');
+    L.marker([b.lat, b.lon], { icon: baliseIcon, title: b.name || `Balise ${b.id}` })
+      .bindTooltip(label, { direction: 'top' })
+      .on('click', () => window.open(officialUrl(b), '_blank', 'noopener'))
       .addTo(layer);
   }
 }
 
-const statusEl = document.getElementById('status');
-
-// Try the live server endpoint first; on a static host (e.g. GitHub Pages there
-// is no backend) fall back to a pre-generated balises.json next to index.html.
+// On a static host (GitHub Pages) there is no backend; read the generated file.
 async function fetchData() {
   try {
     const res = await fetch('/api/balises', { cache: 'no-store' });
     if (res.ok) return await res.json();
-  } catch { /* no backend — fall through to the static snapshot */ }
+  } catch { /* no backend — fall through */ }
   const res = await fetch('./balises.json', { cache: 'no-store' });
-  if (!res.ok) throw new Error('aucune source de données disponible');
+  if (!res.ok) throw new Error('aucune donnée de balises disponible');
   return await res.json();
 }
 
@@ -89,15 +63,36 @@ async function load() {
     const data = await fetchData();
     if (data.error) throw new Error(data.error);
     render(data.balises);
-    const t = new Date().toLocaleTimeString('fr-FR');
-    statusEl.textContent =
-      `${data.count} balises · source: ${data.source} · maj ${t}` +
-      (data.warning ? ` · ⚠ ${data.warning}` : '');
+    statusEl.textContent = `${data.count} balises`;
   } catch (err) {
     statusEl.textContent = `erreur : ${err.message}`;
   }
 }
 
-document.getElementById('refresh').addEventListener('click', load);
+// --- Geolocation -----------------------------------------------------------
+let meLayer = null;
+const meStyle = { radius: 8, color: '#fff', weight: 2, fillColor: '#1e6fff', fillOpacity: 1 };
+
+document.getElementById('locate').addEventListener('click', () => {
+  if (!('geolocation' in navigator)) {
+    statusEl.textContent = 'géolocalisation non disponible sur cet appareil';
+    return;
+  }
+  statusEl.textContent = 'localisation…';
+  map.locate({ setView: true, maxZoom: 12, enableHighAccuracy: true, timeout: 10000 });
+});
+
+map.on('locationfound', (e) => {
+  if (meLayer) meLayer.remove();
+  meLayer = L.layerGroup([
+    L.circle(e.latlng, { radius: e.accuracy, color: '#1e6fff', weight: 1, fillOpacity: 0.08 }),
+    L.circleMarker(e.latlng, meStyle).bindTooltip('Vous êtes ici', { direction: 'top' }),
+  ]).addTo(map);
+  statusEl.textContent = `${layer.getLayers().length} balises · position trouvée`;
+});
+
+map.on('locationerror', (e) => {
+  statusEl.textContent = `localisation impossible : ${e.message}`;
+});
+
 load();
-setInterval(load, REFRESH_MS);

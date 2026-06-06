@@ -6,30 +6,28 @@ html, body { margin: 0; height: 100%; font-family: system-ui, sans-serif; }
   display: flex; align-items: center; gap: 12px; padding: 0 14px;
   background: #1b2a3a; color: #fff; box-sizing: border-box;
 }
-#bar strong { font-size: 15px; }
-#status { font-size: 12px; opacity: .8; flex: 1; }
-#refresh {
+#bar strong { font-size: 15px; white-space: nowrap; }
+#status { font-size: 12px; opacity: .85; flex: 1; }
+
+#locate {
   background: #2c4a6b; color: #fff; border: 0;
-  border-radius: 6px; width: 30px; height: 28px; font-size: 16px; cursor: pointer;
+  border-radius: 6px; height: 30px; padding: 0 12px; font-size: 13px; cursor: pointer;
+  white-space: nowrap;
 }
-#refresh:hover { background: #38597f; }
+#locate:hover { background: #38597f; }
 
-#legend {
-  position: absolute; bottom: 18px; right: 12px; z-index: 1000;
-  background: rgba(255,255,255,.94); padding: 8px 10px; border-radius: 8px;
-  font-size: 12px; box-shadow: 0 1px 5px rgba(0,0,0,.3); line-height: 1.8;
+#hint {
+  position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+  z-index: 1000; background: rgba(255,255,255,.94); color: #333;
+  padding: 6px 12px; border-radius: 16px; font-size: 12px;
+  box-shadow: 0 1px 5px rgba(0,0,0,.3); max-width: 90vw; text-align: center;
 }
-#legend .lg-title { font-weight: 600; margin-bottom: 2px; }
-#legend i { display: inline-block; width: 11px; height: 11px; border-radius: 50%;
-  margin-right: 6px; vertical-align: middle; }
-#legend .lg-note { margin-top: 6px; max-width: 170px; color: #555; font-size: 11px; line-height: 1.3; }
 
-/* Wind arrow marker */
-.balise-marker { transform-origin: center; }
-.balise-marker svg { display: block; filter: drop-shadow(0 1px 1px rgba(0,0,0,.4)); }
+/* Balise pin marker */
+.balise-pin { cursor: pointer; }
+.balise-pin svg { display: block; filter: drop-shadow(0 1px 1.5px rgba(0,0,0,.4)); }
 
-.popup-name { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
-.popup-grid { display: grid; grid-template-columns: auto auto; gap: 1px 10px; font-size: 12px; }
-.popup-grid b { font-weight: 600; }
-.popup-meta { margin-top: 5px; font-size: 11px; color: #666; }
-.popup-meta a { color: #2c4a6b; }
+@media (max-width: 520px) {
+  #bar strong { font-size: 14px; }
+  #hint { font-size: 11px; }
+}

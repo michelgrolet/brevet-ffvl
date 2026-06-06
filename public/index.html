@@ -3,26 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Balises météo FFVL — carte temps réel</title>
+  <title>Balises météo FFVL — carte</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header id="bar">
-    <strong>Balises météo</strong>
+    <strong>Balises météo FFVL</strong>
+    <button id="locate" title="Me localiser">📍 Me localiser</button>
     <span id="status">chargement…</span>
-    <button id="refresh" title="Rafraîchir">⟳</button>
   </header>
   <div id="map"></div>
-  <div id="legend">
-    <div class="lg-title">Vent (km/h)</div>
-    <div><i style="background:#3b8a3b"></i> 0–10</div>
-    <div><i style="background:#c9a227"></i> 10–20</div>
-    <div><i style="background:#d2691e"></i> 20–35</div>
-    <div><i style="background:#c0392b"></i> 35+</div>
-    <div class="lg-note">La flèche pointe dans la direction d'où vient le vent.</div>
-  </div>
+  <div id="hint">Cliquez sur une balise pour ouvrir sa page officielle (nouvel onglet).</div>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
           integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="app.js"></script>
