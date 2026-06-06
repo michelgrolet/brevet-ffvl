@@ -8,6 +8,7 @@
 // directly (it falls back to ./balises.json next to its index.html).
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 const ROOT = path.join(__dirname, '..');
 const OUT = path.join(ROOT, '_site');
@@ -31,10 +32,20 @@ async function main() {
   fs.mkdirSync(OUT, { recursive: true });
 
   // 1. QCM site at the root. Only the web assets (skip README / scripts).
+  //    app.js/style.css get a content-hash query in index.html so browsers
+  //    fetch the new version as soon as the file changes (GitHub Pages caches
+  //    assets for 10 min, which otherwise serves stale JS after a deploy).
   const qcmSrc = path.join(ROOT, 'qcm-site');
-  for (const name of ['index.html', 'app.js', 'style.css']) {
-    fs.copyFileSync(path.join(qcmSrc, name), path.join(OUT, name));
-  }
+  const shortHash = (buf) => crypto.createHash('sha1').update(buf).digest('hex').slice(0, 8);
+  const appJs = fs.readFileSync(path.join(qcmSrc, 'app.js'));
+  const css = fs.readFileSync(path.join(qcmSrc, 'style.css'));
+  fs.writeFileSync(path.join(OUT, 'app.js'), appJs);
+  fs.writeFileSync(path.join(OUT, 'style.css'), css);
+  const indexHtml = fs
+    .readFileSync(path.join(qcmSrc, 'index.html'), 'utf8')
+    .replace('./style.css', `./style.css?v=${shortHash(css)}`)
+    .replace('./app.js', `./app.js?v=${shortHash(appJs)}`);
+  fs.writeFileSync(path.join(OUT, 'index.html'), indexHtml);
   copyDir(path.join(qcmSrc, 'data'), path.join(OUT, 'data'));
 
   // 2. Balise map under /balise/. The frontend uses relative asset paths and
