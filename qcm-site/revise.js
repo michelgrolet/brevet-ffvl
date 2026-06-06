@@ -308,6 +308,33 @@ function strength(card) {
   return s;
 }
 
+// Niveau de confiance affiché sur la carte (« est-ce que je connais celle-ci ? »),
+// dérivé de l'historique SRS déjà stocké — aucun champ supplémentaire.
+//  Nouvelle → Fragile (dernier « Pas ») → À consolider (« Bof ») →
+//  Bien sue (« Bien » récent) → Sue par cœur (« Bien » bien ancré).
+function masteryLevel(card) {
+  const reps = (card && card.reps) || 0;
+  const last = card && card.lastGrade;
+  if (reps === 0) return { label: "Nouvelle", cls: "m-new", icon: "•" };
+  if (last === "pas") return { label: "Fragile", cls: "m-weak", icon: "✕" };
+  if (last === "bof") return { label: "À consolider", cls: "m-mid", icon: "~" };
+  if ((card.intervalDays || 0) >= 7 || reps >= 4)
+    return { label: "Sue par cœur", cls: "m-top", icon: "★" };
+  return { label: "Bien sue", cls: "m-good", icon: "✓" };
+}
+
+// Détail au survol de la pastille (historique de la carte).
+function masteryTitle(card) {
+  const reps = (card && card.reps) || 0;
+  if (reps === 0) return "Jamais révisée";
+  const labels = { pas: "Pas", bof: "Bof", bien: "Bien" };
+  const parts = [`${reps} révision${reps > 1 ? "s" : ""}`];
+  const lapses = (card && card.lapses) || 0;
+  if (lapses > 0) parts.push(`${lapses} oubli${lapses > 1 ? "s" : ""}`);
+  if (card && labels[card.lastGrade]) parts.push(`dernière : ${labels[card.lastGrade]}`);
+  return parts.join(" · ");
+}
+
 // Tout le deck, ordonné des cartes les moins maîtrisées (début) aux mieux
 // connues (fin). Léger aléa pour varier l'ordre à force égale entre deux passages.
 function orderedDeck() {
@@ -369,6 +396,11 @@ function renderCard() {
   }
   const code = session.queue[0];
   const q = BY_CODE[code];
+  const card = state.cards[code];
+  const m = masteryLevel(card);
+  const masteryBadge =
+    `<span class="mastery-badge ${m.cls}" title="${escapeHtml(masteryTitle(card))}">` +
+    `${m.icon} ${m.label}</span>`;
 
   const answers = q.answers
     .map((a) => {
@@ -392,7 +424,7 @@ function renderCard() {
     `<span class="deck-badge">${escapeHtml(state.deck.activity)} · ${escapeHtml(state.deck.level)}</span>` +
     `<span class="review-progress">${session.queue.length} en attente · ${session.mastered}/${session.total} sues</span>` +
     "</div>" +
-    `<p class="code-line"><span class="code">${escapeHtml(code)}</span>` +
+    `<p class="code-line">${masteryBadge}<span class="code">${escapeHtml(code)}</span>` +
     q.categories.map((c) => `<span class="tag cat">${escapeHtml(c)}</span>`).join("") +
     "</p>" +
     `<p class="qtext">${escapeHtml(q.question)}</p>` +

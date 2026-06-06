@@ -160,6 +160,41 @@
   border-radius: 999px;
   margin-bottom: 0.6rem;
 }
+/* Pastille de niveau de confiance sur chaque carte. */
+.mastery-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid var(--neutral-border);
+  background: var(--neutral-bg);
+  color: #4b5563;
+  white-space: nowrap;
+}
+.mastery-badge.m-weak {
+  background: var(--bad-bg);
+  border-color: var(--bad-border);
+  color: var(--bad-ink);
+}
+.mastery-badge.m-mid {
+  background: #fff4e5;
+  border-color: #f0b67f;
+  color: #b45309;
+}
+.mastery-badge.m-good {
+  background: var(--good-bg);
+  border-color: var(--good-border);
+  color: var(--good-ink);
+}
+.mastery-badge.m-top {
+  background: #fef9e7;
+  border-color: #e0b400;
+  color: #8a6d00;
+}
+
 .stats {
   display: flex;
   justify-content: center;
