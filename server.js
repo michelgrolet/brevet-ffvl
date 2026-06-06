@@ -12,17 +12,18 @@ const fs = require('fs');
 const path = require('path');
 
 const PORT = Number(process.env.PORT) || 3000;
-const DATA_SOURCE = (process.env.DATA_SOURCE || 'mock').toLowerCase();
+const DATA_SOURCE = (process.env.DATA_SOURCE || 'static').toLowerCase();
 const CACHE_TTL_MS = Number(process.env.CACHE_TTL_MS) || 60_000;
 
 const SOURCES = {
   mock: () => require('./src/sources/mock'),
+  static: () => require('./src/sources/ffvl-static'),
   ffvl: () => require('./src/sources/ffvl-api'),
   scrape: () => require('./src/sources/balisemeteo-scrape'),
 };
 
 if (!SOURCES[DATA_SOURCE]) {
-  console.error(`Unknown DATA_SOURCE="${DATA_SOURCE}". Use: mock | ffvl | scrape`);
+  console.error(`Unknown DATA_SOURCE="${DATA_SOURCE}". Use: mock | static | ffvl | scrape`);
   process.exit(1);
 }
 const source = SOURCES[DATA_SOURCE]();

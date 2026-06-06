@@ -13,7 +13,7 @@ const ROOT = path.join(__dirname, '..');
 const OUT = path.join(ROOT, '_site');
 const BALISE_OUT = path.join(OUT, 'balise');
 const SOURCE = (process.env.DATA_SOURCE || 'mock').toLowerCase();
-const MODULES = { mock: 'mock', ffvl: 'ffvl-api', scrape: 'balisemeteo-scrape' };
+const MODULES = { mock: 'mock', static: 'ffvl-static', ffvl: 'ffvl-api', scrape: 'balisemeteo-scrape' };
 
 // Recursively copy a directory's contents into dest.
 function copyDir(src, dest) {
@@ -56,6 +56,11 @@ async function main() {
     warning = `${SOURCE} source failed (${err.message}); using sample data`;
     source = 'mock';
     balises = await require('../src/sources/mock').fetchBalises();
+  }
+
+  // The static list has positions but no live wind — make that explicit in the UI.
+  if (source === 'static' && !warning) {
+    warning = 'positions seules — définir FFVL_API_KEY pour le vent en temps réel';
   }
 
   fs.writeFileSync(
