@@ -3,9 +3,11 @@
 // Mode révision (apprentissage intensif) du QCM FFVL.
 // On choisit un examen (activité + niveau) — ou on importe une sauvegarde — puis
 // on révise carte par carte. Le deck contient TOUJOURS toutes les questions de
-// l'examen : une session les fait toutes défiler, des moins maîtrisées (début)
-// aux sues par cœur (repoussées à la fin). La progression (champs SRS par carte)
-// est mémorisée en localStorage, format rétro-compatible avec les sauvegardes v1.
+// l'examen, mais une session ne fait défiler que les cartes pas encore sues
+// « par cœur », des moins maîtrisées (début) aux mieux connues (fin). Seule la
+// note « ★ Par cœur » fait sortir une carte ; « en attente » (file) et « sues »
+// sont donc complémentaires : en attente + sues = total. La progression (champs
+// SRS par carte) est mémorisée en localStorage, rétro-compatible avec les sauvegardes v1.
 
 const DATA_URL = "./data/qcm_ffvl.json";
 const EXPLANATIONS_URL = "./data/explanations.json";
@@ -17,13 +19,14 @@ const SCHEMA = 1;
 // Millisecondes par jour, pour les échéances SRS (mémoire long terme des cartes).
 const DAY_MS = 86400000;
 
-// Apprentissage intensif : une session parcourt TOUT le deck, ordonné des
-// cartes les moins maîtrisées (au début) aux cartes sues par cœur (repoussées
-// à la fin). Quand on note une carte, on la réinjecte plus loin dans la file
-// selon la note : « Pas » revient très vite, « Bof » un peu plus loin, « Bien »
-// sort du passage (carte acquise). Décalages = nombre de cartes avant la
-// prochaine réapparition dans le tour en cours.
-const REQUEUE_OFFSET = { pas: 2, bof: 8 };
+// Apprentissage intensif : une session parcourt les cartes pas encore sues par
+// cœur, ordonnées des moins maîtrisées (au début) aux mieux connues (fin). Quand
+// on note une carte, on la réinjecte plus loin dans la file selon la note :
+// « Pas » revient très vite, « Bof » un peu plus loin, « Bien » repart en fin de
+// file (bien connue mais pas encore acquise). Seule « ★ Par cœur » fait sortir la
+// carte de la file. Décalages = nombre de cartes avant la prochaine réapparition
+// (Infinity = renvoyée en fin de file).
+const REQUEUE_OFFSET = { pas: 2, bof: 8, bien: Infinity };
 
 // Ordre d'affichage des niveaux (du plus simple au plus avancé).
 const LEVEL_ORDER = [
@@ -231,9 +234,11 @@ function renderOnboarding() {
 
 // ---------- Écran 2 : accueil du deck (résumé) ----------
 
-// Une carte est « sue par cœur » quand sa dernière note est « Bien » ou « Par cœur ».
+// Une carte est « sue par cœur » uniquement quand sa dernière note est « ★ Par cœur ».
+// « Bien » signale une carte bien connue mais pas encore acquise : elle continue de
+// tourner (repoussée en fin de file) jusqu'à ce qu'on la passe « Par cœur ».
 function isMastered(card) {
-  return !!card && (card.lastGrade === "bien" || card.lastGrade === "sur");
+  return !!card && card.lastGrade === "sur";
 }
 
 // Nombre de cartes du deck actuellement sues par cœur. Dérivé de l'état persistant
@@ -248,6 +253,7 @@ function renderDeckHome() {
   const total = codes.length;
   const fresh = codes.filter((c) => (state.cards[c].reps || 0) === 0).length;
   const mastered = masteredCount();
+  const pending = total - mastered; // cartes pas encore sues par cœur
 
   app.innerHTML =
     '<div class="card deck-home">' +
@@ -262,17 +268,19 @@ function renderDeckHome() {
     `<div class="stat"><span class="stat-num">${fresh}</span><span class="stat-lbl">jamais vues</span></div>` +
     `<div class="stat"><span class="stat-num">${mastered}</span><span class="stat-lbl">sues par cœur</span></div>` +
     "</div>" +
-    `<button class="btn btn-primary" id="d-start" type="button"${total === 0 ? " disabled" : ""}>` +
+    `<button class="btn btn-primary" id="d-start" type="button"${pending === 0 ? " disabled" : ""}>` +
     (total === 0
       ? "Deck vide"
-      : `Réviser le deck (${total} carte${total > 1 ? "s" : ""})`) +
+      : pending === 0
+        ? "Tout est su par cœur 🎉"
+        : `Réviser (${pending} en attente)`) +
     "</button>" +
-    '<p class="muted next-step">Tout le deck défile, des questions les moins ' +
+    '<p class="muted next-step">Les cartes pas encore acquises défilent, les moins ' +
     "maîtrisées d'abord. Tu révèles la réponse, puis tu t'auto-évalues : " +
     "<b>Pas</b> (revient tout de suite) / <b>Bof</b> (revient bientôt) / " +
-    "<b>Bien</b> (repoussée à la fin) / <b>★ Par cœur</b> (acquise, espacée " +
-    "longtemps). On boucle sur les questions faibles jusqu'à ce qu'elles " +
-    "passent en « Bien » ou « Par cœur ».</p>" +
+    "<b>Bien</b> (repart en fin de file) / <b>★ Par cœur</b> (acquise : sort du " +
+    "deck et revient très espacée). On boucle jusqu'à ce que chaque carte " +
+    "passe en « ★ Par cœur ».</p>" +
     '<div class="deck-actions">' +
     '<button class="btn" id="d-export" type="button">Exporter ma progression</button>' +
     '<input type="file" id="d-import" accept="application/json,.json" hidden />' +
@@ -324,15 +332,15 @@ function strength(card) {
 // Niveau de confiance affiché sur la carte (« est-ce que je connais celle-ci ? »),
 // dérivé de l'historique SRS déjà stocké — aucun champ supplémentaire.
 //  Nouvelle → Fragile (dernier « Pas ») → À consolider (« Bof ») →
-//  Bien sue (« Bien » récent) → Sue par cœur (« Bien » bien ancré).
+//  Bien sue (dernier « Bien ») → Sue par cœur (dernier « ★ Par cœur »).
+// La pastille ★ suit la même définition que le compteur « sues » (note « Par cœur »).
 function masteryLevel(card) {
   const reps = (card && card.reps) || 0;
   const last = card && card.lastGrade;
   if (reps === 0) return { label: "Nouvelle", cls: "m-new", icon: "•" };
   if (last === "pas") return { label: "Fragile", cls: "m-weak", icon: "✕" };
   if (last === "bof") return { label: "À consolider", cls: "m-mid", icon: "~" };
-  if (last === "sur" || (card.intervalDays || 0) >= 7 || reps >= 4)
-    return { label: "Sue par cœur", cls: "m-top", icon: "★" };
+  if (last === "sur") return { label: "Sue par cœur", cls: "m-top", icon: "★" };
   return { label: "Bien sue", cls: "m-good", icon: "✓" };
 }
 
@@ -359,7 +367,8 @@ function orderedDeck() {
 }
 
 function startSession() {
-  const queue = orderedDeck();
+  // On ne révise que les cartes pas encore sues par cœur (les autres sont acquises).
+  const queue = orderedDeck().filter((c) => !isMastered(state.cards[c]));
   if (queue.length === 0) {
     renderDeckHome();
     return;
@@ -368,7 +377,8 @@ function startSession() {
     queue,
     grades: { pas: 0, bof: 0, bien: 0, sur: 0 },
     reviewed: 0,
-    total: queue.length,
+    // « sues » se compte sur le deck entier → total = taille du deck (pas de la file).
+    total: Object.keys(state.cards).filter((c) => BY_CODE[c]).length,
   };
   renderCard();
 }
@@ -486,10 +496,11 @@ function gradeCard(grade) {
   session.reviewed += 1;
   saveState();
   // Réinjection intensive dans le tour en cours :
-  //  - « Bien »/« Par cœur » : carte acquise, elle sort de la file (sa progression
-  //    « sue par cœur » est déjà enregistrée plus haut via saveState) ;
-  //  - « Pas »/« Bof » : remise quelques cartes plus loin pour repasser vite.
-  if (grade !== "bien" && grade !== "sur") {
+  //  - « ★ Par cœur » : carte acquise, elle sort de la file (donc du décompte
+  //    « en attente », et « sues » est déjà incrémenté plus haut via saveState) ;
+  //  - « Pas »/« Bof » : remise quelques cartes plus loin pour repasser vite ;
+  //  - « Bien » : connue mais pas acquise, repart en fin de file (offset Infinity).
+  if (grade !== "sur") {
     const offset = REQUEUE_OFFSET[grade] || 4;
     session.queue.splice(Math.min(offset, session.queue.length), 0, code);
   }
@@ -497,28 +508,29 @@ function gradeCard(grade) {
 }
 
 function endSession() {
-  const g = session ? session.grades : { pas: 0, bof: 0, bien: 0 };
+  const g = session ? session.grades : { pas: 0, bof: 0, bien: 0, sur: 0 };
   const reviewed = session ? session.reviewed : 0;
   const remaining = session ? session.queue.length : 0;
-  const completed = remaining === 0;
+  const completed = remaining === 0; // file vide = toutes les cartes sont passées « Par cœur »
   session = null;
   app.innerHTML =
     '<div class="card review-done">' +
-    (completed ? "<h2>Tout le deck est passé 🎉</h2>" : "<h2>Passage en pause ⏸️</h2>") +
+    (completed ? "<h2>Tout est su par cœur 🎉</h2>" : "<h2>Passage en pause ⏸️</h2>") +
     `<p class="muted">${reviewed} révision${reviewed > 1 ? "s" : ""} effectuée${reviewed > 1 ? "s" : ""}` +
     (remaining > 0
       ? `, ${remaining} carte${remaining > 1 ? "s" : ""} encore en attente.`
       : ".") +
     "</p>" +
     '<div class="stats">' +
+    `<div class="stat"><span class="stat-num">${g.sur}</span><span class="stat-lbl">★ Par cœur</span></div>` +
     `<div class="stat"><span class="stat-num">${g.bien}</span><span class="stat-lbl">Bien</span></div>` +
     `<div class="stat"><span class="stat-num">${g.bof}</span><span class="stat-lbl">Bof</span></div>` +
     `<div class="stat"><span class="stat-num">${g.pas}</span><span class="stat-lbl">Pas</span></div>` +
     "</div>" +
-    `<button class="btn btn-primary" id="s-again" type="button">${
-      completed ? "Refaire un passage" : "Continuer le deck"
-    }</button>` +
-    '<div class="deck-actions"><button class="btn" id="s-home" type="button">Retour au deck</button></div>' +
+    (completed
+      ? '<button class="btn btn-primary" id="s-home" type="button">Retour au deck</button>'
+      : '<button class="btn btn-primary" id="s-again" type="button">Continuer le deck</button>' +
+        '<div class="deck-actions"><button class="btn" id="s-home" type="button">Retour au deck</button></div>') +
     "</div>";
   const again = document.getElementById("s-again");
   if (again) again.addEventListener("click", startSession);
