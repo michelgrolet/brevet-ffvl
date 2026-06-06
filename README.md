@@ -174,6 +174,30 @@ Téléphone (XCTrack) ──LiveTrack24──▶ /track.php (ce serveur)
    en cours, donc tu peux aussi épingler `https://ton-host/live` une fois pour
    toutes.
 
+## Déploiement gratuit sur Render (recommandé)
+
+[Render](https://render.com) héberge le serveur gratuitement, **sans carte
+bancaire**. Le dépôt contient un blueprint [`render.yaml`](render.yaml) :
+
+1. Crée un compte Render, puis **New → Blueprint** et choisis ce dépôt → **Apply**.
+   Render lit `render.yaml` et crée le service (offre *free*).
+2. Dans le service → onglet **Environment**, renseigne :
+   - `PILOT_NAME` = ton nom,
+   - `WHATSAPP_RECIPIENTS` = `numero:apikey` (clé CallMeBot, voir ci-dessus).
+3. Tu obtiens une URL `https://<nom>.onrender.com`. Mets `<nom>.onrender.com`
+   (sans `https://`) comme **serveur LiveTrack24** dans XCTrack, et partage
+   `https://<nom>.onrender.com/live`.
+
+> ⏰ **Mise en veille.** L'offre gratuite endort le service après 15 min
+> d'inactivité ; le 1er paquet le réveille en ~1 min (notif légèrement
+> retardée). Pour l'éviter, crée un ping gratuit toutes les 10 min vers
+> `https://<nom>.onrender.com/` sur [cron-job.org](https://cron-job.org) — ça
+> reste dans le quota gratuit (un seul service 24/7).
+
+*(Autres hébergeurs gratuits possibles : Google Cloud Run ou Fly.io — sans mise
+en veille mais carte bancaire requise ; ou un tunnel Tailscale Funnel /
+Cloudflare Tunnel depuis une machine allumée chez toi.)*
+
 ## Tester sans téléphone
 
 Lance le serveur, puis simule un vol (envoie les paquets LiveTrack24 décollage →

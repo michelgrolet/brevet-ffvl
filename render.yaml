@@ -1,0 +1,29 @@
+# Render Blueprint — déploie le serveur de suivi de vol en direct.
+# Render lit ce fichier quand tu crées un "Blueprint" depuis ce dépôt :
+#   Render → New → Blueprint → choisis ce repo → Apply.
+# L'offre "free" suffit (aucune carte bancaire requise).
+#
+# Après le 1er déploiement, renseigne dans l'onglet Environment du service :
+#   PILOT_NAME            ton nom affiché (ex: Michel)
+#   WHATSAPP_RECIPIENTS   numero:apikey  (clé obtenue via CallMeBot — voir README §3)
+#
+# L'URL publique du service (https://<nom>.onrender.com) est :
+#   - à mettre comme "serveur" dans XCTrack (sans https://) pour le livetracking
+#   - le préfixe du lien partageable : https://<nom>.onrender.com/live
+services:
+  - type: web
+    name: brevet-ffvl-live
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    autoDeploy: true
+    envVars:
+      # Pas de clé requise pour le suivi de vol ; mock = carte balises de démo.
+      - key: DATA_SOURCE
+        value: mock
+      # À renseigner dans le dashboard (sync:false = non versionné, sécurisé).
+      - key: PILOT_NAME
+        sync: false
+      - key: WHATSAPP_RECIPIENTS
+        sync: false
