@@ -197,6 +197,123 @@
   border-top: 1px solid var(--line);
 }
 
+/* Review session */
+.review-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.7rem;
+}
+.review-progress {
+  font-size: 0.8rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.code-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  margin: 0 0 0.5rem;
+}
+.review .qtext {
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin: 0.2rem 0 0.85rem;
+}
+.review .answers {
+  margin-bottom: 0.3rem;
+}
+/* Answers stay neutral until revealed. */
+.ans-review .answer .mark {
+  visibility: hidden;
+}
+.ans-review.revealed .answer.good {
+  background: var(--good-bg);
+  border-color: var(--good-border);
+}
+.ans-review.revealed .answer.good .mark {
+  visibility: visible;
+  color: var(--good-ink);
+}
+.ans-review.revealed .answer.bad {
+  background: var(--bad-bg);
+  border-color: var(--bad-border);
+}
+.ans-review.revealed .answer.bad .mark {
+  visibility: visible;
+  color: var(--bad-ink);
+}
+.review-actions {
+  margin-top: 0.8rem;
+}
+.review-actions .btn-primary small {
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+/* Grade buttons */
+.grade-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  margin-top: 0.9rem;
+}
+.grade-buttons .btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.7rem 0.4rem;
+  font-size: 1.02rem;
+}
+.grade-buttons .btn small {
+  font-weight: 500;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+.grade-pas {
+  border-color: var(--bad-border);
+  color: var(--bad-ink);
+}
+.grade-pas:hover {
+  background: var(--bad-bg);
+}
+.grade-bof {
+  border-color: #d9a23a;
+  color: #8a5a00;
+}
+.grade-bof:hover {
+  background: #fdf3e2;
+}
+.grade-bien {
+  border-color: var(--good-border);
+  color: var(--good-ink);
+}
+.grade-bien:hover {
+  background: var(--good-bg);
+}
+.review-foot {
+  margin-top: 1rem;
+  text-align: center;
+}
+.btn-link {
+  border: none;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  text-decoration: underline;
+  padding: 0.3rem;
+}
+.btn-link:hover {
+  color: var(--ink);
+}
+.review-done {
+  text-align: center;
+}
+
 @media (max-width: 560px) {
   .form-row {
     grid-template-columns: 1fr;
